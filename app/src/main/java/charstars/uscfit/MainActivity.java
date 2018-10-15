@@ -96,7 +96,10 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_badges) {
-            // Handle the camera action
+            // go to badge page
+            Intent i = new Intent(MainActivity.this, GoalsDisplay.class);
+            i.putExtra("EMAIL", "Tianqin");
+            startActivity(i);
         } else if (id == R.id.nav_personalInfo) {
 
         } else if (id == R.id.nav_steps) {
