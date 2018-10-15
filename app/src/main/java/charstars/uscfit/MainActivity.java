@@ -18,11 +18,22 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private String email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        Log.d("MyApp","TOPEKA IS IN THE MAIN PAGE");
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                email = null;
+            } else {
+                email = extras.getString("EMAIL");
+            }
+        } else {
+            email = (String) savedInstanceState.getSerializable("EMAIL");
+        }
+        Log.d("MyApp",email +" IS IN THE MAIN PAGE");
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -84,17 +95,13 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_badges) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_personalInfo) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_steps) {
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_view) {
 
         }
 
