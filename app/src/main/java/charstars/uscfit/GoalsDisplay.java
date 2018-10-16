@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
@@ -19,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GoalsDisplay extends AppCompatActivity {
+public class GoalsDisplay extends AppCompatActivity implements View.OnClickListener{
     private String email;
     private List<Goal> defaultGoals = new ArrayList<Goal>();
 
@@ -78,7 +80,12 @@ public class GoalsDisplay extends AppCompatActivity {
 
             row.addView(desc);
             row.addView(cat);
+            Button b = new Button(this);
+            b.setTag(current);
+            b.setOnClickListener(this);
+            row.addView(b);
 
+            /**
             LinearLayout linlay = new LinearLayout(this);
             linlay.setOrientation(LinearLayout.VERTICAL);
             for(Map.Entry<Activity, Date> entry: current.getDueDates().entrySet()){
@@ -105,6 +112,9 @@ public class GoalsDisplay extends AppCompatActivity {
           // row.addView(minusBtn);
           //  row.addView(addBtn);
             row.addView(linlay);
+
+             **/
+
             if(row == null){
                 Log.d("goalsDisplay","TABLE ROW NULL");
             }
@@ -112,6 +122,13 @@ public class GoalsDisplay extends AppCompatActivity {
         }
 
 
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        Goal g = (Goal) v.getTag();
+        Log.d("goalsDisplay",g.getCategory());
 
     }
 }
