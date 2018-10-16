@@ -71,76 +71,14 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
     }
 
     public void createTable(){
-        TableLayout ll = (TableLayout)findViewById(R.id.goalLayout);
 
-        if(ll == null){
-            Log.d("goalsDisplay","TABLE CONTEXT NULL NULL");
-        }
-        for (int i = 0; i <defaultGoals.size(); i++) {
+        mRecyclerView = (RecyclerView) findViewById(R.id.goalsLayout);
 
-            Goal current = defaultGoals.get(i);
-
-            TableRow row = new TableRow(ll.getContext());
-            TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
-            row.setLayoutParams(lp);
-
-
-            // ImageButton addBtn = new ImageButton(this);
-            //addBtn.setImageResource(R.drawable.add);
-            // ImageButton minusBtn = new ImageButton(this);
-            // minusBtn.setImageResource(R.drawable.minus);
-
-            TextView desc = new TextView(this);
-            TextView cat = new TextView(this);
-            ProgressBar prog = new ProgressBar(this);
-            //HARD CODED VALUE FOR PROGRESS
-            prog.setProgress(50);
-            cat.setText(current.getCategory());
-            desc.setText(current.getDescription());
-
-            row.addView(desc);
-            row.addView(cat);
-            Button b = new Button(this);
-            b.setText("View Details");
-            b.setTag(current);
-            b.setOnClickListener(this);
-            row.addView(b);
-
-            /**
-             LinearLayout linlay = new LinearLayout(this);
-             linlay.setOrientation(LinearLayout.VERTICAL);
-             for(Map.Entry<Activity, Date> entry: current.getDueDates().entrySet()){
-             LinearLayout activ = new LinearLayout((this));
-             activ.setOrientation(LinearLayout.HORIZONTAL);
-             TextView name = new TextView(this);
-             name.setText(entry.getKey().getName());
-             TextView cat2 = new TextView(this);
-             cat2.setText(entry.getKey().getCategory());
-             TextView due = new TextView(this);
-             due.setText(entry.getValue().toString());
-             activ.addView(name);
-             activ.addView(cat2);
-             activ.addView(due);
-
-             CheckBox c = new CheckBox(this);
-             c.setChecked(entry.getKey().isCompleted());
-
-
-             linlay.addView(activ);
-             }
-
-             //row.addView(checkBox);
-             // row.addView(minusBtn);
-             //  row.addView(addBtn);
-             row.addView(linlay);
-
-             **/
-
-            if(row == null){
-                Log.d("goalsDisplay","TABLE ROW NULL");
-            }
-            ll.addView(row,i);
-        }
+        mAdapter = new GoalAdapter(defaultGoals);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setAdapter(mAdapter);
 
     }
 
@@ -162,10 +100,10 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.goal_details);
 
-        TextView title = (TextView) findViewById(R.id.title);
+        TextView title = findViewById(R.id.title);
         title.setText("GOAL: " + g.getCategory() + "-- " + g.getDescription());
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView = findViewById(R.id.recycler_view);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView

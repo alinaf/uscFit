@@ -5,42 +5,42 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Button;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-    private Map<Activity, Date> mDataset;
-    private Activity[] keyList;
+public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.MyViewHolder> {
+    private List<Goal> mDataset;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView name, category, duedate;
+        public TextView desc, category;
+        public Button details;
         public MyViewHolder(View v) {
             super(v);
-            name = v.findViewById(R.id.name);
+            desc = v.findViewById(R.id.description);
             category = v.findViewById(R.id.category);
-            duedate = v.findViewById(R.id.duedate);
+            details = v.findViewById(R.id.detailsButton);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(Map<Activity, Date> mDataset) {
+    public GoalAdapter(List<Goal> mDataset) {
         this.mDataset = mDataset;
-        this.keyList = new Activity[mDataset.keySet().size()];
-        this.keyList = mDataset.keySet().toArray(keyList);
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public MyAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
+    public GoalAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
                                                      int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.activity_list_row, parent, false);
+                .inflate(R.layout.goal_list_row, parent, false);
 
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
@@ -51,16 +51,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        Activity activity = keyList[position];
-        holder.name.setText(activity.getName());
+        Goal activity = mDataset.get(position);
+        holder.desc.setText(activity.getDescription());
         holder.category.setText(activity.getCategory());
-        holder.duedate.setText(mDataset.get(activity).toString());
+        holder.details.setTag(activity);
+        holder.details.setText("View Goal");
 
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return keyList.length;
+        return mDataset.size();
     }
 }
