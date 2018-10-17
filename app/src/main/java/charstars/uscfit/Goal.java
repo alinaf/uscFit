@@ -2,16 +2,33 @@ package charstars.uscfit;
 
 import java.util.Date;
 import java.util.Map;
+enum Quantifier
+{
+    MILES("miles"), MINUTES("minutes"), STEPS("steps"), DAYS("days");
 
-public class Goal {
-    private String description;
-    private String category;
-    private Map<Activity, Date> dueDates;
+    private String measurement;
 
-    public Goal(String description, String category, Map<Activity, Date> dueDates) {
+    // getter method
+    public String getMeasurement()
+    {
+        return this.measurement;
+    }
+
+    // enum constructor - cannot be public or protected
+    private Quantifier(String action)
+    {
+        this.measurement = action;
+    }
+}
+public abstract class Goal {
+
+    String description = "";
+    int goalNum = 100;
+    int trackingNum = 0; //how many so far
+    public Goal(String description, int goalNum, int trackingNum) {
         this.description = description;
-        this.category = category;
-        this.dueDates = dueDates;
+        this.goalNum = goalNum;
+        this.trackingNum = trackingNum;
     }
 
     public String getDescription() {
@@ -22,29 +39,35 @@ public class Goal {
         this.description = description;
     }
 
-    public String getCategory() {
-        return category;
+    public int getGoalNum() {
+        return goalNum;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setGoalNum(int goalNum) {
+        this.goalNum = goalNum;
     }
 
-    public Map<Activity, Date> getDueDates() {
-        return dueDates;
+    public int getTrackingNum() {
+        return trackingNum;
     }
 
-    public void setDueDates(Map<Activity, Date> dueDates) {
-        this.dueDates = dueDates;
+    public void setTrackingNum(int trackingNum) {
+        this.trackingNum = trackingNum;
     }
 
-    public void addActivity(Activity a, Date d){
-        this.dueDates.put(a, d);
-    }
-    public void removeActivity(Activity a){
-        this.dueDates.remove(a);
+    public String getType(){
+        return this.getClass().getName();
     }
 
+    public abstract String getQuantifier();
+    public abstract void setProgress();
+    public abstract boolean setProgress(int n);
 
+    //returns percentage of goal completed
+    public double getProgress() {
+        double ans = (double)(this.trackingNum)/(double)(this.goalNum);
+        double newKB = Math.round(ans*100.0)/100.0;
+        return newKB;
+    }
 
 }

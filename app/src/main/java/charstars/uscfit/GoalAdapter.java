@@ -20,12 +20,10 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.MyViewHolder> 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView desc, category;
-        public Button details;
         public MyViewHolder(View v) {
             super(v);
             desc = v.findViewById(R.id.description);
             category = v.findViewById(R.id.category);
-            details = v.findViewById(R.id.detailsButton);
         }
     }
 
@@ -53,9 +51,7 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.MyViewHolder> 
         // - replace the contents of the view with that element
         Goal activity = mDataset.get(position);
         holder.desc.setText(activity.getDescription());
-        holder.category.setText(activity.getCategory());
-        holder.details.setTag(activity);
-        holder.details.setText("View Goal");
+        holder.category.setText(activity.getTrackingNum()+"/"+activity.getGoalNum()+" "+activity.getQuantifier()+" finished");
 
     }
 

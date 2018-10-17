@@ -31,24 +31,23 @@ import java.util.Map;
 
 public class GoalsDisplay extends AppCompatActivity implements View.OnClickListener{
     private String email;
-    private List<Goal> defaultGoals = new ArrayList<Goal>();
+    private List<Goal> defaultGoals = SampleGoalDatabase.defaultGoals;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    private void initializingDB(){
+        //setting sample goal list (hardcoded)
+
+        defaultGoals.add(new MilesGoal("run 50 miles", 50, 0));
+        defaultGoals.add(new StepsGoal("walk 4000 steps", 4000, 1000));
+        defaultGoals.add(new MinutesGoal("work out for 40 minutes", 40, 0));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //setting sample goal list (hardcoded)
-        Goal sample1 = new Goal("get more fit", "workouts", new HashMap<Activity, Date>());
-        Activity sample = new Activity("1 mile", 100, "Running");
-        Activity sample22 = new Activity("2 mile", 200, "Running");
-        sample1.addActivity(sample, new Date(110));
-        sample1.addActivity(sample22, new Date(500));
-        Goal sample2 = new Goal("take 100 steps", "steps", new HashMap<Activity, Date>());
-        defaultGoals.add(sample1);
-        defaultGoals.add(sample2);
+        initializingDB();
 
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
@@ -84,39 +83,39 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-
-        if(v.getId() == R.id.addActivity){
-
-            return;
-        }
-        if(v.getId() == R.id.goback){
-            setContentView(R.layout.activity_goals_display);
-            createTable();
-            return;
-        }
-
-        Goal g = (Goal) v.getTag();
-        Log.d("goalsDisplay",g.getCategory());
-
-        setContentView(R.layout.goal_details);
-
-        TextView title = findViewById(R.id.title);
-        title.setText("GOAL: " + g.getCategory() + "-- " + g.getDescription());
-
-        mRecyclerView = findViewById(R.id.recycler_view);
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(g.getDueDates());
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setAdapter(mAdapter);
+//
+//        if(v.getId() == R.id.addActivity){
+//
+//            return;
+//        }
+//        if(v.getId() == R.id.goback){
+//            setContentView(R.layout.activity_goals_display);
+//            createTable();
+//            return;
+//        }
+//
+//        Goal g = (Goal) v.getTag();
+//        Log.d("goalsDisplay",g.getCategory());
+//
+//        setContentView(R.layout.goal_details);
+//
+//        TextView title = findViewById(R.id.title);
+//        title.setText("GOAL: " + g.getCategory() + "-- " + g.getDescription());
+//
+//        mRecyclerView = findViewById(R.id.recycler_view);
+//
+//        // use this setting to improve performance if you know that changes
+//        // in content do not change the layout size of the RecyclerView
+//        mRecyclerView.setHasFixedSize(true);
+//
+//        // use a linear layout manager
+//        mLayoutManager = new LinearLayoutManager(this);
+//        mRecyclerView.setLayoutManager(mLayoutManager);
+//
+//        // specify an adapter (see also next example)
+//        mAdapter = new MyAdapter(g.getDueDates());
+//        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+//        mRecyclerView.setAdapter(mAdapter);
 
     }
 

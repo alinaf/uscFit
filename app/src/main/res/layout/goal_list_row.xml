@@ -26,14 +26,4 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/description" />
 
-    <Button
-        android:id="@+id/detailsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="-97dp"
-        android:layout_toRightOf="@id/description"
-        android:onClick="onClick"
-        android:text="View Goal"
-        android:textSize="12dp" />
-
 </RelativeLayout>
