@@ -3,10 +3,10 @@ package charstars.uscfit;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 public class UserInfoDisplay extends AppCompatActivity {
 
@@ -30,12 +30,26 @@ public class UserInfoDisplay extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        UserInfo userInfo = new UserInfo(); // make singleton
+        final TextView mTextView = (TextView) findViewById(R.id.name_display);
+        mTextView.setText("Hello " + userInfo.getFirstName());
+
+        TextView mTextView2 = (TextView) findViewById(R.id.age_display);
+        mTextView2.setText(String.valueOf(userInfo.getAge()) + " years");
+
+        final TextView mTextView3 = (TextView) findViewById(R.id.weight_display);
+        mTextView3.setText("Weight: " + String.valueOf(Double.toString(userInfo.getWeight()) + " lbs"));
+
+        final TextView mTextView4 = (TextView) findViewById(R.id.height_display);
+        int feet = (int)(userInfo.getHeight() / 12);
+        int inches = (int)(userInfo.getHeight() - feet);
+        mTextView4.setText(String.valueOf("Height: " + feet + "'" + inches));
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.edit_user_info);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+              startActivity(new Intent(UserInfoDisplay.this, PopUpInfo.class));
             }
         });
     }

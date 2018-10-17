@@ -1,18 +1,18 @@
 package charstars.uscfit;
 
 public class UserInfo {
-    private String name;
-    private String email;
-    private int age;
-    private double weight;
-    private double height;
+    private static String firstName = "Tianqin";
+    private static String email;
+    private static int age = 23;
+    private static double weight = 150.5;
+    private static double height = 72;
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getEmail() {
