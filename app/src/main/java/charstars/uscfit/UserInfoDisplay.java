@@ -69,7 +69,7 @@ public class UserInfoDisplay extends AppCompatActivity {
 
         final TextView mTextView4 = (TextView) findViewById(R.id.height_display);
         int feet = (int)(userInfo.getHeight() / 12);
-        int inches = (int)(userInfo.getHeight() - feet);
+        int inches = (int)(userInfo.getHeight() - (feet*12));
         mTextView4.setText(String.valueOf("Height: " + feet + "'" + inches));
     }
 }
