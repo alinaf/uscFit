@@ -25,4 +25,8 @@
     <string name="title_badges">Badges</string>
     <string name="title_goals">Goals</string>
     <string name="title_addGoal">Add Goal</string>
+    <string-array name="goalOptions">
+        <item>Miles</item>
+        <item>Minutes</item>
+    </string-array>
 </resources>

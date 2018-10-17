@@ -54,12 +54,19 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.MyViewHolder> 
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         Goal activity = mDataset.get(position);
-        if(activity.getQuantifier().equals(Quantifier.MINUTES.getMeasurement())){
-            holder.desc.setText(activity.getDescription()+" for "+activity.getGoalNum()+" minutes");
-        }else{
-            holder.desc.setText(activity.getDescription()+" "+activity.getGoalNum()+" "+activity.getQuantifier());
+        String quantifier = activity.getQuantifier();
+        if(activity.getGoalNum()==1){
+            quantifier = quantifier.substring(0, quantifier.length()-1);
         }
-        holder.category.setText(activity.getTrackingNum()+"/"+activity.getGoalNum()+" "+activity.getQuantifier()+" finished: ");
+        if(activity.getQuantifier().equals(Quantifier.MINUTES.getMeasurement())){
+            holder.desc.setText(activity.getDescription()+" for "+activity.getGoalNum()+" "+quantifier);
+        }else{
+            holder.desc.setText(activity.getDescription()+" "+activity.getGoalNum()+" "+quantifier);
+        }
+        if(activity.getGoalNum()==1){
+            quantifier = quantifier+"s";
+        }
+        holder.category.setText(activity.getTrackingNum()+"/"+activity.getGoalNum()+" "+quantifier+" finished");
         Log.d("goalapadter", (int)(activity.getProgress()*100)+"");
         holder.progressBar.setProgress((int)(activity.getProgress()*100));
     }
