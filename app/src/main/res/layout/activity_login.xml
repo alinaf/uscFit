@@ -54,7 +54,9 @@
                     android:maxLines="1"
                     android:textAllCaps="false"
                     android:textColor="@color/year"
-                    android:theme="@style/Autocomplete" />
+                    android:theme="@style/Autocomplete"
+                    android:textSize="18sp"
+                    />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -76,7 +78,9 @@
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textColor="@color/year" />
+                    android:textColor="@color/year"
+                    android:textSize="18sp"
+                    />
 
             </android.support.design.widget.TextInputLayout>
 
