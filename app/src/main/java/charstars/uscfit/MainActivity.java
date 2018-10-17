@@ -105,7 +105,12 @@ public class MainActivity extends AppCompatActivity
             Intent i = new Intent(MainActivity.this, UserInfoDisplay.class);
             i.putExtra("EMAIL", "Tianqin");
             startActivity(i);
-        } else if (id == R.id.nav_steps) {
+        } else if (id == R.id.nav_workoutList) {
+            Intent i = new Intent(MainActivity.this, WorkoutList.class);
+            i.putExtra("EMAIL", "Tianqin");
+            startActivity(i);
+        }
+        else if (id == R.id.nav_steps) {
 
         } else if (id == R.id.nav_view) {
 

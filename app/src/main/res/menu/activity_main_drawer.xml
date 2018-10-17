@@ -16,6 +16,10 @@
             android:id="@+id/nav_badges"
             android:icon="@drawable/trophy"
             android:title="Badges" />
+        <item
+            android:id="@+id/nav_workoutList"
+            android:icon="@drawable/trophy"
+            android:title="Workout List" />
     </group>
 
 </menu>
