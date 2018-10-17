@@ -101,7 +101,10 @@ public class MainActivity extends AppCompatActivity
             i.putExtra("EMAIL", "Tianqin");
             startActivity(i);
         } else if (id == R.id.nav_personalInfo) {
-
+            // go to user info page
+            Intent i = new Intent(MainActivity.this, UserInfoDisplay.class);
+            i.putExtra("EMAIL", "Tianqin");
+            startActivity(i);
         } else if (id == R.id.nav_steps) {
 
         } else if (id == R.id.nav_view) {

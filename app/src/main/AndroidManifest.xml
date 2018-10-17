@@ -27,7 +27,11 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".GoalsDisplay"></activity>
+        <activity android:name=".GoalsDisplay" />
+        <activity
+            android:name=".UserInfoDisplay"
+            android:label="@string/title_activity_user_info"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
