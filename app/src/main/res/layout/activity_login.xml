@@ -76,8 +76,6 @@
                     android:backgroundTint="@color/year"
                     />
 
-
-
             </android.support.design.widget.TextInputLayout>
 
             <Button
