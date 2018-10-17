@@ -40,9 +40,9 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
     private void initializingDB(){
         //setting sample goal list (hardcoded)
 
-        defaultGoals.add(new MilesGoal("run 50 miles", 50, 0));
-        defaultGoals.add(new StepsGoal("walk 4000 steps", 4000, 1000));
-        defaultGoals.add(new MinutesGoal("work out for 40 minutes", 40, 0));
+        defaultGoals.add(new MilesGoal("run", 50, 0));
+        defaultGoals.add(new StepsGoal(4000, 1000));
+        defaultGoals.add(new MinutesGoal("work out", 40, 0));
     }
 
     @Override

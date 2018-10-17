@@ -2,8 +2,8 @@ package charstars.uscfit;
 
 public class StepsGoal extends Goal {
 
-    public StepsGoal(String desc, int gNum, int tNum){
-        super(desc, gNum, tNum);
+    public StepsGoal(int gNum, int tNum){
+        super("walk", gNum, tNum);
     }
 
     @Override

@@ -50,7 +50,11 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.MyViewHolder> 
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         Goal activity = mDataset.get(position);
-        holder.desc.setText(activity.getDescription());
+        if(activity.getQuantifier().equals(Quantifier.MINUTES.getMeasurement())){
+            holder.desc.setText(activity.getDescription()+" for "+activity.getGoalNum()+" minutes");
+        }else{
+            holder.desc.setText(activity.getDescription()+" "+activity.getGoalNum()+" "+activity.getQuantifier());
+        }
         holder.category.setText(activity.getTrackingNum()+"/"+activity.getGoalNum()+" "+activity.getQuantifier()+" finished");
 
     }
