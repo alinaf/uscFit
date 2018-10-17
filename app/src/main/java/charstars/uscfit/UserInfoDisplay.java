@@ -54,4 +54,22 @@ public class UserInfoDisplay extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        UserInfo userInfo = new UserInfo(); // make singleton
+        final TextView mTextView = (TextView) findViewById(R.id.name_display);
+        mTextView.setText("Hello " + userInfo.getFirstName());
+
+        TextView mTextView2 = (TextView) findViewById(R.id.age_display);
+        mTextView2.setText(String.valueOf(userInfo.getAge()) + " years");
+
+        final TextView mTextView3 = (TextView) findViewById(R.id.weight_display);
+        mTextView3.setText("Weight: " + String.valueOf(Double.toString(userInfo.getWeight()) + " lbs"));
+
+        final TextView mTextView4 = (TextView) findViewById(R.id.height_display);
+        int feet = (int)(userInfo.getHeight() / 12);
+        int inches = (int)(userInfo.getHeight() - feet);
+        mTextView4.setText(String.valueOf("Height: " + feet + "'" + inches));
+    }
 }

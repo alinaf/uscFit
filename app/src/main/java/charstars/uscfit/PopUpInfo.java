@@ -34,7 +34,6 @@ public class PopUpInfo extends AppCompatActivity {
         userInfo.setHeight(height);
         userInfo.setWeight(weight);
 
-        Intent i = new Intent(PopUpInfo.this, UserInfoDisplay.class);
-        startActivity(i);
+        finish();
     }
 }
