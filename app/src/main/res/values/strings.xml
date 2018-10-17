@@ -24,4 +24,6 @@
     <string name="title_personalInfo">Personal Info</string>
     <string name="title_badges">Badges</string>
     <string name="title_activity_user_info">userInfo</string>
+    <string name="title_goals">Goals</string>
+    <string name="title_addGoal">Add Goal</string>
 </resources>

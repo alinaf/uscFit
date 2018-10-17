@@ -2,6 +2,7 @@ package charstars.uscfit;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -9,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -37,18 +39,31 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    private void initializingDB(){
-        //setting sample goal list (hardcoded)
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-        defaultGoals.add(new MilesGoal("run", 50, 0));
-        defaultGoals.add(new StepsGoal(4000, 1000));
-        defaultGoals.add(new MinutesGoal("work out", 40, 0));
-    }
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_goals:
+                    setContentView(R.layout.activity_goals_display);
+                    createTable();
+
+                    BottomNavigationView navigation = findViewById(R.id.navigation);
+                    navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+                    return true;
+
+                case R.id.navigation_badges:
+                    return true;
+                case R.id.navigation_addGoal:
+                    return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        initializingDB();
-
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         if (savedInstanceState == null) {
@@ -65,13 +80,14 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_goals_display);
         createTable();
 
-
+        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
     }
 
     public void createTable(){
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.goalsLayout);
+        mRecyclerView = findViewById(R.id.goalsLayout);
 
         mAdapter = new GoalAdapter(defaultGoals);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
