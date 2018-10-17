@@ -15,6 +15,14 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.TransparentTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
+
+    <style name="Autocomplete">
+        <item name="colorControlNormal">@color/year</item>
+        <item name="colorControlActivated">@color/year</item>
+    </style>
 
 </resources>
