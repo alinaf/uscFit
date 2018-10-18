@@ -27,7 +27,11 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".GoalsDisplay"></activity>
+        <activity android:name=".GoalsDisplay" />
+        <activity android:name=".PedometerActivity" />
+        <activity android:name=".PedometerListActivity" />
+        <activity android:name=".SimpleStepDetector" />
+        <activity android:name=".StepsDisplay"></activity>
     </application>
 
 </manifest>
