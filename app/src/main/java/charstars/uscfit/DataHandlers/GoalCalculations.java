@@ -1,10 +1,15 @@
 package charstars.uscfit.DataHandlers;
 
+import android.util.Log;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import charstars.uscfit.Activity;
 import charstars.uscfit.Goal;
+import charstars.uscfit.GoalsDisplay;
 import charstars.uscfit.SampleGoalDatabase;
+import charstars.uscfit.Workout;
 
 public class GoalCalculations {
 
@@ -18,8 +23,27 @@ public class GoalCalculations {
     }
 
     //THIS CAN BE INVOKED BY OTHER CLASSES WHEN STEPS ARE COMPLETED OR AN ACTIVITY IS COMPLETED
-    public static void calculateGoalProgress(Activity a, String email){
+    public static void calculateGoalProgress(Workout a, String email){
         //CLARIFY ON THIS
+        List<Goal> completed = new ArrayList<Goal>();
+        int size = SampleGoalDatabase.defaultGoals.size();
+        for(int i = 0; i<size; i++){
+            Goal g = SampleGoalDatabase.defaultGoals.get(i);
+            String desc = g.getDescription().toLowerCase().trim();
+            String workoutEx = a.getActivity().getCategory().toLowerCase().trim();
+
+            if( g.getQuantifier().equals(a.getQuant().getMeasurement()) && desc.equals(workoutEx)){
+                int length = a.getLength();
+                g.setProgress(length);
+                if(g.getProgress()==1.0){
+                    completed.add(g);
+                }
+            }
+        }
+
+        for(Goal g: completed){
+            alertOnCompletion(g, email);
+        }
 
 
     }
@@ -28,6 +52,7 @@ public class GoalCalculations {
         // add badge somwhere
         //remove from list
         removeGoal(e, email);
+        Log.d("GOALCALC", "FINISHED GOAL "+ e.getDescription());
 
     }
     public static List<Goal> getGoals(String email){
