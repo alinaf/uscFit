@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import charstars.uscfit.Activity;
@@ -23,9 +24,9 @@ import charstars.uscfit.R;
 public class WorkoutList extends AppCompatActivity {
     private String email;
 
-    private List<Activity> activityList = new ArrayList<>();
+    private List<Workout> workoutList = new ArrayList<>();
     private RecyclerView mRecyclerView;
-    private ActivityAdapter mAdapter;
+    private WorkoutAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
 
@@ -46,15 +47,13 @@ public class WorkoutList extends AppCompatActivity {
 
         setContentView(R.layout.activity_workout_list);
         createTable();
-
-
     }
 
     public void createTable(){
 
         mRecyclerView = findViewById(R.id.workoutListLayout);
 
-        mAdapter = new ActivityAdapter(activityList);
+        mAdapter = new WorkoutAdapter(workoutList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -65,14 +64,14 @@ public class WorkoutList extends AppCompatActivity {
     }
 
     private void prepareActivityData() {
-        Activity activity = new Activity("Basketball", 100);
-        activityList.add(activity);
+        Workout workout = new Workout(new Activity("Basketball", 100), Quantifier.MINUTES, 60, Calendar.YEAR, Calendar.JANUARY, Calendar.DAY_OF_MONTH, Calendar.HOUR_OF_DAY, Calendar.MINUTE);
+        workoutList.add(workout);
 
-        activity = new Activity("Gardening", 50);
-        activityList.add(activity);
+//        workout = new Workout(new Activity("Gardening", 50), Quantifier.MINUTES, 30, 2018, 10, 19, 12, 30);
+        workoutList.add(workout);
 
 
 
-        mAdapter.notifyDataSetChanged();
+        //mAdapter.notifyDataSetChanged();
     }
 }
