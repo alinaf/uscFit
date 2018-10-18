@@ -6,11 +6,11 @@
     android:padding="8dp"
     android:background="#DAAA"
     >
-    <TextView android:id="@+id/goalsuccessview"
+    <TextView android:id="@+id/goalfail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#FFF"
-        android:text="Successfully saved goal!"
+        android:text="Please fill out all fields."
         android:textSize="30dp"
         android:padding="10dp"
         />

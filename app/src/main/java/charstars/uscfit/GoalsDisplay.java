@@ -1,7 +1,6 @@
 package charstars.uscfit;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -15,31 +14,19 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.NumberPicker;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import charstars.uscfit.DataHandlers.GoalCalculations;
 
 public class GoalsDisplay extends AppCompatActivity implements View.OnClickListener{
     private String email;
-    private List<Goal> defaultGoals = SampleGoalDatabase.defaultGoals;
+    private List<Goal> defaultGoals = GoalCalculations.getGoals(email);
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -113,14 +100,13 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
     public boolean addGoal(String goalType, int goalNum, String exerciseDescription){
 
         if(goalType.equals("Miles")){
-            defaultGoals.add(new MilesGoal(exerciseDescription, goalNum, 0));
+           return GoalCalculations.addGoal(new MilesGoal(exerciseDescription, goalNum, 0), email);
 
         }else{
-            defaultGoals.add(new MinutesGoal(exerciseDescription, goalNum, 0));
+            return GoalCalculations.addGoal(new MinutesGoal(exerciseDescription, goalNum, 0), email);
 
         }
         //assuming success;
-        return true;
     }
 
     public void clearAddGoalFields(){
@@ -135,9 +121,23 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
         num.setValue(1);
     }
 
+    public void onResume(){
+        super.onResume();
+        createTable();
+    }
     @Override
     public void onClick(View v) {
+        if(v.getId() == R.id.goalRowLayout){
+            Goal g = (Goal) v.getTag();
+            if(g.getQuantifier().equals(Quantifier.DAYS.getMeasurement()) || g.getQuantifier().equals(Quantifier.STEPS.getMeasurement())){
+                return;
+            }
+            Intent i = new Intent(GoalsDisplay.this, EditPopUpInfo.class);
+            i.putExtra("GOAL", g);
+            startActivity(i);
 
+
+        }
         if(v.getId() == R.id.addGoal){
             EditText e = findViewById(R.id.exercise);
             Spinner spinner = (Spinner) findViewById(R.id.goalSpinner);
@@ -147,32 +147,37 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
             int goalNum = num.getValue();
             String goalType = spinner.getSelectedItem().toString();
 
-//            TextView toastText = (TextView)findViewById(R.id.goaltoastview);
-//            LayoutInflater inflater = getLayoutInflater();
-//            View layout = inflater.inflate(R.layout.goalsuccess,
-//                    (ViewGroup) findViewById(R.id.custom_toast_container));
-//            Toast toast = new Toast(getApplicationContext());
-//            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-//            toast.setDuration(Toast.LENGTH_LONG);
-//            toast.setView(layout);
+
+
+            LayoutInflater inflater = getLayoutInflater();
+
+            View layout;
+
+
+            Toast toast = new Toast(getApplicationContext());
+            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+            toast.setDuration(Toast.LENGTH_SHORT);
+
 
             if(exerciseDescription.equals("") || exerciseDescription == null || goalNum == 0 || goalType == null || goalType.equals("")){
-//                toastText.setText("Please fill out all fields.");
-//                toast.show();
-
+                layout = inflater.inflate(R.layout.goalfail,null);
+                toast.setView(layout);
+                toast.show();
 
                 return;
             }
             boolean successful = addGoal(goalType, goalNum, exerciseDescription);
 
             if(successful){
-//                toastText.setText("Successfully saved goal!");
-//                toast.show();
+                layout = inflater.inflate(R.layout.goalsuccess,null);
+                toast.setView(layout);
+                toast.show();
 
                 clearAddGoalFields();
             }else{
-//                toastText.setText("Error saving goal. Please try again later.");
-//                toast.show();
+                layout = inflater.inflate(R.layout.goalerror,null);
+                toast.setView(layout);
+                toast.show();
             }
 
             return;
@@ -205,10 +210,6 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
 //        mAdapter = new MyAdapter(g.getDueDates());
 //        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 //        mRecyclerView.setAdapter(mAdapter);
-
-    }
-
-    public void addNewGoal(){
 
     }
 

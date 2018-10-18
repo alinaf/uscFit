@@ -111,7 +111,9 @@ public class MainActivity extends AppCompatActivity
             startActivity(i);
         }
         else if (id == R.id.nav_steps) {
-
+            Intent i = new Intent(MainActivity.this,StepsDisplay.class);
+            i.putExtra("EMAIL", "Tianqin");
+            startActivity(i);
         } else if (id == R.id.nav_view) {
 
         }
