@@ -15,7 +15,7 @@ enum Quantifier
     }
 
     // enum constructor - cannot be public or protected
-    private Quantifier(String action)
+    Quantifier(String action)
     {
         this.measurement = action;
     }

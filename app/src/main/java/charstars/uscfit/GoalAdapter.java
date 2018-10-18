@@ -1,9 +1,11 @@
 package charstars.uscfit;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Button;
 
@@ -20,10 +22,12 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.MyViewHolder> 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView desc, category;
+        public ProgressBar progressBar;
         public MyViewHolder(View v) {
             super(v);
             desc = v.findViewById(R.id.description);
             category = v.findViewById(R.id.category);
+            progressBar = v.findViewById(R.id.progress);
         }
     }
 
@@ -50,13 +54,21 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.MyViewHolder> 
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         Goal activity = mDataset.get(position);
-        if(activity.getQuantifier().equals(Quantifier.MINUTES.getMeasurement())){
-            holder.desc.setText(activity.getDescription()+" for "+activity.getGoalNum()+" minutes");
-        }else{
-            holder.desc.setText(activity.getDescription()+" "+activity.getGoalNum()+" "+activity.getQuantifier());
+        String quantifier = activity.getQuantifier();
+        if(activity.getGoalNum()==1){
+            quantifier = quantifier.substring(0, quantifier.length()-1);
         }
-        holder.category.setText(activity.getTrackingNum()+"/"+activity.getGoalNum()+" "+activity.getQuantifier()+" finished");
-
+        if(activity.getQuantifier().equals(Quantifier.MINUTES.getMeasurement())){
+            holder.desc.setText(activity.getDescription()+" for "+activity.getGoalNum()+" "+quantifier);
+        }else{
+            holder.desc.setText(activity.getDescription()+" "+activity.getGoalNum()+" "+quantifier);
+        }
+        if(activity.getGoalNum()==1){
+            quantifier = quantifier+"s";
+        }
+        holder.category.setText(activity.getTrackingNum()+"/"+activity.getGoalNum()+" "+quantifier+" finished");
+        Log.d("goalapadter", (int)(activity.getProgress()*100)+"");
+        holder.progressBar.setProgress((int)(activity.getProgress()*100));
     }
 
     // Return the size of your dataset (invoked by the layout manager)

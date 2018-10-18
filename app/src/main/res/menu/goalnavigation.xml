@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+<item
+    android:id="@+id/navigation_goals"
+    android:icon="@drawable/flag1"
+    android:title="@string/title_goals" />
+
+<item
+    android:id="@+id/navigation_badges"
+    android:icon="@drawable/trophy"
+    android:title="@string/title_badges" />
+
+<item
+    android:id="@+id/navigation_addGoal"
+    android:icon="@drawable/add"
+    android:title="@string/title_addGoal" />
+
+</menu>

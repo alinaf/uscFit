@@ -28,10 +28,15 @@
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".GoalsDisplay" />
-        <activity android:name=".PedometerActivity" />
-        <activity android:name=".PedometerListActivity" />
-        <activity android:name=".SimpleStepDetector" />
         <activity android:name=".StepsDisplay"></activity>
+        <activity
+            android:name=".UserInfoDisplay"
+            android:label="@string/title_activity_user_info"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PopUpInfo"
+            android:theme="@style/AppTheme.TransparentTheme" />
+        <activity android:name=".WorkoutList"></activity>
     </application>
 
 </manifest>

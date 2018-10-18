@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        // Handle goalnavigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_badges) {
@@ -101,8 +101,16 @@ public class MainActivity extends AppCompatActivity
             i.putExtra("EMAIL", "Tianqin");
             startActivity(i);
         } else if (id == R.id.nav_personalInfo) {
-
-        } else if (id == R.id.nav_steps) {
+            // go to user info page
+            Intent i = new Intent(MainActivity.this, UserInfoDisplay.class);
+            i.putExtra("EMAIL", "Tianqin");
+            startActivity(i);
+        } else if (id == R.id.nav_workoutList) {
+            Intent i = new Intent(MainActivity.this, WorkoutList.class);
+            i.putExtra("EMAIL", "Tianqin");
+            startActivity(i);
+        }
+        else if (id == R.id.nav_steps) {
             Intent i = new Intent(MainActivity.this,StepsDisplay.class);
             i.putExtra("EMAIL", "Tianqin");
             startActivity(i);
