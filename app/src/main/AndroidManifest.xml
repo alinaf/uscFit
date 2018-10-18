@@ -36,6 +36,10 @@
             android:name=".PopUpInfo"
             android:theme="@style/AppTheme.TransparentTheme" />
         <activity android:name=".WorkoutList"></activity>
+        <activity
+            android:name=".EditPopUpInfo"
+            android:theme="@style/AppTheme.TransparentTheme"></activity>
     </application>
+
 
 </manifest>

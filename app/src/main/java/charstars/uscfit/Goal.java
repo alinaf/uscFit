@@ -1,27 +1,13 @@
 package charstars.uscfit;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
-enum Quantifier
-{
-    MILES("miles"), MINUTES("minutes"), STEPS("steps"), DAYS("days");
 
-    private String measurement;
+public abstract class Goal implements Serializable{
 
-    // getter method
-    public String getMeasurement()
-    {
-        return this.measurement;
-    }
-
-    // enum constructor - cannot be public or protected
-    Quantifier(String action)
-    {
-        this.measurement = action;
-    }
-}
-public abstract class Goal {
-
+    static int _ID = 0;
+    private int id;
     String description = "";
     int goalNum = 100;
     int trackingNum = 0; //how many so far
@@ -29,6 +15,8 @@ public abstract class Goal {
         this.description = description;
         this.goalNum = goalNum;
         this.trackingNum = trackingNum;
+        this.id = _ID;
+        _ID++;
     }
 
     public String getDescription() {
@@ -57,6 +45,10 @@ public abstract class Goal {
 
     public String getType(){
         return this.getClass().getName();
+    }
+
+    public int id(){
+        return id;
     }
 
     public abstract String getQuantifier();

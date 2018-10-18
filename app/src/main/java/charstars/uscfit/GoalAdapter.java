@@ -1,11 +1,13 @@
 package charstars.uscfit;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Button;
 
@@ -23,11 +25,13 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.MyViewHolder> 
         // each data item is just a string in this case
         public TextView desc, category;
         public ProgressBar progressBar;
+        public RelativeLayout relativeLayout;
         public MyViewHolder(View v) {
             super(v);
             desc = v.findViewById(R.id.description);
             category = v.findViewById(R.id.category);
             progressBar = v.findViewById(R.id.progress);
+            relativeLayout = v.findViewById(R.id.goalRowLayout);
         }
     }
 
@@ -55,6 +59,7 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.MyViewHolder> 
         // - replace the contents of the view with that element
         Goal activity = mDataset.get(position);
         String quantifier = activity.getQuantifier();
+        holder.desc.setTextColor(Color.GRAY);
         if(activity.getGoalNum()==1){
             quantifier = quantifier.substring(0, quantifier.length()-1);
         }
@@ -69,6 +74,7 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.MyViewHolder> 
         holder.category.setText(activity.getTrackingNum()+"/"+activity.getGoalNum()+" "+quantifier+" finished");
         Log.d("goalapadter", (int)(activity.getProgress()*100)+"");
         holder.progressBar.setProgress((int)(activity.getProgress()*100));
+        holder.relativeLayout.setTag(activity);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
