@@ -1,6 +1,6 @@
 package charstars.uscfit;
 
-enum Quantifier
+public enum Quantifier
 {
     MILES("miles"), MINUTES("minutes"), STEPS("steps"), DAYS("days");
 
