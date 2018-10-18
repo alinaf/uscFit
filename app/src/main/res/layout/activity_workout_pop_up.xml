@@ -1,9 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#66e3749a"
     tools:context=".WorkoutPopUp">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/AddWorkout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Workout"
+            android:textSize="30dp" />
+
+        <Spinner
+            android:id="@+id/workoutSpinner"
+            android:layout_width="314dp"
+            android:layout_height="41dp" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal">
+
+
+            <NumberPicker
+                android:id="@+id/lengthPicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exercise" />
+
+            <Space
+                android:layout_width="29dp"
+                android:layout_height="14dp"
+                android:layout_weight="0.5" />
+
+            <Spinner
+                android:id="@+id/quantifierOption"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:entries="@array/goalOptions"
+                android:prompt="@string/title_goals" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/addWorkoutSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="sendMessage"
+            android:text="Submit"></Button>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

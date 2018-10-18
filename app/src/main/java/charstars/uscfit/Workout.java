@@ -15,7 +15,7 @@ public class Workout {
     Date calendar;
     private int caloriesBurned;
 
-    public Workout(Activity action, Quantifier quant, int length, int yr, int mnth, int dte, int hr, int min) {
+    public Workout(Activity action, Quantifier quant, int length) {
         this.activity = action;
         this.quant = quant;
         this.length = length;

@@ -3,6 +3,7 @@ package charstars.uscfit;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,6 +48,14 @@ public class WorkoutList extends AppCompatActivity {
 
         setContentView(R.layout.activity_workout_list);
         createTable();
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.add_workout_button);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(WorkoutList.this, WorkoutPopUp.class));
+            }
+        });
     }
 
     public void createTable(){
@@ -64,7 +73,7 @@ public class WorkoutList extends AppCompatActivity {
     }
 
     private void prepareActivityData() {
-        Workout workout = new Workout(new Activity("Basketball", 100), Quantifier.MINUTES, 60, Calendar.YEAR, Calendar.JANUARY, Calendar.DAY_OF_MONTH, Calendar.HOUR_OF_DAY, Calendar.MINUTE);
+        Workout workout = new Workout(new Activity("Basketball", 100), Quantifier.MINUTES, 60);
         workoutList.add(workout);
 
 //        workout = new Workout(new Activity("Gardening", 50), Quantifier.MINUTES, 30, 2018, 10, 19, 12, 30);
