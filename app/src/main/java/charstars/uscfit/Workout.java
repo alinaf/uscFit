@@ -40,11 +40,12 @@ public class Workout {
     public void setQuant(Quantifier quant) { this.quant = quant; }
     public Quantifier getQuant () { return this.quant; }
 
+
     //public void setDate(int yr, int mnth, int dte, int hr, int min) { calendar.set(yr, mnth, dte, hr, min); }
     public String getDate() {
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         String today = formatter.format(calendar);
-        return calendar.toString();
+        return today;
     }
 
     public int getCaloriesBurned() { return this.caloriesBurned; }

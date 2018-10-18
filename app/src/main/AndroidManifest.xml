@@ -28,6 +28,7 @@
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".GoalsDisplay" />
+        <activity android:name=".StepsDisplay"></activity>
         <activity
             android:name=".UserInfoDisplay"
             android:label="@string/title_activity_user_info"
@@ -36,6 +37,10 @@
             android:name=".PopUpInfo"
             android:theme="@style/AppTheme.TransparentTheme" />
         <activity android:name=".WorkoutList"></activity>
+        <activity
+            android:name=".EditPopUpInfo"
+            android:theme="@style/AppTheme.TransparentTheme"></activity>
     </application>
+
 
 </manifest>
