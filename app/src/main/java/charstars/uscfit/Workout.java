@@ -11,6 +11,7 @@ public class Workout {
     private Quantifier quant;
     private int length;
     Calendar calendar;
+    private int caloriesBurned;
 
     public Workout(Activity action, Quantifier quant, int length, int yr, int mnth, int dte, int hr, int min) {
         this.activity = action;
@@ -18,7 +19,7 @@ public class Workout {
         this.length = length;
         completed = false;
         calendar.set(yr, mnth, dte, hr, min);
-
+        caloriesBurned = action.getDefaultCalorieValue();
     }
 
     public boolean isCompleted() {
@@ -31,11 +32,16 @@ public class Workout {
     public void setActivity(Activity action) { this.activity = action; }
     public Activity getActivity() { return this.activity;}
 
+    public void setLength(int len) { this.length = len; }
+    public int getLength() { return this.length; }
+
     public void setQuant(Quantifier quant) { this.quant = quant; }
     public Quantifier getQuant () { return this.quant; }
 
     public void setDate(int yr, int mnth, int dte, int hr, int min) { calendar.set(yr, mnth, dte, hr, min); }
-    public Calendar getDate() {
-        return calendar;
+    public String getDate() {
+        return calendar.toString();
     }
+
+    public int getCaloriesBurned() { return this.caloriesBurned; }
 }
