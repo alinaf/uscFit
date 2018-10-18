@@ -1,0 +1,41 @@
+package charstars.uscfit;
+
+import java.util.Calendar;
+import java.util.Date;
+
+
+public class Workout {
+
+    private boolean completed;
+    private Activity activity;
+    private Quantifier quant;
+    private int length;
+    Calendar calendar;
+
+    public Workout(Activity action, Quantifier quant, int length, int yr, int mnth, int dte, int hr, int min) {
+        this.activity = action;
+        this.quant = quant;
+        this.length = length;
+        completed = false;
+        calendar.set(yr, mnth, dte, hr, min);
+
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    public void setActivity(Activity action) { this.activity = action; }
+    public Activity getActivity() { return this.activity;}
+
+    public void setQuant(Quantifier quant) { this.quant = quant; }
+    public Quantifier getQuant () { return this.quant; }
+
+    public void setDate(int yr, int mnth, int dte, int hr, int min) { calendar.set(yr, mnth, dte, hr, min); }
+    public Calendar getDate() {
+        return calendar;
+    }
+}

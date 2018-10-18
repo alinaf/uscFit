@@ -28,24 +28,6 @@ public class WorkoutList extends AppCompatActivity {
     private ActivityAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    /*@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
-        setContentView(R.layout.activity_workout_list);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-
-        mAdapter = new ActivityAdapter(activityList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
-
-        prepareActivityData();
-    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,10 +65,10 @@ public class WorkoutList extends AppCompatActivity {
     }
 
     private void prepareActivityData() {
-        Activity activity = new Activity("Basketball", 100, "Running");
+        Activity activity = new Activity("Basketball", 100);
         activityList.add(activity);
 
-        activity = new Activity("Gardening", 50, "Chore");
+        activity = new Activity("Gardening", 50);
         activityList.add(activity);
 
 

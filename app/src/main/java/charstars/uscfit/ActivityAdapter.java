@@ -13,11 +13,10 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
     private List<Activity> activitiesList;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, defaultCalorieValue, category;
+        public TextView category, defaultCalorieValue;
 
         public MyViewHolder(View view) {
             super(view);
-            name = view.findViewById(R.id.name);
             defaultCalorieValue =  view.findViewById(R.id.defaultCalorieValue);
             category = view.findViewById(R.id.category);
         }
@@ -39,9 +38,8 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Activity activity = activitiesList.get(position);
-        holder.name.setText(activity.getName());
-        holder.defaultCalorieValue.setText(Integer.toString(activity.getDefaultCalorieValue()));
         holder.category.setText(activity.getCategory());
+        holder.defaultCalorieValue.setText(Integer.toString(activity.getDefaultCalorieValue()));
     }
 
     @Override
