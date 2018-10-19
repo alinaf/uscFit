@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity
             "You're killing it, ",
             "Excellent work, ",
             "Keep grinding, ",
-            "Amazing effort, "
+            "Amazing effort, ",
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {

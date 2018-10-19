@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "528548149176",
+    "firebase_url": "https://uscfitapp.firebaseio.com",
+    "project_id": "uscfitapp",
+    "storage_bucket": "uscfitapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:528548149176:android:ceba2daa892fd629",
+        "android_client_info": {
+          "package_name": "charstars.uscfit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "528548149176-puujakoehsknsq04t1esqgiiv1oqg35l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFQCh5U5_d2oq3cx1icNLmv7_QfJl8CZ8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
