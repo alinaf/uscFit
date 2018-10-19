@@ -14,11 +14,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private String email;
+    private final String[] messages = {
+            "Way to go, ",
+            "You're doing great, ",
+            "It's going to be a good day, ",
+            "You got this, ",
+            "Stellar job, ",
+            "Stay smiling, ",
+            "Great work, ",
+            "You're killing it, ",
+            "Excellent work, ",
+            "Keep grinding, ",
+            "Amazing effort, "
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +71,17 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        TextView steps = (TextView)findViewById(R.id.steps);
+        TextView calories = (TextView)findViewById(R.id.calories);
+        TextView minute = (TextView)findViewById(R.id.minutes);
+        TextView happy = (TextView)findViewById(R.id.happymessage);
+
+        steps.setText("You've taken "+10+" steps today.");
+        calories.setText("You've burned "+90+" calories.");
+        minute.setText("You've exercised for "+10+" minutes.");
+        happy.setText(messages[(int)Math.random()*messages.length]+"Tianqin.");
     }
 
     @Override
@@ -66,7 +93,12 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
+    @Override
+    public void onResume(){
+        super.onResume();
+        TextView happy = (TextView)findViewById(R.id.happymessage);
+        happy.setText(messages[(int)(Math.random()*messages.length)]+"Tianqin.");
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
