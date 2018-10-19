@@ -36,6 +36,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
@@ -71,6 +74,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+
+    private boolean cancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,8 +179,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        final String email = mEmailView.getText().toString();
+        final String password = mPasswordView.getText().toString();
+
+        cancel = false;
+        View focusView = null;
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -184,22 +192,85 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("tag", "createUserWithEmail:success");
+                            Toast.makeText(LoginActivity.this, "Welcome!",
+                                    Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
-                            //updateUI(user);
+                            showProgress(true);
+
+                            mAuthTask = new UserLoginTask(email, password);
+                            mAuthTask.execute((Void) null);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("tag", "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            //updateUI(null);
+
+                            try
+                            {
+                                throw task.getException();
+                            }
+                            // if user enters wrong email.
+                            catch (FirebaseAuthWeakPasswordException weakPassword)
+                            {
+                                Log.d("tag", "onComplete: weak_password");
+
+                                Toast.makeText(LoginActivity.this, "Weak password!",
+                                        Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            // if user enters wrong password.
+                            catch (FirebaseAuthInvalidCredentialsException malformedEmail)
+                            {
+                                Log.d("tag", "onComplete: malformed_email");
+
+                                Toast.makeText(LoginActivity.this, "Malformed email!",
+                                        Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            catch (FirebaseAuthUserCollisionException existEmail)
+                            {
+                                Log.d("tag", "onComplete: exist_email");
+
+                                mAuth.signInWithEmailAndPassword(email, password)
+                                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                if (task.isSuccessful()) {
+                                                    // Sign in success, update UI with the signed-in user's information
+                                                    Log.d("tag", "signInWithEmail:success");
+                                                    FirebaseUser user = mAuth.getCurrentUser();
+                                                    Toast.makeText(LoginActivity.this, "Welcome back!",
+                                                            Toast.LENGTH_SHORT).show();
+                                                    showProgress(true);
+
+                                                    mAuthTask = new UserLoginTask(email, password);
+                                                    mAuthTask.execute((Void) null);
+                                                   // updateUI(user);
+                                                } else {
+                                                    // If sign in fails, display a message to the user.
+                                                    Log.w("tag", "signInWithEmail:failure", task.getException());
+                                                    Toast.makeText(LoginActivity.this, "Wrong password!",
+                                                            Toast.LENGTH_SHORT).show();
+                                                    cancel = true;
+                                                  //  updateUI(null);
+                                                }
+
+                                                // ...
+                                            }
+                                        });
+
+                            }
+                            catch (Exception e)
+                            {
+                                Log.d("tag", "onComplete: " + e.getMessage());
+                            }
+
                         }
+
 
                         // ...
                     }
                 });
 
-        boolean cancel = false;
-        View focusView = null;
+
 
 //        // Check for a valid password, if the user entered one.
 //        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
@@ -219,19 +290,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //            cancel = true;
 //        }
 
-        if (cancel) {
+
             // There was an error; don't attempt login and focus the first
             // form field with an error.
-            focusView.requestFocus();
-        } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            showProgress(true);
+            Log.d("tag", "cancel is true: ");
+            //focusView.requestFocus();
 
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
-
-        }
     }
 
     // not used yet
