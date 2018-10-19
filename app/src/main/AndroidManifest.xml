@@ -41,14 +41,13 @@
             android:name=".EditPopUpInfo"
             android:theme="@style/AppTheme.TransparentTheme" />
         <activity
-<<<<<<< HEAD
             android:name=".BadgesDisplay"
             android:label="@string/title_activity_badges_display"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-=======
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
             android:name=".WorkoutPopUp"
             android:theme="@style/AppTheme.TransparentTheme" />
->>>>>>> 3fa2895e2fecd463d3f8859d3bf149d7a956df28
+
     </application>
 
 </manifest>
