@@ -13,6 +13,8 @@ import charstars.uscfit.Workout;
 
 public class GoalCalculations {
 
+    private static int goalsThisWeek = 0;
+
     public static boolean addGoal(Goal e, String email){
         SampleGoalDatabase.defaultGoals.add(e);
         return true;
@@ -47,11 +49,22 @@ public class GoalCalculations {
 
 
     }
+    public static void resetWeek(){
+        goalsThisWeek = 0;
+    }
+    public static int getGoalsThisWeek() {
+        return goalsThisWeek;
+    }
+
+    public static void setGoalsThisWeek(int goalsThisWeek) {
+        GoalCalculations.goalsThisWeek = goalsThisWeek;
+    }
     public static void alertOnCompletion(Goal e, String email){
     //notification that goal is completed
         // add badge somwhere
         //remove from list
         removeGoal(e, email);
+        goalsThisWeek++;
         Log.d("GOALCALC", "FINISHED GOAL "+ e.getDescription());
 
     }
