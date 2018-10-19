@@ -30,4 +30,5 @@
         <item>Miles</item>
         <item>Minutes</item>
     </string-array>
+    <string name="title_activity_badges_display">BadgesDisplay</string>
 </resources>
