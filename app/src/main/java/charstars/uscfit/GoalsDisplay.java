@@ -49,7 +49,11 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
                     return true;
 
                 case R.id.navigation_badges:
+                    setContentView(R.layout.activity_badges_display);
+                    navigation = findViewById(R.id.navigation);
+                    navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
                     return true;
+
                 case R.id.navigation_addGoal:
                     setContentView(R.layout.addgoal);
                     clearAddGoalFields();

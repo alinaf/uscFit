@@ -12,4 +12,7 @@ public class BadgeDatabase
         add(new Badge("Ran 2 miles", "March 20, 2018"));
     }};
 
+    //ArrayList<String> list = getIntent().getStringArrayListExtra("name");
+
+
 }
