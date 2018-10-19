@@ -8,23 +8,25 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyViewHolder> {
+public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.MyViewHolder> {
 
-    private List<Activity> activitiesList;
+    private List<Workout> workoutList;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView category, defaultCalorieValue;
+        public TextView category, length, date, caloriesBurned;
 
         public MyViewHolder(View view) {
             super(view);
-            //defaultCalorieValue =  view.findViewById(R.id.defaultCalorieValue);
             category = view.findViewById(R.id.category);
+            length =  view.findViewById(R.id.length);
+            date = view.findViewById(R.id.date);
+            caloriesBurned = view.findViewById(R.id.caloriesBurned);
         }
     }
 
 
-    public ActivityAdapter(List<Activity> activityList) {
-        this.activitiesList = activityList;
+    public WorkoutAdapter(List<Workout> workoutList) {
+        this.workoutList = workoutList;
     }
 
     @Override
@@ -37,13 +39,15 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Activity activity = activitiesList.get(position);
-        holder.category.setText(activity.getCategory());
-        holder.defaultCalorieValue.setText(Integer.toString(activity.getDefaultCalorieValue()));
+        Workout workout = workoutList.get(position);
+        holder.category.setText(workout.getActivity().getCategory());
+        holder.length.setText(Integer.toString(workout.getLength()) + workout.getQuant().getMeasurement());
+        holder.date.setText(workout.getDate());
+        holder.caloriesBurned.setText(Integer.toString(workout.getCaloriesBurned()));
     }
 
     @Override
     public int getItemCount() {
-        return activitiesList.size();
+        return workoutList.size();
     }
 }

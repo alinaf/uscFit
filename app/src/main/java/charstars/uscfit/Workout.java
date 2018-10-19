@@ -1,5 +1,7 @@
 package charstars.uscfit;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -10,15 +12,15 @@ public class Workout {
     private Activity activity;
     private Quantifier quant;
     private int length;
-    Calendar calendar;
+    Date calendar;
     private int caloriesBurned;
 
-    public Workout(Activity action, Quantifier quant, int length, int yr, int mnth, int dte, int hr, int min) {
+    public Workout(Activity action, Quantifier quant, int length) {
         this.activity = action;
         this.quant = quant;
         this.length = length;
         completed = false;
-        calendar.set(yr, mnth, dte, hr, min);
+        calendar = Calendar.getInstance().getTime();
         caloriesBurned = action.getDefaultCalorieValue();
     }
 
@@ -38,9 +40,12 @@ public class Workout {
     public void setQuant(Quantifier quant) { this.quant = quant; }
     public Quantifier getQuant () { return this.quant; }
 
-    public void setDate(int yr, int mnth, int dte, int hr, int min) { calendar.set(yr, mnth, dte, hr, min); }
+
+    //public void setDate(int yr, int mnth, int dte, int hr, int min) { calendar.set(yr, mnth, dte, hr, min); }
     public String getDate() {
-        return calendar.toString();
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String today = formatter.format(calendar);
+        return today;
     }
 
     public int getCaloriesBurned() { return this.caloriesBurned; }

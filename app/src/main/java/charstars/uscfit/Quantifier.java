@@ -1,6 +1,6 @@
 package charstars.uscfit;
 
-enum Quantifier
+public enum Quantifier
 {
     MILES("miles"), MINUTES("minutes"), STEPS("steps"), DAYS("days");
 
@@ -11,6 +11,9 @@ enum Quantifier
     {
         return this.measurement;
     }
+
+    // enum constructor - cannot be public or protected
+
 
     // enum constructor - cannot be public or protected
     Quantifier(String action)

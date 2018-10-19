@@ -5,8 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.IOException;
 
 public class PopUpInfo extends AppCompatActivity {
 
@@ -26,15 +31,31 @@ public class PopUpInfo extends AppCompatActivity {
 
     /** Called when the user touches the button */
     public void sendMessage(View view) {
-        int age = Integer.parseInt(((TextView)findViewById(R.id.input_age)).getText().toString());
-        double height = Double.parseDouble(((TextView)findViewById(R.id.input_height)).getText().toString());
-        double weight = Double.parseDouble(((TextView)findViewById(R.id.input_weight)).getText().toString());
+        try {
+            int age = Integer.parseInt(((TextView)findViewById(R.id.input_age)).getText().toString());
+            double height = Double.parseDouble(((TextView)findViewById(R.id.input_height)).getText().toString());
+            double weight = Double.parseDouble(((TextView)findViewById(R.id.input_weight)).getText().toString());
+            UserInfo userInfo = new UserInfo(); // make singleton
+            userInfo.setAge(age);
+            userInfo.setHeight(height);
+            userInfo.setWeight(weight);
 
-        UserInfo userInfo = new UserInfo(); // make singleton
-        userInfo.setAge(age);
-        userInfo.setHeight(height);
-        userInfo.setWeight(weight);
+            finish();
+        }
+        catch (NumberFormatException nfe) {
 
-        finish();
+            LayoutInflater inflater = getLayoutInflater();
+            View layout;
+
+            Toast toast = new Toast(getApplicationContext());
+            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+            toast.setDuration(Toast.LENGTH_SHORT);
+
+            layout = inflater.inflate(R.layout.goalfail,null);
+            toast.setView(layout);
+            toast.show();
+
+            return;
+        }
     }
 }
