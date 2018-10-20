@@ -30,5 +30,19 @@
         <item>Miles</item>
         <item>Minutes</item>
     </string-array>
+    <string-array name="workoutOptions">
+        <item>Basketball</item>
+        <item>Soccer</item>
+        <item>Baseball</item>
+        <item>Swimming</item>
+        <item>Running</item>
+        <item>Biking</item>
+        <item>Miles</item>
+        <item>Tennis</item>
+    </string-array>
+    <string-array name="lengthOptions">
+        <item>MILES</item>
+        <item>MINUTES</item>
+    </string-array>
     <string name="title_activity_badges_display">BadgesDisplay</string>
 </resources>

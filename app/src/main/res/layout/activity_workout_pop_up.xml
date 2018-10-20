@@ -27,7 +27,8 @@
         <Spinner
             android:id="@+id/workoutSpinner"
             android:layout_width="314dp"
-            android:layout_height="41dp" />
+            android:layout_height="41dp"
+            android:entries="@array/workoutOptions" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -42,8 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/exercise" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <Space
                 android:layout_width="29dp"
@@ -58,7 +58,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:entries="@array/goalOptions"
+                android:entries="@array/lengthOptions"
                 android:prompt="@string/title_goals" />
 
         </LinearLayout>
