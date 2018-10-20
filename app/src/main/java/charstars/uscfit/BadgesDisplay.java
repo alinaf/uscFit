@@ -150,79 +150,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
+public class BadgesDisplay extends AppCompatActivity
+{
 
-abstract public class BadgesDisplay extends AppCompatActivity implements View.OnClickListener{
-    private String email;
-    private List<Goal> defaultGoals = GoalCalculations.getGoals(email);
-    //private List<Badge> defaultBadges = BadgeCalculator.getBadges(email);
-
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-            BottomNavigationView navigation;
-            switch (item.getItemId()) {
-                case R.id.navigation_goals:
-                    setContentView(R.layout.activity_goals_display);
-                    createTable();
-
-                    navigation = findViewById(R.id.navigation);
-                    navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-                    return true;
-
-                case R.id.navigation_badges:
-                    setContentView(R.layout.activity_badges_display);
-
-//                    navigation = findViewById(R.id.navigation);
-//                    navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-                    return true;
-
-                case R.id.navigation_addGoal:
-                    setContentView(R.layout.addgoal);
-                    clearAddGoalFields();
-
-                    navigation = findViewById(R.id.navigationAddGoal);
-                    navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-                    return true;
-            }
-            return false;
-        }
-    };
-
+    ListView show;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-          super.onCreate(savedInstanceState);
-//        Intent intent = getIntent();
-//        if (savedInstanceState == null) {
-//            Bundle extras = getIntent().getExtras();
-//            if(extras == null) {
-//                email = null;
-//            } else {
-//                email = extras.getString("EMAIL");
-//            }
-//        } else {
-//            email = (String) savedInstanceState.getSerializable("EMAIL");
-//        }
-
+    protected void onCreate (Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_badges_display);
-        //createTable();
 
-//        GridView gridview = (GridView) findViewById(R.id.gridview);
-//        gridview.setAdapter(new ImageAdapter(this));
-//
-//        gridview.setOnItemClickListener(new OnItemClickListener() {
-//            public void onItemClick(AdapterView<?> parent, View v,
-//                                    int position, long id) {
-//                Toast.makeText(BadgesDisplay.this, "" + position,
-//                        Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        show = (ListView)findViewById(R.id.badges_list_view);
 
         String[] cheeses = {
                 "Parmesan",
@@ -232,165 +170,263 @@ abstract public class BadgesDisplay extends AppCompatActivity implements View.On
                 "Cheddar"
         };
 
+//        ArrayAdapter<String> cheeseAdapter =
+//                new ArrayAdapter<String>(this,
+//                        R.layout.activity_badges_display,
+//                        R.id.cheese_name,
+//                        cheeses
+//                );
 
-
-        ArrayAdapter<String> cheeseAdapter =
-                new ArrayAdapter<String>(this,
-                        R.layout.activity_badges_display,
-                        R.id.cheese_name,
-                        cheeses
-                );
-
-        ListView cheeseList = new ListView(this);
-        setContentView(cheeseList);
-        cheeseList.setAdapter(cheeseAdapter);
-
-//        BottomNavigationView navigation = findViewById(R.id.navigation);
-//        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-//        GridView cheeseGrid = new GridView(this);
-//        setContentView(cheeseGrid);
-//        cheeseGrid.setNumColumns(2);
-//        cheeseGrid.setColumnWidth(60);
-//        cheeseGrid.setVerticalSpacing(20);
-//        cheeseGrid.setHorizontalSpacing(20);
-//        cheeseGrid.setAdapter(cheeseAdapter);
-
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.activity_badges_display, cheeses);
+        //RecyclerView adapter = new RecyclerView(this, R.layout.activity_badges_display, R.id.cheese_name, cheeses);
+        //list.setAdapter(cheeseAdapter);
+        show.setAdapter(adapter);
+        //show.adapter = adapter;
+//        ListView cheeseList = new ListView(this);
+//        setContentView(cheeseList);
+//        cheeseList.setAdapter(cheeseAdapter);
 
     }
+}
 
-    public void createTable(){
-
-        mRecyclerView = findViewById(R.id.goalsLayout);
-
-        mAdapter = new GoalAdapter(defaultGoals);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setAdapter(mAdapter);
-
-    }
+//abstract public class BadgesDisplay extends AppCompatActivity implements View.OnClickListener{
+//    private String email;
+//    private List<Goal> defaultGoals = GoalCalculations.getGoals(email);
+//    //private List<Badge> defaultBadges = BadgeCalculator.getBadges(email);
 //
-//    public boolean addGoal(String goalType, int goalNum, String exerciseDescription){
+////    private RecyclerView mRecyclerView;
+////    private RecyclerView.Adapter mAdapter;
+////    private RecyclerView.LayoutManager mLayoutManager;
+////
+////    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+////            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+////
+////        @Override
+////        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+////
+////            BottomNavigationView navigation;
+////            switch (item.getItemId()) {
+////                case R.id.navigation_goals:
+////                    setContentView(R.layout.activity_goals_display);
+////                    createTable();
+////
+////                    navigation = findViewById(R.id.navigation);
+////                    navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+////                    return true;
+////
+////                case R.id.navigation_badges:
+////                    setContentView(R.layout.activity_badges_display);
+////
+//////                    navigation = findViewById(R.id.navigation);
+//////                    navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+////                    return true;
+////
+////                case R.id.navigation_addGoal:
+////                    setContentView(R.layout.addgoal);
+////                    clearAddGoalFields();
+////
+////                    navigation = findViewById(R.id.navigationAddGoal);
+////                    navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+////                    return true;
+////            }
+////            return false;
+////        }
+////    };
 //
-//        if(goalType.equals("Miles")){
-//            return GoalCalculations.addGoal(new MilesGoal(exerciseDescription, goalNum, 0), email);
-//
-//        }else{
-//            return GoalCalculations.addGoal(new MinutesGoal(exerciseDescription, goalNum, 0), email);
-//
-//        }
-//        //assuming success;
-//    }
-//
-    public void clearAddGoalFields(){
-        EditText e = findViewById(R.id.exercise);
-        e.getText().clear();
-        e.setHint("ex. run, swim, bike");
-        Spinner spinner = (Spinner) findViewById(R.id.goalSpinner);
-        spinner.setSelection(0);
-        NumberPicker num = (NumberPicker)findViewById(R.id.numberPicker);
-        num.setMinValue(1);
-        num.setMaxValue(1000);
-        num.setValue(1);
-    }
-//
-//    public void onResume(){
-//        super.onResume();
-//        createTable();
-//    }
 //    @Override
-//    public void onClick(View v) {
-//        if(v.getId() == R.id.goalRowLayout){
-//            Goal g = (Goal) v.getTag();
-//            if(g.getQuantifier().equals(Quantifier.DAYS.getMeasurement()) || g.getQuantifier().equals(Quantifier.STEPS.getMeasurement())){
-//                return;
-//            }
-//            Intent i = new Intent(BadgesDisplay.this, EditPopUpInfo.class);
-//            i.putExtra("GOAL", g);
-//            startActivity(i);
+//    protected void onCreate(Bundle savedInstanceState) {
+//          super.onCreate(savedInstanceState);
+////        Intent intent = getIntent();
+////        if (savedInstanceState == null) {
+////            Bundle extras = getIntent().getExtras();
+////            if(extras == null) {
+////                email = null;
+////            } else {
+////                email = extras.getString("EMAIL");
+////            }
+////        } else {
+////            email = (String) savedInstanceState.getSerializable("EMAIL");
+////        }
+//
+//        setContentView(R.layout.activity_badges_display);
+//        //createTable();
+//
+////        GridView gridview = (GridView) findViewById(R.id.gridview);
+////        gridview.setAdapter(new ImageAdapter(this));
+////
+////        gridview.setOnItemClickListener(new OnItemClickListener() {
+////            public void onItemClick(AdapterView<?> parent, View v,
+////                                    int position, long id) {
+////                Toast.makeText(BadgesDisplay.this, "" + position,
+////                        Toast.LENGTH_SHORT).show();
+////            }
+////        });
+//
+//        String[] cheeses = {
+//                "Parmesan",
+//                "Ricotta",
+//                "Fontina",
+//                "Mozzarella",
+//                "Cheddar"
+//        };
+//
+//        ArrayAdapter<String> cheeseAdapter =
+//                new ArrayAdapter<String>(this,
+//                        R.layout.activity_badges_display,
+//                        R.id.cheese_name,
+//                        cheeses
+//                );
+//
+//        ListView cheeseList = new ListView(this);
+//        setContentView(cheeseList);
+//        cheeseList.setAdapter(cheeseAdapter);
+//
+////        BottomNavigationView navigation = findViewById(R.id.navigation);
+////        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+//
+////        GridView cheeseGrid = new GridView(this);
+////        setContentView(cheeseGrid);
+////        cheeseGrid.setNumColumns(2);
+////        cheeseGrid.setColumnWidth(60);
+////        cheeseGrid.setVerticalSpacing(20);
+////        cheeseGrid.setHorizontalSpacing(20);
+////        cheeseGrid.setAdapter(cheeseAdapter);
 //
 //
-//        }
-//        if(v.getId() == R.id.addGoal){
-//            EditText e = findViewById(R.id.exercise);
-//            Spinner spinner = (Spinner) findViewById(R.id.goalSpinner);
-//            NumberPicker num = (NumberPicker)findViewById(R.id.numberPicker);
+//    }
 //
-//            String exerciseDescription = e.getText().toString();
-//            int goalNum = num.getValue();
-//            String goalType = spinner.getSelectedItem().toString();
+////    public void createTable(){
+////
+////        mRecyclerView = findViewById(R.id.goalsLayout);
+////
+////        mAdapter = new GoalAdapter(defaultGoals);
+////        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+////        mRecyclerView.setLayoutManager(mLayoutManager);
+////        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+////        mRecyclerView.setAdapter(mAdapter);
+////
+////    }
+////
+////    public boolean addGoal(String goalType, int goalNum, String exerciseDescription){
+////
+////        if(goalType.equals("Miles")){
+////            return GoalCalculations.addGoal(new MilesGoal(exerciseDescription, goalNum, 0), email);
+////
+////        }else{
+////            return GoalCalculations.addGoal(new MinutesGoal(exerciseDescription, goalNum, 0), email);
+////
+////        }
+////        //assuming success;
+////    }
+////
+//    public void clearAddGoalFields(){
+//        EditText e = findViewById(R.id.exercise);
+//        e.getText().clear();
+//        e.setHint("ex. run, swim, bike");
+//        Spinner spinner = (Spinner) findViewById(R.id.goalSpinner);
+//        spinner.setSelection(0);
+//        NumberPicker num = (NumberPicker)findViewById(R.id.numberPicker);
+//        num.setMinValue(1);
+//        num.setMaxValue(1000);
+//        num.setValue(1);
+//    }
+////
+////    public void onResume(){
+////        super.onResume();
+////        createTable();
+////    }
+////    @Override
+////    public void onClick(View v) {
+////        if(v.getId() == R.id.goalRowLayout){
+////            Goal g = (Goal) v.getTag();
+////            if(g.getQuantifier().equals(Quantifier.DAYS.getMeasurement()) || g.getQuantifier().equals(Quantifier.STEPS.getMeasurement())){
+////                return;
+////            }
+////            Intent i = new Intent(BadgesDisplay.this, EditPopUpInfo.class);
+////            i.putExtra("GOAL", g);
+////            startActivity(i);
+////
+////
+////        }
+////        if(v.getId() == R.id.addGoal){
+////            EditText e = findViewById(R.id.exercise);
+////            Spinner spinner = (Spinner) findViewById(R.id.goalSpinner);
+////            NumberPicker num = (NumberPicker)findViewById(R.id.numberPicker);
+////
+////            String exerciseDescription = e.getText().toString();
+////            int goalNum = num.getValue();
+////            String goalType = spinner.getSelectedItem().toString();
+////
+////
+////
+////            LayoutInflater inflater = getLayoutInflater();
+////
+////            View layout;
+////
+////
+////            Toast toast = new Toast(getApplicationContext());
+////            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+////            toast.setDuration(Toast.LENGTH_SHORT);
+////
+////
+////            if(exerciseDescription.equals("") || exerciseDescription == null || goalNum == 0 || goalType == null || goalType.equals("")){
+////                layout = inflater.inflate(R.layout.goalfail,null);
+////                toast.setView(layout);
+////                toast.show();
+////
+////                return;
+////            }
+////            boolean successful = addGoal(goalType, goalNum, exerciseDescription);
+////
+////            if(successful){
+////                layout = inflater.inflate(R.layout.goalsuccess,null);
+////                toast.setView(layout);
+////                toast.show();
+////
+////                clearAddGoalFields();
+////            }else{
+////                layout = inflater.inflate(R.layout.goalerror,null);
+////                toast.setView(layout);
+////                toast.show();
+////            }
+////
+////            return;
+////        }
 //
 //
 //
-//            LayoutInflater inflater = getLayoutInflater();
-//
-//            View layout;
 //
 //
-//            Toast toast = new Toast(getApplicationContext());
-//            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-//            toast.setDuration(Toast.LENGTH_SHORT);
+////        if(v.getId() == R.id.goback){
+////            setContentView(R.layout.activity_goals_display);
+////            createTable();
+////            return;
+////        }
+////
+////        Goal g = (Goal) v.getTag();
+////        Log.d("goalsDisplay",g.getCategory());
+////
+////        setContentView(R.layout.goal_details);
+////
+////        TextView title = findViewById(R.id.title);
+////        title.setText("GOAL: " + g.getCategory() + "-- " + g.getDescription());
+////
+////        mRecyclerView = findViewById(R.id.recycler_view);
+////
+////        // use this setting to improve performance if you know that changes
+////        // in content do not change the layout size of the RecyclerView
+////        mRecyclerView.setHasFixedSize(true);
+////
+////        // use a linear layout manager
+////        mLayoutManager = new LinearLayoutManager(this);
+////        mRecyclerView.setLayoutManager(mLayoutManager);
+////
+////        // specify an adapter (see also next example)
+////        mAdapter = new MyAdapter(g.getDueDates());
+////        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+////        mRecyclerView.setAdapter(mAdapter);
 //
-//
-//            if(exerciseDescription.equals("") || exerciseDescription == null || goalNum == 0 || goalType == null || goalType.equals("")){
-//                layout = inflater.inflate(R.layout.goalfail,null);
-//                toast.setView(layout);
-//                toast.show();
-//
-//                return;
-//            }
-//            boolean successful = addGoal(goalType, goalNum, exerciseDescription);
-//
-//            if(successful){
-//                layout = inflater.inflate(R.layout.goalsuccess,null);
-//                toast.setView(layout);
-//                toast.show();
-//
-//                clearAddGoalFields();
-//            }else{
-//                layout = inflater.inflate(R.layout.goalerror,null);
-//                toast.setView(layout);
-//                toast.show();
-//            }
-//
-//            return;
-//        }
-
-
-
-
-
-//        if(v.getId() == R.id.goback){
-//            setContentView(R.layout.activity_goals_display);
-//            createTable();
-//            return;
-//        }
-//
-//        Goal g = (Goal) v.getTag();
-//        Log.d("goalsDisplay",g.getCategory());
-//
-//        setContentView(R.layout.goal_details);
-//
-//        TextView title = findViewById(R.id.title);
-//        title.setText("GOAL: " + g.getCategory() + "-- " + g.getDescription());
-//
-//        mRecyclerView = findViewById(R.id.recycler_view);
-//
-//        // use this setting to improve performance if you know that changes
-//        // in content do not change the layout size of the RecyclerView
-//        mRecyclerView.setHasFixedSize(true);
-//
-//        // use a linear layout manager
-//        mLayoutManager = new LinearLayoutManager(this);
-//        mRecyclerView.setLayoutManager(mLayoutManager);
-//
-//        // specify an adapter (see also next example)
-//        mAdapter = new MyAdapter(g.getDueDates());
-//        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-//        mRecyclerView.setAdapter(mAdapter);
-
-    }
+//    }
 
 
 
