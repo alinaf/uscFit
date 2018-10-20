@@ -11,12 +11,19 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.IOException;
 
 public class PopUpInfo extends AppCompatActivity {
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_pop_up_info);
@@ -39,6 +46,14 @@ public class PopUpInfo extends AppCompatActivity {
             userInfo.setAge(age);
             userInfo.setHeight(height);
             userInfo.setWeight(weight);
+
+            // Write a message to the database
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+            String username = userInfo.getFirstName();
+            DatabaseReference myRef = database.getReference(username);
+
+            myRef.setValue(age);
 
             finish();
         }

@@ -52,6 +52,7 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
     private FirebaseAuth mAuth;
+
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -195,6 +196,29 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             Toast.makeText(LoginActivity.this, "Welcome!",
                                     Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
+
+                            user.updateEmail(email)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d("tag", "User email address updated.");
+                                            }
+                                        }
+                                    });
+
+                            user.sendEmailVerification()
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d("tag", "Email sent.");
+                                            }
+                                        }
+                                    });
+
+
+
                             showProgress(true);
 
                             mAuthTask = new UserLoginTask(email, password);
@@ -243,7 +267,28 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                                                     mAuthTask = new UserLoginTask(email, password);
                                                     mAuthTask.execute((Void) null);
-                                                   // updateUI(user);
+
+                                                    user.updateEmail(email)
+                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                    if (task.isSuccessful()) {
+                                                                        Log.d("tag", "User email address updated.");
+                                                                    }
+                                                                }
+                                                            });
+
+                                                    user.sendEmailVerification()
+                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                    if (task.isSuccessful()) {
+                                                                        Log.d("tag", "Email sent.");
+                                                                    }
+                                                                }
+                                                            });
+
+                                                    // updateUI(user);
                                                 } else {
                                                     // If sign in fails, display a message to the user.
                                                     Log.w("tag", "signInWithEmail:failure", task.getException());
