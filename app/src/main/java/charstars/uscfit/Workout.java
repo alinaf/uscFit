@@ -14,7 +14,7 @@ public class Workout {
     private Quantifier quant;
     private int length;
     Calendar calendar;
-    private int caloriesBurned;
+    private long caloriesBurned;
 
     public Workout(Activity action, Quantifier quant, int length, GregorianCalendar cal) {
         this.activity = action;
@@ -48,5 +48,5 @@ public class Workout {
         return today;
     }
 
-    public int getCaloriesBurned() { return this.caloriesBurned; }
+    public long getCaloriesBurned() { return this.caloriesBurned; }
 }

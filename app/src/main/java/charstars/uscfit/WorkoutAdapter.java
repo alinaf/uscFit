@@ -43,7 +43,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.MyViewHo
         holder.category.setText(workout.getActivity().getCategory());
         holder.length.setText(Integer.toString(workout.getLength()) + workout.getQuant().getMeasurement());
         holder.date.setText(workout.getDate());
-        holder.caloriesBurned.setText(Integer.toString(workout.getCaloriesBurned()));
+        holder.caloriesBurned.setText(Long.toString(workout.getCaloriesBurned()));
     }
 
     @Override

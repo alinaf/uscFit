@@ -3,15 +3,15 @@ package charstars.uscfit;
 public class Activity {
 
     private String category;
-    private int defaultCalorieValue;
+    private long defaultCalorieValue;
 
-    public Activity(String category, int defaultCalorieValue) {
+    public Activity(String category, long defaultCalorieValue) {
         this.category = category;
         this.defaultCalorieValue = defaultCalorieValue;
     }
 
 
-    public int getDefaultCalorieValue() {
+    public long getDefaultCalorieValue() {
         return defaultCalorieValue;
     }
 
@@ -27,5 +27,8 @@ public class Activity {
         this.category = category;
     }
 
-
+    @Override
+    public String toString() {
+        return this.category;
+    }
 }
