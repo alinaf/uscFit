@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 public class Workout {
@@ -12,15 +13,15 @@ public class Workout {
     private Activity activity;
     private Quantifier quant;
     private int length;
-    Date calendar;
-    private int caloriesBurned;
+    Calendar calendar;
+    private long caloriesBurned;
 
-    public Workout(Activity action, Quantifier quant, int length) {
+    public Workout(Activity action, Quantifier quant, int length, GregorianCalendar cal) {
         this.activity = action;
         this.quant = quant;
         this.length = length;
         completed = false;
-        calendar = Calendar.getInstance().getTime();
+        calendar = cal;
         caloriesBurned = action.getDefaultCalorieValue();
     }
 
@@ -43,10 +44,9 @@ public class Workout {
 
     //public void setDate(int yr, int mnth, int dte, int hr, int min) { calendar.set(yr, mnth, dte, hr, min); }
     public String getDate() {
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        String today = formatter.format(calendar);
+        String today = calendar.getTime().toString();
         return today;
     }
 
-    public int getCaloriesBurned() { return this.caloriesBurned; }
+    public long getCaloriesBurned() { return this.caloriesBurned; }
 }

@@ -20,12 +20,13 @@ import java.util.List;
 
 import charstars.uscfit.Activity;
 import charstars.uscfit.ActivityAdapter;
+import charstars.uscfit.DataHandlers.UpdateWorkouts;
 import charstars.uscfit.R;
 
 public class WorkoutList extends AppCompatActivity {
     private String email;
 
-    private List<Workout> workoutList = new ArrayList<>();
+    private List<Workout> workoutList;
     private RecyclerView mRecyclerView;
     private WorkoutAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -45,7 +46,7 @@ public class WorkoutList extends AppCompatActivity {
         } else {
             email = (String) savedInstanceState.getSerializable("EMAIL");
         }
-
+        workoutList = UpdateWorkouts.getWorkouts(email);
         setContentView(R.layout.activity_workout_list);
         createTable();
 
@@ -53,7 +54,9 @@ public class WorkoutList extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(WorkoutList.this, WorkoutPopUp.class));
+                Intent i = new Intent(WorkoutList.this, WorkoutPopUp.class);
+                i.putExtra("EMAIL", "Tianqin");
+                startActivity(i);
             }
         });
     }
@@ -67,20 +70,10 @@ public class WorkoutList extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mAdapter);
-
-        prepareActivityData();
-
     }
 
-    private void prepareActivityData() {
-        Workout workout = new Workout(new Activity("Basketball", 100), Quantifier.MINUTES, 60);
-        workoutList.add(workout);
-
-//        workout = new Workout(new Activity("Gardening", 50), Quantifier.MINUTES, 30, 2018, 10, 19, 12, 30);
-        workoutList.add(workout);
-
-
-
-        //mAdapter.notifyDataSetChanged();
+    public void onResume(){
+        super.onResume();
+        createTable();
     }
 }

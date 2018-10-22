@@ -14,7 +14,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
-        android:gravity="center_vertical|center_horizontal"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <TextView
@@ -27,7 +27,8 @@
         <Spinner
             android:id="@+id/workoutSpinner"
             android:layout_width="314dp"
-            android:layout_height="41dp" />
+            android:layout_height="41dp"
+            android:entries="@array/workoutOptions" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -42,8 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/exercise" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <Space
                 android:layout_width="29dp"
@@ -52,16 +52,60 @@
 
             <Spinner
                 android:id="@+id/quantifierOption"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="30dp"
-                android:layout_gravity="center_vertical"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:entries="@array/lengthOptions"
                 android:padding="5dp"
-                android:entries="@array/goalOptions"
                 android:prompt="@string/title_goals" />
 
         </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/in_date"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="82dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SELECT DATE"
+            android:id="@+id/btn_date"
+            android:layout_alignBottom="@+id/in_date"
+            android:layout_toRightOf="@+id/in_date"
+            android:layout_toEndOf="@+id/in_date" />
+
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/in_time"
+            android:layout_below="@+id/in_date"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SELECT TIME"
+            android:id="@+id/btn_time"
+            android:layout_below="@+id/btn_date"
+            android:layout_alignLeft="@+id/btn_date"
+            android:layout_alignStart="@+id/btn_date" />
+
+
+    </RelativeLayout>
 
         <Button
             android:id="@+id/addWorkoutSubmit"
@@ -71,7 +115,11 @@
             android:onClick="sendMessage"
             android:text="Submit"></Button>
 
+
+
     </LinearLayout>
+
+
 
 
 </RelativeLayout>

@@ -39,7 +39,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.MyView
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Activity activity = activitiesList.get(position);
         holder.category.setText(activity.getCategory());
-        holder.defaultCalorieValue.setText(Integer.toString(activity.getDefaultCalorieValue()));
+        holder.defaultCalorieValue.setText(Long.toString(activity.getDefaultCalorieValue()));
     }
 
     @Override
