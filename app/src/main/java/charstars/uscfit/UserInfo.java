@@ -2,6 +2,8 @@ package charstars.uscfit;
 
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -14,10 +16,14 @@ public class UserInfo {
     private static int age = 23;
     private static double weight = 150.5;
     private static double height = 72;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     public UserInfo() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference(firstName);
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        DatabaseReference myRef = database.getReference(currentUser.getUid());
+
+//        String username = userInfo.getFirstName();
 
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {

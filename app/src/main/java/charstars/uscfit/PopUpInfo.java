@@ -51,7 +51,7 @@ public class PopUpInfo extends AppCompatActivity {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             FirebaseUser currentUser = mAuth.getCurrentUser();
             String username = userInfo.getFirstName();
-            DatabaseReference myRef = database.getReference(username);
+            DatabaseReference myRef = database.getReference(currentUser.getUid());
 
             myRef.setValue(age);
 

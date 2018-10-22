@@ -316,26 +316,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 });
 
 
-
-//        // Check for a valid password, if the user entered one.
-//        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-//            mPasswordView.setError(getString(R.string.error_invalid_password));
-//            focusView = mPasswordView;
-//            cancel = true;
-//        }
-//
-//        // Check for a valid email address.
-//        if (TextUtils.isEmpty(email)) {
-//            mEmailView.setError(getString(R.string.error_field_required));
-//            focusView = mEmailView;
-//            cancel = true;
-//        } else if (!isEmailValid(email)) {
-//           // mEmailView.setError(getString(R.string.error_invalid_email));
-//            focusView = mEmailView;
-//            cancel = true;
-//        }
-
-
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             Log.d("tag", "cancel is true: ");
@@ -478,15 +458,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mEmail)) {
                     // Account exists, return true if the password matches.
-                    Log.d("MyApp","EMAIL MATCH TOPEKA");
                     return pieces[1].equals(mPassword);
                 }
             }
 
-            Log.d("MyApp","NO EMAIL MATCH TOPEKA");
-
-
-//            // TODO: register the new account here.
             return true;
         }
 
@@ -496,7 +471,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                Log.d("MyApp","LOGIN WAS SUCCESSFULLLLL");
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 i.putExtra("EMAIL", "Tianqin");
                 startActivity(i);
