@@ -34,7 +34,7 @@
 
     <TextView
         android:id="@+id/date"
-        android:layout_width="79dp"
+        android:layout_width="90dp"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/category"
         android:layout_alignParentRight="true"
@@ -45,7 +45,7 @@
 
     <TextView
         android:id="@+id/caloriesBurned"
-        android:layout_width="79dp"
+        android:layout_width="90dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/date"
         android:layout_alignParentRight="true"

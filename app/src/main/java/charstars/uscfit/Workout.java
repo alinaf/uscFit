@@ -44,7 +44,7 @@ public class Workout {
 
     //public void setDate(int yr, int mnth, int dte, int hr, int min) { calendar.set(yr, mnth, dte, hr, min); }
     public String getDate() {
-        String today = calendar.toString();
+        String today = calendar.getTime().toString();
         return today;
     }
 
