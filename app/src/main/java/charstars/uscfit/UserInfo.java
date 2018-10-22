@@ -19,20 +19,31 @@ public class UserInfo {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     public UserInfo() {
+    }
+
+    public UserInfo(boolean fromDb) {
+        if (fromDb){
+            return;
+        }
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         DatabaseReference myRef = database.getReference(currentUser.getUid());
 
-//        String username = userInfo.getFirstName();
-
+        if (myRef == null) {
+            return;
+        }
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                Long value = dataSnapshot.getValue(Long.class);
-                Log.d("tag", "Value is: " + value);
+                UserInfo uinfo = dataSnapshot.getValue(UserInfo.class);
+                if (uinfo != null){
+                    age = uinfo.getAge();
+                    weight = uinfo.getWeight();
+                    height = uinfo.getHeight();
+                }
             }
 
             @Override

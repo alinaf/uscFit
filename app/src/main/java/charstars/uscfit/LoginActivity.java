@@ -191,6 +191,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            UserInfo ui = new UserInfo(false);
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("tag", "createUserWithEmail:success");
                             Toast.makeText(LoginActivity.this, "Welcome!",
@@ -258,6 +259,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                             @Override
                                             public void onComplete(@NonNull Task<AuthResult> task) {
                                                 if (task.isSuccessful()) {
+                                                    UserInfo ui = new UserInfo(false);
                                                     // Sign in success, update UI with the signed-in user's information
                                                     Log.d("tag", "signInWithEmail:success");
                                                     FirebaseUser user = mAuth.getCurrentUser();

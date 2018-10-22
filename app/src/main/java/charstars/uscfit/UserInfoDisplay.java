@@ -30,7 +30,7 @@ public class UserInfoDisplay extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        UserInfo userInfo = new UserInfo(); // make singleton
+        UserInfo userInfo = new UserInfo(false); // make singleton
         final TextView mTextView = (TextView) findViewById(R.id.name_display);
         mTextView.setText("Hello " + userInfo.getFirstName());
 
@@ -57,7 +57,7 @@ public class UserInfoDisplay extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        UserInfo userInfo = new UserInfo(); // make singleton
+        UserInfo userInfo = new UserInfo(false); // make singleton
         final TextView mTextView = (TextView) findViewById(R.id.name_display);
         mTextView.setText("Hello " + userInfo.getFirstName());
 
