@@ -162,12 +162,12 @@ public class BadgesDisplay extends AppCompatActivity
 
         show = (ListView)findViewById(R.id.badges_list_view);
 
-        String[] cheeses = {
-                "Parmesan",
-                "Ricotta",
-                "Fontina",
-                "Mozzarella",
-                "Cheddar"
+        String[] goals = {
+                "Ran 5 miles",
+                "Ran 10 miles",
+                "Worked out for a week",
+                "Worked out for a month",
+                "Completed Calorie Goal"
         };
 
 //        ArrayAdapter<String> cheeseAdapter =
@@ -177,7 +177,7 @@ public class BadgesDisplay extends AppCompatActivity
 //                        cheeses
 //                );
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.activity_badges_display, cheeses);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.activity_badges_display, goals);
         //RecyclerView adapter = new RecyclerView(this, R.layout.activity_badges_display, R.id.cheese_name, cheeses);
         //list.setAdapter(cheeseAdapter);
         show.setAdapter(adapter);
