@@ -50,6 +50,8 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
 
                 case R.id.navigation_badges:
                     setContentView(R.layout.activity_badges_display);
+                    Intent i = new Intent(GoalsDisplay.this, BadgesDisplay.class);
+                    startActivity(i);
                     navigation = findViewById(R.id.navigation);
                     navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
                     return true;

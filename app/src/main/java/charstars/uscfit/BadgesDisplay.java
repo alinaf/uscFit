@@ -138,6 +138,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import charstars.uscfit.DataHandlers.GoalCalculations;
@@ -157,18 +158,16 @@ public class BadgesDisplay extends AppCompatActivity
     @Override
     protected void onCreate (Bundle savedInstanceState)
     {
+      // Log.d("HELLOOOO", "Hello again?");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_badges_display);
 
         show = (ListView)findViewById(R.id.badges_list_view);
 
-        String[] goals = {
-                "Ran 5 miles",
-                "Ran 10 miles",
-                "Worked out for a week",
-                "Worked out for a month",
-                "Completed Calorie Goal"
-        };
+        ArrayList<String> goals = new ArrayList<String>(){{
+            add("Ran 5 miles");
+            add("Ran 10 miles");
+        }};
 
 //        ArrayAdapter<String> cheeseAdapter =
 //                new ArrayAdapter<String>(this,
@@ -177,10 +176,12 @@ public class BadgesDisplay extends AppCompatActivity
 //                        cheeses
 //                );
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.activity_badges_display, goals);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1 , goals);
         //RecyclerView adapter = new RecyclerView(this, R.layout.activity_badges_display, R.id.cheese_name, cheeses);
         //list.setAdapter(cheeseAdapter);
         show.setAdapter(adapter);
+
+        //adapter.notifyDataSetChanged();
         //show.adapter = adapter;
 //        ListView cheeseList = new ListView(this);
 //        setContentView(cheeseList);
