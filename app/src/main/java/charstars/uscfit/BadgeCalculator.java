@@ -6,12 +6,12 @@ public class BadgeCalculator
 {
     public static boolean addBadge(Badge e, String email)
     {
-        BadgeDatabase.badgeCollection.add(e);
+        //BadgeDatabase.badgeCollection.add(e);
         return true;
     }
     public static boolean removeBadge(Badge e, String email)
     {
-        BadgeDatabase.badgeCollection.remove(e);
+        //BadgeDatabase.badgeCollection.remove(e);
         return true;
     }
 
@@ -28,9 +28,9 @@ public class BadgeCalculator
         removeBadge(e, email);
 
     }
-    public static List<Badge> getBadges(String email){
-        return BadgeDatabase.badgeCollection;
-    }
+//    public static List<Badge> getBadges(String email){
+//        //return BadgeDatabase.badgeCollection;
+//    }
 
 //    public static void editGoal(Goal goal) {
 //        for(Goal g : SampleGoalDatabase.defaultGoals){

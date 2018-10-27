@@ -153,6 +153,43 @@ import android.view.View;
 
 public class BadgesDisplay extends AppCompatActivity
 {
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+            BottomNavigationView navigation;
+            switch (item.getItemId()) {
+                case R.id.navigation_goals:
+                    setContentView(R.layout.activity_goals_display);
+                    //createTable();
+                    Intent i = new Intent(BadgesDisplay.this, GoalsDisplay.class);
+                    startActivity(i);
+                    navigation = findViewById(R.id.navigation);
+                    navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+                    return true;
+
+                case R.id.navigation_badges:
+                    setContentView(R.layout.activity_badges_display);
+                    //Intent i = new Intent(GoalsDisplay.this, BadgesDisplay.class);
+                    //startActivity(i);
+                    navigation = findViewById(R.id.navigation);
+                    navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+                    return true;
+
+                case R.id.navigation_addGoal:
+                    setContentView(R.layout.addgoal);
+                    //clearAddGoalFields();
+                    Intent i2 = new Intent(BadgesDisplay.this, GoalsDisplay.class);
+                    startActivity(i2);
+                    navigation = findViewById(R.id.navigationAddGoal);
+                    navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+                    return true;
+            }
+            return false;
+        }
+    };
 
     ListView show;
     @Override
@@ -164,19 +201,16 @@ public class BadgesDisplay extends AppCompatActivity
 
         show = (ListView)findViewById(R.id.badges_list_view);
 
-        ArrayList<String> goals = new ArrayList<String>(){{
-            add("Ran 5 miles");
-            add("Ran 10 miles");
-        }};
+//        ArrayList<String> goals = new ArrayList<String>(){{
+//            add("Ran 5 miles");
+//            add("Ran 10 miles");
+//        }};
 
-//        ArrayAdapter<String> cheeseAdapter =
-//                new ArrayAdapter<String>(this,
-//                        R.layout.activity_badges_display,
-//                        R.id.cheese_name,
-//                        cheeses
-//                );
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1 , goals);
+        ArrayList<String> goals;
+        BadgeDatabase bd = new BadgeDatabase();
+        goals = bd.badgeCollection;
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1 , goals);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.badges_list_row, goals);
         //RecyclerView adapter = new RecyclerView(this, R.layout.activity_badges_display, R.id.cheese_name, cheeses);
         //list.setAdapter(cheeseAdapter);
         show.setAdapter(adapter);
