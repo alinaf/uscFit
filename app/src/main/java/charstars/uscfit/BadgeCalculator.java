@@ -1,45 +1,20 @@
 package charstars.uscfit;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
+
 import java.util.List;
 
-public class BadgeCalculator
+public class BadgeCalculator extends AppCompatActivity
 {
-    public static boolean addBadge(Badge e, String email)
+    // adds badge to the database and shows a pop goal completed pop up message
+    public static void addBadge(String b)
     {
-        //BadgeDatabase.badgeCollection.add(e);
-        return true;
-    }
-    public static boolean removeBadge(Badge e, String email)
-    {
-        //BadgeDatabase.badgeCollection.remove(e);
-        return true;
+        BadgeDatabase.badgeCollection.add(b);
+//        Toast.makeText(BadgeCalculator.this, "Goal Completed! New Badge Added.",
+//                Toast.LENGTH_SHORT).show();
     }
 
-    //THIS CAN BE INVOKED BY OTHER CLASSES WHEN STEPS ARE COMPLETED OR AN ACTIVITY IS COMPLETED
-    public static void calculateGoalProgress(Activity a, String email){
-        //CLARIFY ON THIS
-
-
-    }
-    public static void alertOnCompletion(Badge e, String email){
-        //notification that goal is completed
-        // add badge somwhere
-        //remove from list
-        removeBadge(e, email);
-
-    }
-//    public static List<Badge> getBadges(String email){
-//        //return BadgeDatabase.badgeCollection;
-//    }
-
-//    public static void editGoal(Goal goal) {
-//        for(Goal g : SampleGoalDatabase.defaultGoals){
-//            if(g.id() == goal.id()){
-//                g.setDescription(goal.getDescription());
-//                g.setGoalNum(goal.getGoalNum());
-//                g.setTrackingNum(goal.getTrackingNum());
-//                return;
-//            }
-//        }
-//    }
 }

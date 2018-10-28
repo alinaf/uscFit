@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+// ADD TO THIS BY CALLING BadgeDatabase.badgeCollection.add("badge name");
 public class BadgeDatabase
 {
     public static ArrayList<String> badgeCollection = new ArrayList<String>()

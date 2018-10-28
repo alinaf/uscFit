@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import charstars.uscfit.Activity;
+import charstars.uscfit.BadgeDatabase;
 import charstars.uscfit.Goal;
 import charstars.uscfit.GoalsDisplay;
 import charstars.uscfit.SampleGoalDatabase;
@@ -45,6 +46,7 @@ public class GoalCalculations {
 
         for(Goal g: completed){
             alertOnCompletion(g, email);
+            BadgeDatabase.badgeCollection.add(g.getDescription());
         }
 
 

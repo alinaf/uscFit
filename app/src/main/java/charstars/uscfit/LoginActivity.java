@@ -44,6 +44,8 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.List;
 
+import charstars.uscfit.DataHandlers.GoalCalculations;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 
