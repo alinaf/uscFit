@@ -38,39 +38,58 @@ public class PopUpInfo extends AppCompatActivity {
 
     /** Called when the user touches the button */
     public void sendMessage(View view) {
-        try {
-            int age = Integer.parseInt(((TextView)findViewById(R.id.input_age)).getText().toString());
-            double height = Double.parseDouble(((TextView)findViewById(R.id.input_height)).getText().toString());
-            double weight = Double.parseDouble(((TextView)findViewById(R.id.input_weight)).getText().toString());
-            UserInfo userInfo = new UserInfo(); // make singleton
-            userInfo.setAge(age);
-            userInfo.setHeight(height);
-            userInfo.setWeight(weight);
+        String ageString = ((TextView)findViewById(R.id.input_age)).getText().toString();
+        String heightString = ((TextView)findViewById(R.id.input_height)).getText().toString();
+        String weightString = ((TextView)findViewById(R.id.input_weight)).getText().toString();
 
-            // Write a message to the database
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            FirebaseUser currentUser = mAuth.getCurrentUser();
-            DatabaseReference myRef = database.getReference("Users"); // will not be null
-            DatabaseReference myRef1 = myRef.child(currentUser.getUid());
-            DatabaseReference myRef2 = myRef1.child("UserInfo");
-            myRef2.setValue(userInfo);
-
-            finish();
-        }
-        catch (NumberFormatException nfe) {
-
-            LayoutInflater inflater = getLayoutInflater();
-            View layout;
-
-            Toast toast = new Toast(getApplicationContext());
-            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-            toast.setDuration(Toast.LENGTH_SHORT);
-
-            layout = inflater.inflate(R.layout.goalfail,null);
-            toast.setView(layout);
-            toast.show();
-
+        UserInfo userInfo = new UserInfo();
+        if (!updateUserInfo(userInfo, ageString, heightString, weightString)) {
+            DisplayToast();
             return;
         }
+
+        writeToDatabase(userInfo);
+        finish();
+    }
+
+    public boolean updateUserInfo(UserInfo userInfo, String ageString, String heightString, String weightString){
+        int age;
+        double height, weight;
+        try {
+            age = Integer.parseInt(ageString);
+            height = Double.parseDouble(heightString);
+            weight = Double.parseDouble(weightString);
+        }
+
+        catch (NumberFormatException nfe) {
+            return false;
+        }
+
+        userInfo.setAge(age);
+        userInfo.setHeight(height);
+        userInfo.setWeight(weight);
+        return true;
+    }
+
+    public void writeToDatabase(UserInfo userInfo) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        DatabaseReference myRef = database.getReference("Users");
+        DatabaseReference myRef1 = myRef.child(currentUser.getUid());
+        DatabaseReference myRef2 = myRef1.child("UserInfo");
+        myRef2.setValue(userInfo);
+    }
+
+    public void DisplayToast() {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout;
+
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.setDuration(Toast.LENGTH_SHORT);
+
+        layout = inflater.inflate(R.layout.goalfail,null);
+        toast.setView(layout);
+        toast.show();
     }
 }

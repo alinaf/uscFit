@@ -13,29 +13,31 @@ import com.google.firebase.database.ValueEventListener;
 public class UserInfo {
     private static String firstName = "Tianqin";
     private static String email;
-    private static int age = 23;
-    private static double weight = 150.5;
-    private static double height = 72;
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private static int age = 0;
+    private static double weight = 0;
+    private static double height = 0;
+    private FirebaseAuth mAuth;
 
     public UserInfo() {
     }
 
     public UserInfo(boolean fromDb) {
+        mAuth = FirebaseAuth.getInstance();
+
         if (fromDb){
             return;
         }
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        DatabaseReference myRef = database.getReference("Users"); // will not be null
-        DatabaseReference myRef1 = myRef.child(currentUser.getUid());
-        if (myRef1 == null) { // will be null the first time
+        DatabaseReference userListRef = database.getReference("Users"); // will not be null
+        DatabaseReference currentUserRef = userListRef.child(currentUser.getUid());
+        if (currentUserRef == null) { // will be null the first time
             return;
         }
-        DatabaseReference myRef2 = myRef1.child("UserInfo");
+        DatabaseReference userInfoRef = currentUserRef.child("UserInfo");
 
         // Read from the database
-        myRef2.addValueEventListener(new ValueEventListener() {
+        userInfoRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again

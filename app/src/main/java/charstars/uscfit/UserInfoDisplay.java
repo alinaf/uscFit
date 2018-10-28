@@ -14,18 +14,6 @@ public class UserInfoDisplay extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = getIntent();
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if(extras == null) {
-//                email = null;
-            } else {
-//                email = extras.getString("EMAIL");
-            }
-        } else {
-//            email = (String) savedInstanceState.getSerializable("EMAIL");
-        }
-
         setContentView(R.layout.activity_user_info);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
