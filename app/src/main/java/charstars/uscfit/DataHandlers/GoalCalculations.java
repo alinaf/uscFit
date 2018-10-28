@@ -5,6 +5,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import charstars.uscfit.Activity;
+import charstars.uscfit.BadgeDatabase;
 import charstars.uscfit.Goal;
 import charstars.uscfit.GoalDatabaseManager;
 import charstars.uscfit.Workout;
@@ -44,6 +46,7 @@ public class GoalCalculations {
 
         for(Goal g: completed){
             alertOnCompletion(g, email);
+            BadgeDatabase.badgeCollection.add(g.getDescription());
         }
 
         gdb.updateGoalsDB();

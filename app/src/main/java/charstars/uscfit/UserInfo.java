@@ -27,13 +27,15 @@ public class UserInfo {
         }
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        DatabaseReference myRef = database.getReference(currentUser.getUid());
-
-        if (myRef == null) {
+        DatabaseReference myRef = database.getReference("Users"); // will not be null
+        DatabaseReference myRef1 = myRef.child(currentUser.getUid());
+        if (myRef1 == null) { // will be null the first time
             return;
         }
+        DatabaseReference myRef2 = myRef1.child("UserInfo");
+
         // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
