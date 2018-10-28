@@ -59,14 +59,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
-
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "tianqinz@usc.edu:uscfit"
-    };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -225,14 +217,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             mAuthTask = new UserLoginTask(email, password);
                             mAuthTask.execute((Void) null);
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("tag", "createUserWithEmail:failure", task.getException());
 
                             try
                             {
                                 throw task.getException();
                             }
-                            // if user enters wrong email.
                             catch (FirebaseAuthWeakPasswordException weakPassword)
                             {
                                 Log.d("tag", "onComplete: weak_password");
@@ -241,7 +230,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                         Toast.LENGTH_SHORT).show();
                                 return;
                             }
-                            // if user enters wrong password.
                             catch (FirebaseAuthInvalidCredentialsException malformedEmail)
                             {
                                 Log.d("tag", "onComplete: malformed_email");
@@ -269,41 +257,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                                                     mAuthTask = new UserLoginTask(email, password);
                                                     mAuthTask.execute((Void) null);
-
-                                                    user.updateEmail(email)
-                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                @Override
-                                                                public void onComplete(@NonNull Task<Void> task) {
-                                                                    if (task.isSuccessful()) {
-                                                                        Log.d("tag", "User email address updated.");
-                                                                    }
-                                                                }
-                                                            });
-
-                                                    user.sendEmailVerification()
-                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                @Override
-                                                                public void onComplete(@NonNull Task<Void> task) {
-                                                                    if (task.isSuccessful()) {
-                                                                        Log.d("tag", "Email sent.");
-                                                                    }
-                                                                }
-                                                            });
-
-                                                    // updateUI(user);
                                                 } else {
                                                     // If sign in fails, display a message to the user.
                                                     Log.w("tag", "signInWithEmail:failure", task.getException());
                                                     Toast.makeText(LoginActivity.this, "Wrong password!",
                                                             Toast.LENGTH_SHORT).show();
                                                     cancel = true;
-                                                  //  updateUI(null);
                                                 }
-
-                                                // ...
                                             }
                                         });
-
                             }
                             catch (Exception e)
                             {
@@ -311,32 +273,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             }
 
                         }
-
-                        // ...
                     }
                 });
-
-
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            Log.d("tag", "cancel is true: ");
-            //focusView.requestFocus();
-
     }
 
     // not used yet
     public void signOut() {
         FirebaseAuth.getInstance().signOut();
-    }
-
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
-    }
-
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
     }
 
     /**
@@ -445,24 +388,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
             return true;
         }
 
