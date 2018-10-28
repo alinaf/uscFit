@@ -25,12 +25,12 @@ import java.util.List;
 import charstars.uscfit.DataHandlers.GoalCalculations;
 
 public class GoalsDisplay extends AppCompatActivity implements View.OnClickListener{
-    private String email;
-    private List<Goal> defaultGoals = GoalCalculations.getGoals(email);
+    private static String email;
+    private static List<Goal> defaultGoals = GoalCalculations.getGoals(email);
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private static RecyclerView mRecyclerView;
+    private static RecyclerView.Adapter mAdapter;
+    private static RecyclerView.LayoutManager mLayoutManager;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -91,10 +91,19 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    public static void onChangeData(List<Goal> goals){
+        defaultGoals = goals;
+        ((GoalAdapter) mRecyclerView.getAdapter()).notifyDataSetChanged();
+        mAdapter = new GoalAdapter(defaultGoals);
+        mRecyclerView.setAdapter(mAdapter);
+
+    }
+
     public void createTable(){
-
+        this.defaultGoals = GoalCalculations.getGoals(email);
         mRecyclerView = findViewById(R.id.goalsLayout);
-
+        Log.d("inside table", "create");
+        Log.d("inside table", defaultGoals.toString());
         mAdapter = new GoalAdapter(defaultGoals);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -109,6 +118,7 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
            return GoalCalculations.addGoal(new MilesGoal(exerciseDescription, goalNum, 0), email);
 
         }else{
+            Log.d("updating", exerciseDescription);
             return GoalCalculations.addGoal(new MinutesGoal(exerciseDescription, goalNum, 0), email);
 
         }

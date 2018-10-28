@@ -38,6 +38,7 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.MyViewHolder> 
     // Provide a suitable constructor (depends on the kind of dataset)
     public GoalAdapter(List<Goal> mDataset) {
         this.mDataset = mDataset;
+        Log.d("inside adapter", mDataset.toString());
     }
 
     // Create new views (invoked by the layout manager)
@@ -80,6 +81,9 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.MyViewHolder> 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
+        if(mDataset== null){
+            return 0;
+        }
         return mDataset.size();
     }
 }
