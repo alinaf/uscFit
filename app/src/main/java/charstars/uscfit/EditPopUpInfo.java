@@ -59,10 +59,11 @@ public class EditPopUpInfo extends AppCompatActivity {
         Log.d("EDIT", "GOAL BEFORE: "+ g.getDescription());
         EditText desc = (EditText)findViewById(R.id.editgoalexercise);
         NumberPicker num = (NumberPicker)findViewById(R.id.editGoalnumberPicker);
-        g.setDescription(desc.getText().toString());
-        g.setGoalNum(num.getValue());
-        g.setTrackingNum(0);
-        GoalCalculations.editGoal(g);
+        Goal gg = new Goal();
+        gg.setDescription(desc.getText().toString());
+        gg.setGoalNum(num.getValue());
+        gg.setTrackingNum(0);
+        GoalCalculations.editGoal(gg, g);
         Log.d("EDIT", "GOAL BEFORE: "+ g.getDescription());
 
         finish();

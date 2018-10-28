@@ -4,19 +4,24 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 
-public abstract class Goal implements Serializable{
+public class Goal implements Serializable{
 
     static int _ID = 0;
     private int id;
-    String description = "";
-    int goalNum = 100;
-    int trackingNum = 0; //how many so far
+    protected String description = "";
+    protected String quantifier = "";
+    protected int goalNum = 100;
+    protected int trackingNum = 0; //how many so far
     public Goal(String description, int goalNum, int trackingNum) {
         this.description = description;
         this.goalNum = goalNum;
         this.trackingNum = trackingNum;
         this.id = _ID;
         _ID++;
+    }
+
+    public Goal(){
+
     }
 
     public String getDescription() {
@@ -51,9 +56,17 @@ public abstract class Goal implements Serializable{
         return id;
     }
 
-    public abstract String getQuantifier();
-    public abstract void setProgress();
-    public abstract boolean setProgress(int n);
+    public String getQuantifier(){
+        return this.quantifier;
+    };
+    public void setQuantifier(String quantifier) {
+        this.quantifier = quantifier;
+    }
+
+    public void setProgress(){};
+    public boolean setProgress(int n){
+        return true;
+    };
 
     //returns percentage of goal completed
     public double getProgress() {
