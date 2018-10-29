@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import charstars.uscfit.DataHandlers.GoalCalculations;
@@ -38,8 +39,9 @@ import android.view.View;
 
 public class BadgesDisplay extends AppCompatActivity
 {
-    private ListView listView;
-    private BadgeAdapter mAdapter;
+    private static ArrayList<Badge> badges = BadgeCalculator.getBadges();
+    private static ListView listView;
+    private static BadgeAdapter mAdapter;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -82,21 +84,35 @@ public class BadgesDisplay extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_badges_display);
-
+        //initBadges();
         listView = (ListView) findViewById(R.id.movies_list);
-        ArrayList<Badge> badgesList = new ArrayList<>();
-        badgesList.add(new Badge(R.drawable.small_trophy, "Swam 10 miles" , "10/20/18"));
-        badgesList.add(new Badge(R.drawable.med_trophy, "Ran 20 miles" , "10/13/18"));
-        badgesList.add(new Badge(R.drawable.big_trophy, "Biked 50 miles" , "10/08/18"));
-        badgesList.add(new Badge(R.drawable.small_trophy, "Hiked 10 miles" , "10/01/18"));
-        badgesList.add(new Badge(R.drawable.med_trophy, "Roller-bladed 20 miles" , "9/13/18"));
-        badgesList.add(new Badge(R.drawable.big_trophy, "Biked 50 miles" , "9/08/18"));
-        badgesList.add(new Badge(R.drawable.small_trophy, "Swam 10 miles" , "8/20/18"));
-        badgesList.add(new Badge(R.drawable.med_trophy, "Ran 20 miles" , "8/13/18"));
-        badgesList.add(new Badge(R.drawable.big_trophy, "Biked 50 miles" , "7/08/18"));
-
-        mAdapter = new BadgeAdapter(this,badgesList);
+        mAdapter = new BadgeAdapter(this,badges);
         listView.setAdapter(mAdapter);
 
+    }
+
+
+
+    public static void onChangeData(ArrayList<Badge> goals){
+        badges = goals;
+        ((BadgeAdapter) listView.getAdapter()).notifyDataSetChanged();
+        //mAdapter = new BadgeAdapter(this, badges);
+        //listView.setAdapter(mAdapter);
+
+    }
+
+    public void initBadges(){
+        BadgeCalculator.addBadge("Swam 50 miles", 50, new Date());
+        BadgeCalculator.addBadge("Ran 500 miles", 500, new Date());
+//        ArrayList<Badge> badgesList = new ArrayList<>();
+//        badgesList.add(new Badge(R.drawable.small_trophy, "Swam 10 miles" , "10/20/18"));
+//        badgesList.add(new Badge(R.drawable.med_trophy, "Ran 20 miles" , "10/13/18"));
+//        badgesList.add(new Badge(R.drawable.big_trophy, "Biked 50 miles" , "10/08/18"));
+//        badgesList.add(new Badge(R.drawable.small_trophy, "Hiked 10 miles" , "10/01/18"));
+//        badgesList.add(new Badge(R.drawable.med_trophy, "Roller-bladed 20 miles" , "9/13/18"));
+//        badgesList.add(new Badge(R.drawable.big_trophy, "Biked 50 miles" , "9/08/18"));
+//        badgesList.add(new Badge(R.drawable.small_trophy, "Swam 10 miles" , "8/20/18"));
+//        badgesList.add(new Badge(R.drawable.med_trophy, "Ran 20 miles" , "8/13/18"));
+//        badgesList.add(new Badge(R.drawable.big_trophy, "Biked 50 miles" , "7/08/18"));
     }
 }

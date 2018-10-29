@@ -83,7 +83,6 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
             email = (String) savedInstanceState.getSerializable("EMAIL");
         }
 
-        setContentView(R.layout.activity_goals_display);
         createTable();
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
@@ -100,6 +99,7 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
     }
 
     public void createTable(){
+        setContentView(R.layout.activity_goals_display);
         this.defaultGoals = GoalCalculations.getGoals(email);
         mRecyclerView = findViewById(R.id.goalsLayout);
         Log.d("inside table", "create");

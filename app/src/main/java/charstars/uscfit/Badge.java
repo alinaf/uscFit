@@ -12,6 +12,9 @@ public class Badge {
     private String mDate;
 
     // Constructor that is used to create an instance of the Movie object
+    public Badge(){
+
+    }
     public Badge(int mTrophyNum, String mName, String mDate) {
         this.mTrophyNum = mTrophyNum;
         this.mName = mName;

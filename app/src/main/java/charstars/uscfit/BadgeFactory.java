@@ -10,19 +10,19 @@ import java.util.List;
 public class BadgeFactory extends android.app.Activity
 {
     public static Badge generateFifty(String name, Date d){
-        return new Badge(1, name, "TODAY");
+        return new Badge(R.drawable.small_trophy, name, d.toString());
     }
 
     public static Badge generateHundred(String name, Date d){
-        return new Badge(2, name, "TODAY");
+        return new Badge(R.drawable.med_trophy, name, d.toString());
     }
 
     public static Badge generateFiveHundred(String name, Date d){
-        return new Badge(3, name, "TODAY");
+        return new Badge(R.drawable.big_trophy, name, d.toString());
     }
 
     public static Badge generateThousand(String name, Date d){
-        return new Badge(4, name, "TODAY");
+        return new Badge(R.drawable.big_trophy, name, d.toString());
     }
 
 }

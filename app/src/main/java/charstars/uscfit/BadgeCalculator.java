@@ -5,11 +5,13 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class BadgeCalculator extends AppCompatActivity
 {
+    static BadgeDatabaseManager bm = BadgeDatabaseManager.getInstance();
     // adds badge to the database and shows a pop goal completed pop up message
     public static void addBadge(String b, int quant, Date date)
     {
@@ -31,17 +33,17 @@ public class BadgeCalculator extends AppCompatActivity
 
 
         }
-        BadgeDB.getBadges().add(bb);
+        bm.addBadge(bb);
 //        Toast.makeText(BadgeCalculator.this, "Goal Completed! New Badge Added.",
 //                Toast.LENGTH_SHORT).show();
     }
 
     public static void removeBadge(Badge b){
-        BadgeDB.getBadges().remove(b);
+        bm.removeBadge(b);
     }
 
-    public static List<Badge> getBadges(){
-        return BadgeDB.getBadges();
+    public static ArrayList<Badge> getBadges(){
+        return bm.getBadges();
     }
 
 }
