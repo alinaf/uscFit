@@ -46,5 +46,10 @@ public class PopUpInfoTest {
         assertEquals(uInfo.getAge(), 100);
         assertEquals(uInfo.getHeight(), 200, 0.001); // add small epsilon
         assertEquals(uInfo.getWeight(), 300, 0.001);
+
+        Assert.assertTrue(popUpInfo.updateUserInfo(uInfo, "5", "20.1", "20.5"));
+        assertEquals(uInfo.getAge(), 5);
+        assertEquals(uInfo.getHeight(), 20.1, 0.001); // add small epsilon
+        assertEquals(uInfo.getWeight(), 20.5, 0.001);
     }
 }
