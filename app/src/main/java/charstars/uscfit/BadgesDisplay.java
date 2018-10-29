@@ -132,6 +132,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
@@ -153,6 +154,8 @@ import android.view.View;
 
 public class BadgesDisplay extends AppCompatActivity
 {
+    private ListView listView;
+    private BadgeAdapter mAdapter;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -191,21 +194,25 @@ public class BadgesDisplay extends AppCompatActivity
         }
     };
 
-    ListView show;
     @Override
-    protected void onCreate (Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_badges_display);
 
-        show = (ListView)findViewById(R.id.badges_list_view);
+        listView = (ListView) findViewById(R.id.movies_list);
+        ArrayList<Badge> badgesList = new ArrayList<>();
+        badgesList.add(new Badge(R.drawable.small_trophy, "Swam 10 miles" , "10/20/18"));
+        badgesList.add(new Badge(R.drawable.med_trophy, "Ran 20 miles" , "10/13/18"));
+        badgesList.add(new Badge(R.drawable.big_trophy, "Biked 50 miles" , "10/08/18"));
+        badgesList.add(new Badge(R.drawable.small_trophy, "Hiked 10 miles" , "10/01/18"));
+        badgesList.add(new Badge(R.drawable.med_trophy, "Roller-bladed 20 miles" , "9/13/18"));
+        badgesList.add(new Badge(R.drawable.big_trophy, "Biked 50 miles" , "9/08/18"));
+        badgesList.add(new Badge(R.drawable.small_trophy, "Swam 10 miles" , "8/20/18"));
+        badgesList.add(new Badge(R.drawable.med_trophy, "Ran 20 miles" , "8/13/18"));
+        badgesList.add(new Badge(R.drawable.big_trophy, "Biked 50 miles" , "7/08/18"));
 
-        //BadgeDatabase.badgeCollection.add("Logged in Successfully");
-
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1 , goals);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.badges_list_row, BadgeDatabase.badgeCollection);
-
-        show.setAdapter(adapter);
+        mAdapter = new BadgeAdapter(this,badgesList);
+        listView.setAdapter(mAdapter);
 
     }
 }

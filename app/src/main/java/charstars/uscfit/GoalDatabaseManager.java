@@ -37,6 +37,10 @@ public class GoalDatabaseManager {
         this.goals = new ArrayList<Goal>();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if(currentUser == null){
+            return;
+        }
         DatabaseReference myRef = database.getReference("Users"); // will not be null
         DatabaseReference myRef1 = myRef.child(currentUser.getUid());
         if (myRef1 == null) { // will be null the first time
@@ -57,6 +61,9 @@ public class GoalDatabaseManager {
                 goals = new ArrayList<Goal>();
                 GenericTypeIndicator<List<Goal>> t = new GenericTypeIndicator<List<Goal>>() {};
                 List<Goal> gm = dataSnapshot.getValue(t);
+                if(gm == null){
+                    return;
+                }
                 Log.d("Hello", gm.toString());
                 if (gm != null && gm.size()!=0){
                     for (Goal entry : gm) {
