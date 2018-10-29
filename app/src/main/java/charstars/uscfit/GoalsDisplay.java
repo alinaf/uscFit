@@ -49,10 +49,10 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
                     return true;
 
                 case R.id.navigation_badges:
-                    setContentView(R.layout.activity_mainbadgedisplay);
+                    setContentView(R.layout.activity_badges_display);
                     Intent i = new Intent(GoalsDisplay.this, BadgesDisplay.class);
                     startActivity(i);
-                    navigation = findViewById(R.id.navigation2);
+                    navigation = findViewById(R.id.navigation);
                     navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
                     return true;
 

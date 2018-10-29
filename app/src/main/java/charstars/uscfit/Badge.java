@@ -4,38 +4,42 @@ import java.util.Date;
 
 public class Badge {
 
-    String description;
-    Date date;
+    // Store the id of the trophy
+    private int mTrophyNum;
+    // Store the name of the badge
+    private String mName;
+    // Store the date of the badge
+    private String mDate;
 
-    BadgeLevel level;
-
-    public Badge(String description, Date date, BadgeLevel b) {
-        this.description = description;
-        this.date = date;
-        this.level = b;
+    // Constructor that is used to create an instance of the Movie object
+    public Badge(int mTrophyNum, String mName, String mDate) {
+        this.mTrophyNum = mTrophyNum;
+        this.mName = mName;
+        this.mDate = mDate;
     }
 
-    public String getDescription() {
-        return description;
+    public int getmTrophyNum() {
+        return mTrophyNum;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setmTrophyNum(int mTrophyNum) {
+        this.mTrophyNum = mTrophyNum;
     }
 
-    public Date getDate() {
-        return date;
+    public String getmName() {
+        return mName;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-    public BadgeLevel getLevel() {
-        return level;
+    public void setmName(String mName) {
+        this.mName = mName;
     }
 
-    public void setLevel(BadgeLevel level) {
-        this.level = level;
+    public String getmDate() {
+        return mDate;
     }
 
-}
+    public void setmDate(String mDate) {
+        this.mDate = mDate;
+    }
+
+    }
