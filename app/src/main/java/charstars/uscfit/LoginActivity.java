@@ -177,6 +177,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         final String email = mEmailView.getText().toString();
         final String password = mPasswordView.getText().toString();
 
+        if (fieldsAreEmpty(email, password)) {
+            Log.d("tag", "Blank username or password");
+
+            Toast.makeText(LoginActivity.this, "Please fill out all fields!",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         cancel = false;
         View focusView = null;
 
@@ -281,6 +289,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public void signOut() {
         FirebaseAuth.getInstance().signOut();
     }
+
+    public boolean fieldsAreEmpty(String email, String password) {
+        return (email == null || email.length() == 0) || (password == null || password.length() == 0);
+        }
 
     /**
      * Shows the progress UI and hides the login form.

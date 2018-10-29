@@ -1,15 +1,18 @@
 package charstars.uscfit;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class LoginActivityTest {
+    LoginActivity la;
 
     @Before
     public void setUp() throws Exception {
+        la = new LoginActivity();
     }
 
     @After
@@ -17,30 +20,26 @@ public class LoginActivityTest {
     }
 
     @Test
-    public void onCreate() {
+    public void emptyEmail() {
+        Assert.assertTrue(la.fieldsAreEmpty("", "password"));
     }
 
     @Test
-    public void onStart() {
+    public void emptyPassword() {
+        Assert.assertTrue(la.fieldsAreEmpty("alina@alina.com", ""));
+
     }
 
     @Test
-    public void onRequestPermissionsResult() {
+    public void emptyBoth() {
+        Assert.assertTrue(la.fieldsAreEmpty("", ""));
+
     }
 
     @Test
-    public void signOut() {
+    public void validBoth() {
+        Assert.assertFalse(la.fieldsAreEmpty("alina@alina.com", "alinaalina"));
+
     }
 
-    @Test
-    public void onCreateLoader() {
-    }
-
-    @Test
-    public void onLoadFinished() {
-    }
-
-    @Test
-    public void onLoaderReset() {
-    }
 }
