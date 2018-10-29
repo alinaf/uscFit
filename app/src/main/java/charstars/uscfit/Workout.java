@@ -42,7 +42,6 @@ public class Workout {
     public Quantifier getQuant () { return this.quant; }
 
 
-    //public void setDate(int yr, int mnth, int dte, int hr, int min) { calendar.set(yr, mnth, dte, hr, min); }
     public String getDate() {
         String today = calendar.getTime().toString();
         return today;
