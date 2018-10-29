@@ -6,10 +6,11 @@ import java.util.Arrays;
 import java.util.List;
 
 // ADD TO THIS BY CALLING BadgeDatabase.badgeCollection.add("badge name");
-public class BadgeDatabase
+public class BadgeDatabase extends android.app.Activity
 {
     public static ArrayList<String> badgeCollection = new ArrayList<String>()
     {{
+        add("Successfully created account");
         add("7 Day Workout");
         add("20 Day Workout");
         add("Ran 2 miles");
