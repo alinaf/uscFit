@@ -14,24 +14,23 @@ import charstars.uscfit.Workout;
 public class GoalCalculations {
 
     private static int goalsThisWeek = 0;
-    private static GoalDatabaseManager gdb = GoalDatabaseManager.getInstance();
 
     public static boolean addGoal(Goal e, String email){
         Log.d("updating gc", e.toString());
-        gdb.addGoal(e);
+        GoalDatabaseManager.getInstance().addGoal(e);
         return true;
     }
     public static boolean removeGoal(Goal e, String email){
-        gdb.removeGoal(e);
+        GoalDatabaseManager.getInstance().removeGoal(e);
         return true;
     }
 
     //THIS CAN BE INVOKED BY OTHER CLASSES WHEN STEPS ARE COMPLETED OR AN ACTIVITY IS COMPLETED
     public static void calculateGoalProgress(Workout a, String email){
         List<Goal> completed = new ArrayList<Goal>();
-        int size = gdb.getGoals().size();
+        int size = GoalDatabaseManager.getInstance().getGoals().size();
         for(int i = 0; i<size; i++){
-            Goal g = gdb.getGoals().get(i);
+            Goal g = GoalDatabaseManager.getInstance().getGoals().get(i);
             String desc = g.getDescription().toLowerCase().trim();
             String workoutEx = a.getActivity().getCategory().toLowerCase().trim();
 
@@ -49,7 +48,7 @@ public class GoalCalculations {
             BadgeDatabase.badgeCollection.add(g.getDescription());
         }
 
-        gdb.updateGoalsDB();
+        GoalDatabaseManager.getInstance().updateGoalsDB();
     }
     public static void resetWeek(){
         goalsThisWeek = 0;
@@ -72,13 +71,13 @@ public class GoalCalculations {
     }
     public static List<Goal> getGoals(String email){
 
-        Log.d("inside GoalCalc", gdb.getGoals().toString());
+        Log.d("inside GoalCalc", GoalDatabaseManager.getInstance().getGoals().toString());
         return
-                gdb.getGoals();
+                GoalDatabaseManager.getInstance().getGoals();
     }
 
     public static void editGoal(Goal copy, Goal orig) {
-       Goal g = gdb.getGoal(orig);
+       Goal g = GoalDatabaseManager.getInstance().getGoal(orig);
         Log.d("GOAL ID", g.id()+" "+copy.id());
 
                g.setDescription(copy.getDescription());
@@ -86,9 +85,9 @@ public class GoalCalculations {
                g.setTrackingNum(copy.getTrackingNum());
 
 
-               for(Goal ggg: gdb.getGoals()){
+               for(Goal ggg: GoalDatabaseManager.getInstance().getGoals()){
                    Log.d("goal", ggg.getDescription());
                }
-        gdb.updateGoalsDB();
+        GoalDatabaseManager.getInstance().updateGoalsDB();
     }
 }
