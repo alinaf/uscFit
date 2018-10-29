@@ -30,15 +30,15 @@ public class DaysGoal extends Goal{
         }
         if(this.trackingNum == 7)
         {
-            BadgeDatabase.badgeCollection.add("Worked out every day for a week");
+            //BadgeDatabase.badgeCollection.add("Worked out every day for a week");
         }
         if(this.trackingNum == 20)
         {
-            BadgeDatabase.badgeCollection.add("Worked out for 20 days");
+            //BadgeDatabase.badgeCollection.add("Worked out for 20 days");
         }
         if(this.trackingNum == 365)
         {
-            BadgeDatabase.badgeCollection.add("Worked out every day for a year");
+            //BadgeDatabase.badgeCollection.add("Worked out every day for a year");
         }
         return true;
     }
