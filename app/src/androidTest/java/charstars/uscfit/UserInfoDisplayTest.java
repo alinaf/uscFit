@@ -17,7 +17,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 
-
 @RunWith(AndroidJUnit4.class)
 public class UserInfoDisplayTest {
 
@@ -31,7 +30,4 @@ public class UserInfoDisplayTest {
         onView(withId(R.id.edit_user_info)).perform(android.support.test.espresso.action.ViewActions.click());
         intended(hasComponent(PopUpInfo.class.getName()));
     }
-
-
-
 }
