@@ -34,5 +34,5 @@ public class BadgeTest {
         b.setmName("new name");
         Assert.assertEquals("new name", b.getmName());
     }
-*/
+
 }
