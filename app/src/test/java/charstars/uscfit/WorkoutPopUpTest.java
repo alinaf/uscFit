@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.util.GregorianCalendar;
 
 import charstars.uscfit.DataHandlers.UpdateWorkouts;
+import charstars.uscfit.RootObjects.Quantifier;
 
 import static org.junit.Assert.*;
 
