@@ -28,7 +28,7 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
     private static String email;
     private static List<Goal> defaultGoals = GoalCalculations.getGoals(email);
 
-    private static RecyclerView mRecyclerView;
+    private static RecyclerView mRecyclerView = null;
     private static RecyclerView.Adapter mAdapter;
     private static RecyclerView.LayoutManager mLayoutManager;
 
@@ -92,9 +92,12 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
 
     public static void onChangeData(List<Goal> goals){
         defaultGoals = goals;
-        ((GoalAdapter) mRecyclerView.getAdapter()).notifyDataSetChanged();
-        mAdapter = new GoalAdapter(defaultGoals);
-        mRecyclerView.setAdapter(mAdapter);
+        System.out.println("qianze: " + goals.get(0).getDescription());
+        if(mRecyclerView !=null) {
+            ((GoalAdapter) mRecyclerView.getAdapter()).notifyDataSetChanged();
+            mAdapter = new GoalAdapter(defaultGoals);
+            mRecyclerView.setAdapter(mAdapter);
+        }
 
     }
 
@@ -184,6 +187,7 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
 
                 return;
             }
+
             boolean successful = addGoal(goalType, goalNum, exerciseDescription);
 
             if(successful){

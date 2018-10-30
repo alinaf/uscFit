@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/custom_toast_container"
     android:orientation="horizontal"
@@ -8,11 +6,11 @@
     android:padding="8dp"
     android:background="#DAAA"
     >
-    <TextView android:id="@+id/goalsuccessview"
+    <TextView android:id="@+id/workoutfail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#FFF"
-        android:text="Successfully saved goal!"
+        android:text="Please use the calendar pickers to choose the date and time."
         android:textSize="30dp"
         android:padding="10dp"
         />

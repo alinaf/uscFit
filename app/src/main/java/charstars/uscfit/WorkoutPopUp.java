@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,6 +18,7 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -40,7 +43,7 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
     Button btnDatePicker, btnTimePicker;
     EditText txtDate, txtTime;
     private int mYear, mMonth, mDay, mHour, mMinute;
-    private int eYear, eMonth, eDay, eHour, eMinute;
+    private int eYear =-1, eMonth=-1, eDay=-1, eHour = -1, eMinute = -1;
 
     private ArrayList<Activity> activityList = new ArrayList<Activity>();
 
@@ -129,15 +132,35 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
 
     public void sendMessage(View view) {
         Activity activity = (Activity)((Spinner)findViewById(R.id.workoutSpinner)).getSelectedItem();
-         int length = (((NumberPicker)findViewById(R.id.lengthPicker)).getValue());
+        int length = (((NumberPicker)findViewById(R.id.lengthPicker)).getValue());
         Quantifier quant = Quantifier.valueOf(((Spinner)findViewById(R.id.quantifierOption)).getSelectedItem().toString());
-        GregorianCalendar cal = new GregorianCalendar(eYear, eMonth, eDay, eHour, eMinute);
-        Workout workout = new Workout(activity, quant, length, cal);
-        UpdateWorkouts.addWorkout(workout,email);
+        int year = eYear;
+        int month = eMonth;
+        int day = eDay;
+        int hour = eHour;
+        int minute = eMinute;
+
+        if(!addWorkout(activity, quant, length, year, month, day, hour, minute)) {
+            DisplayToast();
+            return;
+        }
         finish();
     }
 
+    public boolean addWorkout(Activity activity, Quantifier quant, int length, int year, int month, int day, int hour, int minute) {
+        if(activity == null || !isCalendarSet(year, month, day, hour, minute)) {
+            return false;
+        }
+        GregorianCalendar cal = new GregorianCalendar(year, month, day, hour, minute);
+        Workout workout = new Workout(activity, quant, length, cal);
+        writeToDatabase(workout);
+        return true;
+    }
 
+    //Need to include firebase
+    public void writeToDatabase(Workout workout) {
+        UpdateWorkouts.addWorkout(workout,email);
+    }
 
     @Override
     public void onClick(View v) {
@@ -181,7 +204,6 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay,
                                               int minute) {
-
                             txtTime.setText(hourOfDay + ":" + minute);
                             eHour = hourOfDay;
                             eMinute = minute;
@@ -189,5 +211,32 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
                     }, mHour, mMinute, false);
             timePickerDialog.show();
         }
+    }
+
+    public boolean isCalendarSet(int year, int month, int day, int hour, int minute) {
+        if(year < 1970)
+            return false;
+        if(month < 0 || month > 12)
+            return false;
+        if(day < 1 || day > 31)
+            return false;
+        if(hour < 0 || hour >=24 )
+            return false;
+        if(minute < 0 || minute >= 60)
+            return false;
+        return true;
+    }
+
+    public void DisplayToast() {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout;
+
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.setDuration(Toast.LENGTH_SHORT);
+
+        layout = inflater.inflate(R.layout.workoutfail,null);
+        toast.setView(layout);
+        toast.show();
     }
 }
