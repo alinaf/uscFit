@@ -5,14 +5,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.GregorianCalendar;
-
-import charstars.uscfit.Activity;
 import charstars.uscfit.Goal;
-import charstars.uscfit.GoalDatabaseManager;
 import charstars.uscfit.MilesGoal;
-import charstars.uscfit.Quantifier;
-import charstars.uscfit.Workout;
 
 public class GoalCalculationsTest {
     GoalCalculations gc;

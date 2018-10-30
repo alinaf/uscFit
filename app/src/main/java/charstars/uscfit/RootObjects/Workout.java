@@ -1,10 +1,9 @@
-package charstars.uscfit;
+package charstars.uscfit.RootObjects;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
+
+import charstars.uscfit.Activity;
 
 
 public class Workout {

@@ -1,5 +1,7 @@
 package charstars.uscfit;
 
+import charstars.uscfit.RootObjects.Quantifier;
+
 public class MilesGoal extends Goal{
 
     public MilesGoal(String desc, int gNum, int tNum){

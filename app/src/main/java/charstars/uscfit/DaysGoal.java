@@ -2,7 +2,10 @@ package charstars.uscfit;
 
 import java.util.Date;
 
-public class DaysGoal extends Goal{
+import charstars.uscfit.Goal;
+import charstars.uscfit.RootObjects.Quantifier;
+
+public class DaysGoal extends Goal {
 
     Date startingDate;
 

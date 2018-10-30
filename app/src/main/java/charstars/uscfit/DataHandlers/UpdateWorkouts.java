@@ -3,8 +3,8 @@ package charstars.uscfit.DataHandlers;
 import java.util.ArrayList;
 import java.util.List;
 
-import charstars.uscfit.SampleWorkoutDatabase;
-import charstars.uscfit.Workout;
+import charstars.uscfit.DatabaseHandlers.SampleWorkoutDatabase;
+import charstars.uscfit.RootObjects.Workout;
 
 public class UpdateWorkouts {
 

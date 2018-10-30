@@ -28,6 +28,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import charstars.uscfit.DataHandlers.UpdateWorkouts;
+import charstars.uscfit.RootObjects.Quantifier;
+import charstars.uscfit.RootObjects.Workout;
 
 public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListener {
     Workout w;

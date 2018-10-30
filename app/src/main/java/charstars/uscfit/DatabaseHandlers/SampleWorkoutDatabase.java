@@ -1,8 +1,12 @@
-package charstars.uscfit;
+package charstars.uscfit.DatabaseHandlers;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import charstars.uscfit.Activity;
+import charstars.uscfit.RootObjects.Quantifier;
+import charstars.uscfit.RootObjects.Workout;
 
 public class SampleWorkoutDatabase {
 

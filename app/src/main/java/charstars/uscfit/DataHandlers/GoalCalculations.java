@@ -3,13 +3,13 @@ package charstars.uscfit.DataHandlers;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import charstars.uscfit.Activity;
 //import charstars.uscfit.BadgeDatabase;
 import charstars.uscfit.Goal;
-import charstars.uscfit.GoalDatabaseManager;
-import charstars.uscfit.Workout;
+import charstars.uscfit.DatabaseHandlers.GoalDatabaseManager;
+import charstars.uscfit.RootObjects.Workout;
 
 public class GoalCalculations {
 
@@ -64,8 +64,27 @@ public class GoalCalculations {
     //notification that goal is completed
         // add badge somwhere
         //remove from list
+        String q = "";
+        if(e.getGoalNum()==1){
+            q = e.getQuantifier().substring(0, e.getQuantifier().length()-1);
+        }else{
+            q = e.getQuantifier();
+        }
+        String desc = "Completed: " + e.getDescription() + " " + e.getGoalNum() + " " + q;
+        BadgeCalculator.addBadge(desc, e.getGoalNum(), (new Date()));
         removeGoal(e, email);
+
         goalsThisWeek++;
+
+        if(goalsThisWeek == 50){
+            BadgeCalculator.addBadge("Completed 50 goals", 50, (new Date()));
+        }
+        if(goalsThisWeek == 100){
+            BadgeCalculator.addBadge("Completed 100 goals", 100, (new Date()));
+        }
+        if(goalsThisWeek == 500){
+            BadgeCalculator.addBadge("Completed 500 goals", 500, (new Date()));
+        }
         Log.d("GOALCALC", "FINISHED GOAL "+ e.getDescription());
 
     }

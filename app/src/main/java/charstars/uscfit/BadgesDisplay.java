@@ -5,41 +5,19 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.NumberPicker;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import charstars.uscfit.DataHandlers.GoalCalculations;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
-import android.widget.Toast;
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.View;
+import charstars.uscfit.Adapters.BadgeAdapter;
+import charstars.uscfit.DataHandlers.BadgeCalculator;
+import charstars.uscfit.RootObjects.Badge;
 
 public class BadgesDisplay extends AppCompatActivity
 {
-    private static ArrayList<Badge> badges = BadgeCalculator.getBadges();
+    private static ArrayList<Badge> badges;
     private static ListView listView;
     private static BadgeAdapter mAdapter;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -55,7 +33,7 @@ public class BadgesDisplay extends AppCompatActivity
                     //createTable();
                     Intent i = new Intent(BadgesDisplay.this, GoalsDisplay.class);
                     startActivity(i);
-                    navigation = findViewById(R.id.navigation);
+                    navigation = findViewById(R.id.navigationGoals);
                     navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
                     return true;
 
@@ -85,9 +63,14 @@ public class BadgesDisplay extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_badges_display);
         //initBadges();
+        BadgeCalculator.initDB();
+        badges = BadgeCalculator.getBadges();
+        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         listView = (ListView) findViewById(R.id.movies_list);
         mAdapter = new BadgeAdapter(this,badges);
         listView.setAdapter(mAdapter);
+
 
     }
 

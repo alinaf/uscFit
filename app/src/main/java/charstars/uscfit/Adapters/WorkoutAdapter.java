@@ -1,4 +1,4 @@
-package charstars.uscfit;
+package charstars.uscfit.Adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
+
+import charstars.uscfit.R;
+import charstars.uscfit.RootObjects.Workout;
 
 public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.MyViewHolder> {
 

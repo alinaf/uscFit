@@ -1,4 +1,4 @@
-package charstars.uscfit;
+package charstars.uscfit.RootObjects;
 
 import java.util.Date;
 

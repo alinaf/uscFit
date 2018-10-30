@@ -13,16 +13,16 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
 
+import charstars.uscfit.Adapters.GoalAdapter;
 import charstars.uscfit.DataHandlers.GoalCalculations;
+import charstars.uscfit.RootObjects.Quantifier;
 
 public class GoalsDisplay extends AppCompatActivity implements View.OnClickListener{
     private static String email;
@@ -44,11 +44,12 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
                     setContentView(R.layout.activity_goals_display);
                     createTable();
 
-                    navigation = findViewById(R.id.navigation);
+                    navigation = findViewById(R.id.navigationGoals);
                     navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
                     return true;
 
                 case R.id.navigation_badges:
+                    Log.d("nav to badges", "badge");
                     setContentView(R.layout.activity_badges_display);
                     Intent i = new Intent(GoalsDisplay.this, BadgesDisplay.class);
                     startActivity(i);
@@ -57,6 +58,7 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
                     return true;
 
                 case R.id.navigation_addGoal:
+                    Log.d("nav to add", "add goal");
                     setContentView(R.layout.addgoal);
                     clearAddGoalFields();
 
@@ -64,6 +66,7 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
                     navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
                     return true;
             }
+            Log.d("didnt get nav???", "create");
             return false;
         }
     };
@@ -85,9 +88,6 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
 
         createTable();
 
-        BottomNavigationView navigation = findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
     }
 
     public static void onChangeData(List<Goal> goals){
@@ -100,6 +100,8 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
 
     public void createTable(){
         setContentView(R.layout.activity_goals_display);
+        BottomNavigationView navigation = findViewById(R.id.navigationGoals);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         this.defaultGoals = GoalCalculations.getGoals(email);
         mRecyclerView = findViewById(R.id.goalsLayout);
         Log.d("inside table", "create");

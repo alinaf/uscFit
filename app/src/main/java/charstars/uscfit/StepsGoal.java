@@ -1,5 +1,7 @@
 package charstars.uscfit;
 
+import charstars.uscfit.RootObjects.Quantifier;
+
 public class StepsGoal extends Goal {
 
     public StepsGoal(int gNum, int tNum){

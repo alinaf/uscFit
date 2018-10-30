@@ -1,14 +1,14 @@
 package charstars.uscfit;
-import android.widget.ArrayAdapter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
+
+import charstars.uscfit.RootObjects.Badge;
 
 // ADD TO THIS BY CALLING BadgeDatabase.badgeCollection.add("badge name");
 public class BadgeFactory extends android.app.Activity
 {
+    //generates badges of different sizes by passing in name/desc and date
+
     public static Badge generateFifty(String name, Date d){
         return new Badge(R.drawable.small_trophy, name, d.toString());
     }

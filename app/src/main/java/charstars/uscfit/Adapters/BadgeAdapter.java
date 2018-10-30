@@ -1,4 +1,4 @@
-package charstars.uscfit;
+package charstars.uscfit.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -14,6 +14,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import charstars.uscfit.RootObjects.Badge;
+import charstars.uscfit.R;
 
 
 public class BadgeAdapter extends ArrayAdapter<Badge> {

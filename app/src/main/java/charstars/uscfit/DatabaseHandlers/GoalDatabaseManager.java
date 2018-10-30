@@ -1,4 +1,4 @@
-package charstars.uscfit;
+package charstars.uscfit.DatabaseHandlers;
 
         import android.util.Log;
 
@@ -12,12 +12,17 @@ package charstars.uscfit;
         import com.google.firebase.database.ValueEventListener;
 
         import java.util.ArrayList;
-        import java.util.Arrays;
-        import java.util.Collections;
         import java.util.Date;
         import java.util.HashMap;
         import java.util.List;
         import java.util.Map;
+
+        import charstars.uscfit.DaysGoal;
+        import charstars.uscfit.Goal;
+        import charstars.uscfit.GoalsDisplay;
+        import charstars.uscfit.MilesGoal;
+        import charstars.uscfit.MinutesGoal;
+        import charstars.uscfit.StepsGoal;
 
 public class GoalDatabaseManager {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -51,7 +56,7 @@ public class GoalDatabaseManager {
         // This method is called once with the initial value and again
         // whenever data at this location is updated.
 
-        // Read from the database
+  // Read from the database
         myRef2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

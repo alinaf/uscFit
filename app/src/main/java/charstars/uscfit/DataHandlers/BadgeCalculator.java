@@ -1,18 +1,19 @@
-package charstars.uscfit;
+package charstars.uscfit.DataHandlers;
 
-import android.app.AlertDialog;
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
+import charstars.uscfit.RootObjects.Badge;
+import charstars.uscfit.DatabaseHandlers.BadgeDatabaseManager;
+import charstars.uscfit.BadgeFactory;
 
 public class BadgeCalculator extends AppCompatActivity
 {
     static BadgeDatabaseManager bm = BadgeDatabaseManager.getInstance();
-    // adds badge to the database and shows a pop goal completed pop up message
+    //takes in a name/description, quanitity of goal completed, and date of completion
+    //generates correct badge and adds to database
     public static void addBadge(String b, int quant, Date date)
     {
 
@@ -43,7 +44,14 @@ public class BadgeCalculator extends AppCompatActivity
     }
 
     public static ArrayList<Badge> getBadges(){
+        if(bm==null){
+           initDB();
+        }
         return bm.getBadges();
+    }
+
+    public static void initDB(){
+         bm = BadgeDatabaseManager.getInstance();
     }
 
 }

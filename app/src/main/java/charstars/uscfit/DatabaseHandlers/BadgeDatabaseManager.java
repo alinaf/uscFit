@@ -1,4 +1,4 @@
-package charstars.uscfit;
+package charstars.uscfit.DatabaseHandlers;
 
 import android.util.Log;
 
@@ -12,17 +12,15 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+
+import charstars.uscfit.RootObjects.Badge;
+import charstars.uscfit.BadgesDisplay;
 
 public class BadgeDatabaseManager {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static BadgeDatabaseManager bm = null;
-    private static ArrayList<Badge> badges;
-    private boolean oninit = true;
+    private static ArrayList<Badge> badges = null;
+    private boolean changed = true;
 
     public static BadgeDatabaseManager getInstance() {
         if(bm == null){
@@ -31,8 +29,8 @@ public class BadgeDatabaseManager {
         return bm;
     }
 
-    private BadgeDatabaseManager() {
-        this.badges = new ArrayList<Badge>();
+    public void query(){
+        badges = new ArrayList<Badge>();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
@@ -48,7 +46,6 @@ public class BadgeDatabaseManager {
 
         // This method is called once with the initial value and again
         // whenever data at this location is updated.
-
         // Read from the database
         myRef2.addValueEventListener(new ValueEventListener() {
             @Override
@@ -65,14 +62,14 @@ public class BadgeDatabaseManager {
                 Log.d("Hello", bm.toString());
                 if (bm != null && bm.size()!=0){
                     for (Badge entry : bm) {
-                       badges.add(entry);
+                        badges.add(entry);
                     }
                 }else{
                     Log.d("BadgeDB", "Badges don't exist");
                 }
 
                 if(onInit){
-                    BadgesDisplay.onChangeData(badges);
+                   BadgesDisplay.onChangeData(badges);
                     onInit = false;
                 }
 
@@ -86,10 +83,16 @@ public class BadgeDatabaseManager {
         });
     }
 
+    private BadgeDatabaseManager() {
+        query();
+
+    }
+
     public void addBadge(Badge e) {
         if(!badges.contains(e)){
             badges.add(e);
         }
+        this.updateBadgesDB();
     }
 
     public void removeBadge(Badge e) {
@@ -102,6 +105,9 @@ public class BadgeDatabaseManager {
     }
 
     public ArrayList<Badge> getBadges() {
+        if(this.badges == null){
+            query();
+        }
         Log.d("inside gdb, get badges", this.badges.toString());
         return this.badges;
     }
