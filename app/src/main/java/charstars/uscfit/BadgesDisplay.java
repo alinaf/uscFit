@@ -1,119 +1,3 @@
-//package charstars.uscfit;
-//
-//import android.content.Context;
-//import android.os.Bundle;
-//import android.support.v7.app.AppCompatActivity;
-//import android.view.View;
-//import android.view.ViewGroup;
-//import android.widget.AdapterView;
-//import android.widget.BaseAdapter;
-//import android.widget.GridView;
-//import android.widget.ImageView;
-//import android.widget.Toast;
-//
-//public class BadgesDisplay extends AppCompatActivity {
-//
-//    GridView androidGridView;
-//
-//    Integer[] imageIDs = {
-//            R.drawable.trophy, R.drawable.trophy, R.drawable.trophy,
-//            R.drawable.trophy, R.drawable.trophy, R.drawable.trophy,
-//            R.drawable.trophy, R.drawable.trophy, R.drawable.trophy,
-//            R.drawable.trophy, R.drawable.trophy, R.drawable.trophy
-//
-////            R.drawable.email, R.drawable.mobile, R.drawable.alram,
-////            R.drawable.android, R.drawable.wordpress, R.drawable.web,
-////            R.drawable.email, R.drawable.mobile, R.drawable.alram,
-////            R.drawable.android, R.drawable.wordpress, R.drawable.web,
-////            R.drawable.email, R.drawable.mobile, R.drawable.alram,
-////            R.drawable.android, R.drawable.wordpress, R.drawable.web,
-//    };
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_badges_display);
-//
-//        androidGridView = (GridView) findViewById(R.id.gridview_android_example);
-//        androidGridView.setAdapter(new ImageAdapterGridView(this));
-//
-//        androidGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            public void onItemClick(AdapterView<?> parent,
-//                                    View v, int position, long id) {
-//                Toast.makeText(getBaseContext(), "Grid Item " + (position + 1) + " Selected", Toast.LENGTH_LONG).show();
-//            }
-//        });
-//
-//    }
-//
-//    public class ImageAdapterGridView extends BaseAdapter {
-//        private Context mContext;
-//
-//        public ImageAdapterGridView(Context c) {
-//            mContext = c;
-//        }
-//
-//        public int getCount() {
-//            return imageIDs.length;
-//        }
-//
-//        public Object getItem(int position) {
-//            return null;
-//        }
-//
-//        public long getItemId(int position) {
-//            return 0;
-//        }
-//
-//        public View getView(int position, View convertView, ViewGroup parent) {
-//            ImageView mImageView;
-//
-//            if (convertView == null) {
-//                mImageView = new ImageView(mContext);
-//                mImageView.setLayoutParams(new GridView.LayoutParams(130, 130));
-//                mImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//                mImageView.setPadding(16, 16, 16, 16);
-//            } else {
-//                mImageView = (ImageView) convertView;
-//            }
-//            mImageView.setImageResource(imageIDs[position]);
-//            return mImageView;
-//        }
-//    }
-//}
-
-
-//package charstars.uscfit;
-//
-//import android.os.Bundle;
-//import android.support.design.widget.FloatingActionButton;
-//import android.support.design.widget.Snackbar;
-//import android.support.v7.app.AppCompatActivity;
-//import android.support.v7.widget.Toolbar;
-//import android.view.View;
-//
-//public class BadgesDisplay extends AppCompatActivity {
-//
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_badges_display);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-//    }
-//
-//}
-
 package charstars.uscfit;
 
 import android.content.Intent;
@@ -121,41 +5,21 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.NumberPicker;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
-import charstars.uscfit.DataHandlers.GoalCalculations;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
-import android.widget.Toast;
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.View;
+import charstars.uscfit.Adapters.BadgeAdapter;
+import charstars.uscfit.DataHandlers.BadgeCalculator;
+import charstars.uscfit.RootObjects.Badge;
 
 public class BadgesDisplay extends AppCompatActivity
 {
-    private ListView listView;
-    private BadgeAdapter mAdapter;
+    private static ArrayList<Badge> badges;
+    private static ListView listView;
+    private static BadgeAdapter mAdapter;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -169,7 +33,7 @@ public class BadgesDisplay extends AppCompatActivity
                     //createTable();
                     Intent i = new Intent(BadgesDisplay.this, GoalsDisplay.class);
                     startActivity(i);
-                    navigation = findViewById(R.id.navigation);
+                    navigation = findViewById(R.id.navigationGoals);
                     navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
                     return true;
 
@@ -198,21 +62,40 @@ public class BadgesDisplay extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_badges_display);
-
+        //initBadges();
+        BadgeCalculator.initDB();
+        badges = BadgeCalculator.getBadges();
+        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         listView = (ListView) findViewById(R.id.movies_list);
-        ArrayList<Badge> badgesList = new ArrayList<>();
-        badgesList.add(new Badge(R.drawable.small_trophy, "Swam 10 miles" , "10/20/18"));
-        badgesList.add(new Badge(R.drawable.med_trophy, "Ran 20 miles" , "10/13/18"));
-        badgesList.add(new Badge(R.drawable.big_trophy, "Biked 50 miles" , "10/08/18"));
-        badgesList.add(new Badge(R.drawable.small_trophy, "Hiked 10 miles" , "10/01/18"));
-        badgesList.add(new Badge(R.drawable.med_trophy, "Roller-bladed 20 miles" , "9/13/18"));
-        badgesList.add(new Badge(R.drawable.big_trophy, "Biked 50 miles" , "9/08/18"));
-        badgesList.add(new Badge(R.drawable.small_trophy, "Swam 10 miles" , "8/20/18"));
-        badgesList.add(new Badge(R.drawable.med_trophy, "Ran 20 miles" , "8/13/18"));
-        badgesList.add(new Badge(R.drawable.big_trophy, "Biked 50 miles" , "7/08/18"));
-
-        mAdapter = new BadgeAdapter(this,badgesList);
+        mAdapter = new BadgeAdapter(this,badges);
         listView.setAdapter(mAdapter);
 
+
+    }
+
+
+
+    public static void onChangeData(ArrayList<Badge> goals){
+        badges = goals;
+        ((BadgeAdapter) listView.getAdapter()).notifyDataSetChanged();
+        //mAdapter = new BadgeAdapter(this, badges);
+        //listView.setAdapter(mAdapter);
+
+    }
+
+    public void initBadges(){
+        BadgeCalculator.addBadge("Swam 50 miles", 50, new Date());
+        BadgeCalculator.addBadge("Ran 500 miles", 500, new Date());
+//        ArrayList<Badge> badgesList = new ArrayList<>();
+//        badgesList.add(new Badge(R.drawable.small_trophy, "Swam 10 miles" , "10/20/18"));
+//        badgesList.add(new Badge(R.drawable.med_trophy, "Ran 20 miles" , "10/13/18"));
+//        badgesList.add(new Badge(R.drawable.big_trophy, "Biked 50 miles" , "10/08/18"));
+//        badgesList.add(new Badge(R.drawable.small_trophy, "Hiked 10 miles" , "10/01/18"));
+//        badgesList.add(new Badge(R.drawable.med_trophy, "Roller-bladed 20 miles" , "9/13/18"));
+//        badgesList.add(new Badge(R.drawable.big_trophy, "Biked 50 miles" , "9/08/18"));
+//        badgesList.add(new Badge(R.drawable.small_trophy, "Swam 10 miles" , "8/20/18"));
+//        badgesList.add(new Badge(R.drawable.med_trophy, "Ran 20 miles" , "8/13/18"));
+//        badgesList.add(new Badge(R.drawable.big_trophy, "Biked 50 miles" , "7/08/18"));
     }
 }

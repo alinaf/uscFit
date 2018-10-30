@@ -18,7 +18,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class AddBadgesTest
 {
     @Rule
-    public final ActivityRule<BadgeDatabase> main = new ActivityRule<>(BadgeDatabase.class);
+   // public final ActivityRule<BadgeDatabase> main = new ActivityRule<>(BadgeDatabase.class);
 
     @Test
     public void seeMessageFromHomeScreen() {
