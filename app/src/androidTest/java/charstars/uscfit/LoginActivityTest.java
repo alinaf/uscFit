@@ -32,11 +32,6 @@ public class LoginActivityTest {
     }
 
     @Test
-    public void buttonIsDisplayed() {
-        onView(withId(R.id.email_sign_in_button)).check(matches(isDisplayed()));
-    }
-
-    @Test
     public void buttonIsCompletelyDisplayed() {
         onView(withId(R.id.email_sign_in_button)).check(matches(isCompletelyDisplayed()));
     }
