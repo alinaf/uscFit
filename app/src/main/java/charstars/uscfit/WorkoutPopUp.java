@@ -141,8 +141,11 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
         int minute = eMinute;
 
         if(!addWorkout(activity, quant, length, year, month, day, hour, minute)) {
-            DisplayToast();
+            DisplayToast(false);
             return;
+        }
+        else {
+            DisplayToast(true);
         }
         finish();
     }
@@ -227,15 +230,17 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-    public void DisplayToast() {
+    public void DisplayToast(boolean value) {
         LayoutInflater inflater = getLayoutInflater();
-        View layout;
+        View layout = null;
 
         Toast toast = new Toast(getApplicationContext());
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         toast.setDuration(Toast.LENGTH_SHORT);
-
-        layout = inflater.inflate(R.layout.workoutfail,null);
+        if(!value)
+            layout = inflater.inflate(R.layout.workoutfail,null);
+        else if(value)
+            layout = inflater.inflate(R.layout.workoutsuccess,null);
         toast.setView(layout);
         toast.show();
     }
