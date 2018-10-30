@@ -29,21 +29,18 @@ public class NavigationTest {
     @Test
     public void goalNavigation()
     {
-        //onView(withId(R.id.email_sign_in_button)).check(matches(isEnabled()));
         onView(withId(R.id.navigation_goals)).check(matches(isDisplayed()));
     }
 
     @Test
     public void badgeNavigation()
     {
-        //onView(withId(R.id.email_sign_in_button)).check(matches(isEnabled()));
         onView(withId(R.id.navigation_badges)).check(matches(isDisplayed()));
     }
 
     @Test
     public void addGoalsNavigation()
     {
-        //onView(withId(R.id.email_sign_in_button)).check(matches(isEnabled()));
         onView(withId(R.id.navigation_addGoal)).check(matches(isDisplayed()));
     }
 
