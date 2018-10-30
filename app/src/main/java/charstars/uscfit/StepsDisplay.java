@@ -60,25 +60,26 @@ public class StepsDisplay extends AppCompatActivity implements SensorEventListen
 
 
     public void onClick(View v) {
+        System.out.println("clicked");
         if(v.getId() == R.id.goalRowLayout){
             Goal g = (Goal) v.getTag();
             if(g.getQuantifier().equals(Quantifier.DAYS.getMeasurement()) || g.getQuantifier().equals(Quantifier.STEPS.getMeasurement())){
                 return;
-            }//what does this do topeka!!
+            }
             Intent i = new Intent(StepsDisplay.this, EditPopUpInfo.class);
             i.putExtra("GOAL", g);
             startActivity(i);
 
 
         }
-        if(v.getId() == R.id.addGoal){
-            EditText e = findViewById(R.id.numSteps);
+        if(v.getId() == R.id.addStepsGoal_button){
+            EditText e = findViewById(R.id.numSteps_input);
             //Spinner spinner = (Spinner) findViewById(R.id.goalSpinner);
             //NumberPicker num = (NumberPicker)findViewById(R.id.numberPicker);
 
             String exerciseDescription = "walk";
             String numStepsString = e.getText().toString();
-            System.out.println("qianze: " + numStepsString);
+            //System.out.println("qianze: " + numStepsString);
             int numStepsInt = Integer.parseInt(numStepsString);
             //String goalType = spinner.getSelectedItem().toString(); perhaps use in future for daily or weekly goal
                     //next sprint: allow user to schedule steps for a specific week or day
