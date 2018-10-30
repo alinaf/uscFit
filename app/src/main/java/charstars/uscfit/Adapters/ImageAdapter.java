@@ -1,4 +1,4 @@
-package charstars.uscfit;
+package charstars.uscfit.Adapters;
 
 import android.widget.BaseAdapter;
 import android.content.Context;
@@ -17,6 +17,8 @@ import android.widget.Button;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import charstars.uscfit.R;
 
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;

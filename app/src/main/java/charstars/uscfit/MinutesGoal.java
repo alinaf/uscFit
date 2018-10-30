@@ -1,5 +1,7 @@
 package charstars.uscfit;
 
+import charstars.uscfit.RootObjects.Quantifier;
+
 public class MinutesGoal extends Goal {
 
     public MinutesGoal(String desc, int gNum, int tNum){

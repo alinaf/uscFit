@@ -6,4 +6,6 @@
     <color name="white">#ffffff</color>
     <color name="year">#c9abc0</color>
     <color name="title">#ffffff</color>
+    <color name="viewBg">#f1f5f8</color>
+    <color name="album_title">#4c4c4c</color>
 </resources>
