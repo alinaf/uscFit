@@ -1,4 +1,4 @@
-package charstars.uscfit;
+package charstars.uscfit.RootObjects;
 
 public enum Quantifier
 {

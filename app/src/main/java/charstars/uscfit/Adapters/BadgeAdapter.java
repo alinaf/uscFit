@@ -1,5 +1,6 @@
-package charstars.uscfit;
+package charstars.uscfit.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -14,13 +15,16 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import charstars.uscfit.RootObjects.Badge;
+import charstars.uscfit.R;
+
 
 public class BadgeAdapter extends ArrayAdapter<Badge> {
 
     private Context mContext;
     private List<Badge> moviesList = new ArrayList<>();
 
-    public BadgeAdapter(@NonNull Context context, @LayoutRes ArrayList<Badge> list) {
+    public BadgeAdapter(@NonNull Context context, @SuppressLint("SupportAnnotationUsage") @LayoutRes ArrayList<Badge> list) {
         super(context, 0 , list);
         mContext = context;
         moviesList = list;

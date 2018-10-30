@@ -1,4 +1,4 @@
-package charstars.uscfit;
+package charstars.uscfit.Adapters;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -9,11 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Button;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
+
+import charstars.uscfit.Goal;
+import charstars.uscfit.RootObjects.Quantifier;
+import charstars.uscfit.R;
 
 public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.MyViewHolder> {
     private List<Goal> mDataset;

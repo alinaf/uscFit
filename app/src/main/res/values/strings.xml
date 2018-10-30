@@ -26,6 +26,10 @@
     <string name="title_activity_user_info">userInfo</string>
     <string name="title_goals">Goals</string>
     <string name="title_addGoal">Add Goal</string>
+    <string name="action_add_favourite">Add to Favourites</string>
+    <string name="action_play_next">Play Next</string>
+    <string name="backdrop_title">LOVE MUSIC</string>
+    <string name="backdrop_subtitle">This season top 20 albums</string>
     <string-array name="goalOptions">
         <item>Miles</item>
         <item>Minutes</item>
@@ -45,4 +49,5 @@
         <item>MINUTES</item>
     </string-array>
     <string name="title_activity_badges_display">BadgesDisplay</string>
+    <string name="title_activity_mainbadgedisplay">mainbadgedisplay</string>
 </resources>

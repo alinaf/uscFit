@@ -1,6 +1,5 @@
 package charstars.uscfit;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,20 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-import charstars.uscfit.Activity;
-import charstars.uscfit.ActivityAdapter;
+import charstars.uscfit.Adapters.WorkoutAdapter;
 import charstars.uscfit.DataHandlers.UpdateWorkouts;
-import charstars.uscfit.R;
+import charstars.uscfit.RootObjects.Workout;
 
 public class WorkoutList extends AppCompatActivity {
     private String email;
