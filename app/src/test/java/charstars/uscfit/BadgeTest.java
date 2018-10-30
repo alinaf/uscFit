@@ -10,23 +10,7 @@ import charstars.uscfit.RootObjects.Badge;
 import static org.junit.Assert.*;
 
 public class BadgeTest {
-<<<<<<< HEAD
 
-//    @Test
-//    public void badgeCalculator() // checks whether new badge is being added to database
-//    {
-//        BadgeCalculator.addBadge("new badge");
-//        Assert.assertTrue(BadgeDatabase.badgeCollection.contains("new badge"));
-//    }
-=======
-/*
-    @Test
-    public void badgeCalculator() // checks whether new badge is being added to database
-    {
-        //BadgeCalculator.addBadge("new badge");
-      //  Assert.assertTrue(BadgeDatabase.badgeCollection.contains("new badge"));
-    }
->>>>>>> 767df1eb4edef3ce32f2ed93e5bd3f20da183719
 
     @Test
     public void trophyTest() {
