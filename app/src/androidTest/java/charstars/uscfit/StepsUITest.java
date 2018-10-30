@@ -63,7 +63,7 @@ public class StepsUITest
     }
 
     @Test
-    public void stepsGoalSubmission(){//this one still fails hmMMM
+    public void stepsGoalSubmission(){
         onView(withId(R.id.navigation_addGoal)).perform(click());
         onView(withId(R.id.numSteps_input)).perform(typeText("500"));
         Espresso.closeSoftKeyboard();

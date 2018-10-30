@@ -23,9 +23,13 @@ import java.util.List;
 
 import charstars.uscfit.DataHandlers.GoalCalculations;
 
+import static java.lang.Character.isDigit;
+
 public class StepsDisplay extends AppCompatActivity implements SensorEventListener {
+
+
     private static String email;
-    private static List<Goal> defaultGoals = GoalCalculations.getGoals(email);
+    private static List<Goal> defaultGoals;
 
     SensorManager sensorManager;
 
@@ -60,6 +64,7 @@ public class StepsDisplay extends AppCompatActivity implements SensorEventListen
 
 
     public void onClick(View v) {
+        defaultGoals = GoalCalculations.getGoals(email);
         System.out.println("clicked");
         if(v.getId() == R.id.goalRowLayout){
             Goal g = (Goal) v.getTag();
@@ -120,7 +125,22 @@ public class StepsDisplay extends AppCompatActivity implements SensorEventListen
         }
     }
 
-    //use this for a white box test -- Qianze
+
+    public boolean addStepsGoal(String goalType, String goalNumString, String exerciseDescription){
+        int goalNum = 0;
+        if(goalNumString == null || goalNumString.equals("")){
+            return false;
+        }
+        for (char ch : goalNumString.toCharArray()){
+            if(!isDigit(ch)){
+                return false;
+            }
+        }
+        {
+            return true;
+        }
+    }
+
     public boolean addGoal(String goalType, int goalNum, String exerciseDescription){
             Log.d("updating", exerciseDescription);
             return GoalCalculations.addGoal(new StepsGoal(goalNum, 0), email);
