@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#FFF"
-        android:text="Please use the calendar pickers to choose the date and time."
+        android:text="@string/workoutFailString"
         android:textSize="30dp"
         android:padding="10dp"
         />

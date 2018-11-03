@@ -20,8 +20,24 @@ public class StepsTest {
     }
 
     @Test
-    public void addActivityNotInSpinner() {
+    public void addStepsGoalInvalidNum() {
+        Assert.assertFalse(sd.addStepsGoal("step", "a", "walk"));
+        Assert.assertFalse(sd.addStepsGoal("step", "!a", "walk"));
+        Assert.assertFalse(sd.addStepsGoal("step", "122 00", "walk"));
+        Assert.assertFalse(sd.addStepsGoal("step", "sfdkslABC", "walk"));
+    }
 
+    @Test
+    public void addStepsGoalEmptyNum() {
+        Assert.assertFalse(sd.addStepsGoal("step", null, "walk"));
+        Assert.assertFalse(sd.addStepsGoal("step", "", "walk"));
+    }
+
+    @Test
+    public void addStepsGoalNegativeNum() {
+        Assert.assertFalse(sd.addStepsGoal("step", "-0", "walk"));
+        Assert.assertFalse(sd.addStepsGoal("step", "-1", "walk"));
+        Assert.assertFalse(sd.addStepsGoal("step", "-5000", "walk"));
     }
 
 }
