@@ -32,6 +32,7 @@ import org.w3c.dom.Text;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    UserInfo userInfo;
     private String email;
     private final String[] messages = {
             "Way to go, ",
@@ -94,22 +95,26 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        userInfo = new UserInfo(false);
         TextView name = (TextView) hView.findViewById(R.id.full_name);
-        name.setText("text");
+        name.setText(userInfo.getFirstName());
 
         TextView email = (TextView) hView.findViewById(R.id.email);
-        email.setText("email");
+        email.setText(userInfo.getEmail());
 
+        TextView day = (TextView)findViewById(R.id.dayatglance);
         TextView steps = (TextView)findViewById(R.id.steps);
         TextView calories = (TextView)findViewById(R.id.calories);
         TextView minute = (TextView)findViewById(R.id.minutes);
         TextView happy = (TextView)findViewById(R.id.happymessage);
 
+        day.setText(userInfo.getFirstName() + "'s day at a glance");
         steps.setText("You've taken "+10+" steps today.");
         calories.setText("You've burned "+90+" calories.");
         minute.setText("You've exercised for "+10+" minutes.");
-        happy.setText(messages[(int)Math.random()*messages.length]+"Tianqin.");
+        happy.setText(messages[(int)Math.random()*messages.length]+ userInfo.getFirstName());
     }
+
 
     @Override
     public void onBackPressed() {
@@ -124,7 +129,7 @@ public class MainActivity extends AppCompatActivity
     public void onResume(){
         super.onResume();
         TextView happy = (TextView)findViewById(R.id.happymessage);
-        happy.setText(messages[(int)(Math.random()*messages.length)]+"Tianqin.");
+        happy.setText(messages[(int)(Math.random()*messages.length)]+userInfo.getFirstName());
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

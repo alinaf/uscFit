@@ -81,7 +81,7 @@ public class NewUserFlow extends AppCompatActivity {
         String weightString = ((TextView)findViewById(R.id.input_weight)).getText().toString();
 
         UserInfo userInfo = new UserInfo();
-        if (!updateUserInfo(userInfo, ageString, heightString, weightString)) {
+        if (!updateUserInfo(userInfo, nameString, ageString, heightString, weightString)) {
             DisplayToast();
             return;
         }
@@ -93,7 +93,7 @@ public class NewUserFlow extends AppCompatActivity {
         finish();
     }
 
-    public boolean updateUserInfo(UserInfo userInfo, String ageString, String heightString, String weightString){
+    public boolean updateUserInfo(UserInfo userInfo, String nameString, String ageString, String heightString, String weightString){
         int age;
         double height, weight;
         try {
@@ -106,6 +106,7 @@ public class NewUserFlow extends AppCompatActivity {
             return false;
         }
 
+        userInfo.setFirstName(nameString);
         userInfo.setAge(age);
         userInfo.setHeight(height);
         userInfo.setWeight(weight);
