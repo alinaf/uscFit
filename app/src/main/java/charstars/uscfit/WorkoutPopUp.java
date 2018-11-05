@@ -3,8 +3,10 @@ package charstars.uscfit;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -164,17 +166,6 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
         return UpdateWorkouts.addWorkout(workout);
     }
 
-    //Need to include firebase
-    public void writeToDatabase(Workout workout) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        DatabaseReference myRef = database.getReference("Users");
-        DatabaseReference myRef1 = myRef.child(currentUser.getUid());
-        DatabaseReference myRef2 = myRef1.child("Workouts");
-        myRef2.setValue(workout);
-        //UpdateWorkouts.addWorkout(workout,email);
-    }
-
     @Override
     public void onClick(View v) {
 
@@ -255,5 +246,29 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
         toast.show();
     }
 
+    public void notificationstuff() {
 
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.notification_icon)
+                .setContentTitle(textTitle)
+                .setContentText(textContent)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+// notificationId is a unique int for each notification that you must define
+        notificationManager.notify(notificationId, mBuilder.build());
+    }
 }

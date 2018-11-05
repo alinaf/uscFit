@@ -63,10 +63,13 @@ public class Date {
     public String toStringDate() {
         String h = "";
         String m = "";
+        String ampm = "AM";
         if(hour == 0)
             h = "12";
-        else if(hour > 12)
+        else if(hour > 12) {
             h = Integer.toString(hour - 12);
+            ampm = "PM";
+        }
         else
             h = Integer.toString(hour);
         if(minute < 10)
@@ -74,7 +77,7 @@ public class Date {
         else
             m = Integer.toString(minute);
 
-        return "" + h + ":" + m + " " + day + "/" + month + "/" + year;
+        return "" + h + ":" + m + " " + ampm + " " + day + "/" + month + "/" + year;
     }
 
 }
