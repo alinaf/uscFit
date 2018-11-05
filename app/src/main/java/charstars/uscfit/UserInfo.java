@@ -11,7 +11,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class UserInfo {
-    private static String firstName = "Tianqin";
+    private static String firstName = "";
     private static String email;
     private static int age = 0;
     private static double weight = 0;
@@ -29,6 +29,7 @@ public class UserInfo {
         }
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        email = currentUser.getEmail();
         DatabaseReference userListRef = database.getReference("Users"); // will not be null
         DatabaseReference currentUserRef = userListRef.child(currentUser.getUid());
         if (currentUserRef == null) { // will be null the first time
@@ -44,6 +45,7 @@ public class UserInfo {
                 // whenever data at this location is updated.
                 UserInfo uinfo = dataSnapshot.getValue(UserInfo.class);
                 if (uinfo != null){
+                    firstName = uinfo.getFirstName();
                     age = uinfo.getAge();
                     weight = uinfo.getWeight();
                     height = uinfo.getHeight();
