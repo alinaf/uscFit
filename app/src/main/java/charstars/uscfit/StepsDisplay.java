@@ -22,6 +22,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import charstars.uscfit.DataHandlers.GoalCalculations;
+import charstars.uscfit.RootObjects.Quantifier;
 
 import static java.lang.Character.isDigit;
 
