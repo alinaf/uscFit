@@ -3,8 +3,10 @@ package charstars.uscfit;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -20,6 +22,8 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,11 +37,13 @@ import java.util.GregorianCalendar;
 import charstars.uscfit.DataHandlers.UpdateWorkouts;
 import charstars.uscfit.RootObjects.Quantifier;
 import charstars.uscfit.RootObjects.Workout;
+import charstars.uscfit.RootObjects.Date;
 
 public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListener {
     Workout w;
     private String email;
     private FirebaseDatabase mDatabase;
+    private FirebaseAuth mAuth;
 
 
     Button btnDatePicker, btnTimePicker;
@@ -49,6 +55,7 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_pop_up);
 
@@ -154,15 +161,9 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
         if(activity == null || !isCalendarSet(year, month, day, hour, minute)) {
             return false;
         }
-        GregorianCalendar cal = new GregorianCalendar(year, month, day, hour, minute);
-        Workout workout = new Workout(activity, quant, length, cal);
-        writeToDatabase(workout);
-        return true;
-    }
-
-    //Need to include firebase
-    public void writeToDatabase(Workout workout) {
-        UpdateWorkouts.addWorkout(workout,email);
+        Date date = new Date(year, month, day, hour, minute);
+        Workout workout = new Workout(activity, quant, length, date);
+        return UpdateWorkouts.addWorkout(workout);
     }
 
     @Override
@@ -244,4 +245,6 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
         toast.setView(layout);
         toast.show();
     }
+
+
 }

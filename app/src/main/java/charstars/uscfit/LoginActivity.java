@@ -3,6 +3,7 @@ package charstars.uscfit;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.NotificationChannel;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -47,11 +48,19 @@ import java.util.List;
 import charstars.uscfit.DataHandlers.GoalCalculations;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
 
 
 /**
  * A login screen that offers login via email/password.
  */
+
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
     private FirebaseAuth mAuth;
 
@@ -159,6 +168,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
+
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
@@ -196,6 +206,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             UserInfo ui = new UserInfo(false);
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("tag", "createUserWithEmail:success");
+
+
                             Toast.makeText(LoginActivity.this, "Welcome!",
                                     Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
@@ -222,7 +234,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                             showProgress(true);
 
-                            mAuthTask = new UserLoginTask(email, password);
+                            mAuthTask = new UserLoginTask(true);
                             mAuthTask.execute((Void) null);
                         } else {
 
@@ -259,11 +271,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                                     // Sign in success, update UI with the signed-in user's information
                                                     Log.d("tag", "signInWithEmail:success");
                                                     FirebaseUser user = mAuth.getCurrentUser();
+
+                                                    mNotificationHelper = new NotificationHelper(LoginActivity.this);
+                                                    sendNotification("LogIn!", "You have successfully logged in!");
+
                                                     Toast.makeText(LoginActivity.this, "Welcome back!",
                                                             Toast.LENGTH_SHORT).show();
                                                     showProgress(true);
 
-                                                    mAuthTask = new UserLoginTask(email, password);
+                                                    mAuthTask = new UserLoginTask(false);
                                                     mAuthTask.execute((Void) null);
                                                 } else {
                                                     // If sign in fails, display a message to the user.
@@ -285,6 +301,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 });
     }
 
+    private NotificationHelper mNotificationHelper;
+    public void sendNotification(String title, String message)
+    {
+
+        NotificationCompat.Builder nb = mNotificationHelper.getChannelNotification(title, message);
+        mNotificationHelper.getManager().notify(1, nb.build());
+    }
+
     // not used yet
     public void signOut() {
         FirebaseAuth.getInstance().signOut();
@@ -292,7 +316,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     public boolean fieldsAreEmpty(String email, String password) {
         return (email == null || email.length() == 0) || (password == null || password.length() == 0);
-        }
+    }
 
     /**
      * Shows the progress UI and hides the login form.
@@ -390,12 +414,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
-        private final String mPassword;
+        private final boolean signUp;
 
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
+        UserLoginTask(boolean signUp) {
+            this.signUp = signUp;
         }
 
         @Override
@@ -408,9 +430,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
 
+            Intent i; // could go to two activities
+
             if (success) {
-                Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                i.putExtra("EMAIL", "Tianqin");
+                UserInfo ui = new UserInfo(false);
+                if (signUp) {
+                    i = new Intent(LoginActivity.this, NewUserFlow.class);
+                }
+                else {
+                    i = new Intent(LoginActivity.this, MainActivity.class);
+                }
                 startActivity(i);
                 finish();
             } else {

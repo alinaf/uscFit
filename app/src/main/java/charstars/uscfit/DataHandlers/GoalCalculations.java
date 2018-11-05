@@ -60,6 +60,7 @@ public class GoalCalculations {
     public static void setGoalsThisWeek(int goalsThisWeek) {
         GoalCalculations.goalsThisWeek = goalsThisWeek;
     }
+
     public static void alertOnCompletion(Goal e, String email){
     //notification that goal is completed
         // add badge somwhere

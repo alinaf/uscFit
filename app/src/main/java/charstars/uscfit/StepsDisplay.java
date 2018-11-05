@@ -22,6 +22,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import charstars.uscfit.DataHandlers.GoalCalculations;
+import charstars.uscfit.RootObjects.Quantifier;
 
 import static java.lang.Character.isDigit;
 
@@ -68,9 +69,10 @@ public class StepsDisplay extends AppCompatActivity implements SensorEventListen
         System.out.println("clicked");
         if(v.getId() == R.id.goalRowLayout){
             Goal g = (Goal) v.getTag();
+            /*
             if(g.getQuantifier().equals(Quantifier.DAYS.getMeasurement()) || g.getQuantifier().equals(Quantifier.STEPS.getMeasurement())){
                 return;
-            }
+            }*/
             Intent i = new Intent(StepsDisplay.this, EditPopUpInfo.class);
             i.putExtra("GOAL", g);
             startActivity(i);

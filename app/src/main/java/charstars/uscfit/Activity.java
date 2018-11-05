@@ -10,6 +10,9 @@ public class Activity {
         this.defaultCalorieValue = defaultCalorieValue;
     }
 
+    public Activity() {
+
+    }
 
     public long getDefaultCalorieValue() {
         return defaultCalorieValue;
