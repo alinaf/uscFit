@@ -222,7 +222,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                             showProgress(true);
 
-                            mAuthTask = new UserLoginTask(email, password);
+                            mAuthTask = new UserLoginTask(true);
                             mAuthTask.execute((Void) null);
                         } else {
 
@@ -263,7 +263,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                                             Toast.LENGTH_SHORT).show();
                                                     showProgress(true);
 
-                                                    mAuthTask = new UserLoginTask(email, password);
+                                                    mAuthTask = new UserLoginTask(false);
                                                     mAuthTask.execute((Void) null);
                                                 } else {
                                                     // If sign in fails, display a message to the user.
@@ -292,7 +292,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     public boolean fieldsAreEmpty(String email, String password) {
         return (email == null || email.length() == 0) || (password == null || password.length() == 0);
-        }
+    }
 
     /**
      * Shows the progress UI and hides the login form.
@@ -390,12 +390,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
-        private final String mPassword;
+        private final boolean signUp;
 
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
+        UserLoginTask(boolean signUp) {
+            this.signUp = signUp;
         }
 
         @Override
@@ -408,9 +406,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
 
+            Intent i; // could go to two activities
+
             if (success) {
-                Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                i.putExtra("EMAIL", "Tianqin");
+                if (signUp) {
+                    i = new Intent(LoginActivity.this, MainActivity.class);
+                }
+                else {
+                    // switch this later don't forget !!!!
+                    i = new Intent(LoginActivity.this, NewUserFlow.class);
+                }
                 startActivity(i);
                 finish();
             } else {
