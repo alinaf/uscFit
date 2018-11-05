@@ -47,6 +47,7 @@
         <activity
             android:name=".WorkoutPopUp"
             android:theme="@style/AppTheme.TransparentTheme" />
+        <activity android:name=".NewUserFlow"></activity>
     </application>
 
 </manifest>

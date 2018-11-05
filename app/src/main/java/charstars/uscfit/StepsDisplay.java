@@ -69,9 +69,10 @@ public class StepsDisplay extends AppCompatActivity implements SensorEventListen
         System.out.println("clicked");
         if(v.getId() == R.id.goalRowLayout){
             Goal g = (Goal) v.getTag();
+            /*
             if(g.getQuantifier().equals(Quantifier.DAYS.getMeasurement()) || g.getQuantifier().equals(Quantifier.STEPS.getMeasurement())){
                 return;
-            }
+            }*/
             Intent i = new Intent(StepsDisplay.this, EditPopUpInfo.class);
             i.putExtra("GOAL", g);
             startActivity(i);
