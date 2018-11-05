@@ -1,7 +1,10 @@
 package charstars.uscfit;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
@@ -13,26 +16,36 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    UserInfo userInfo;
     private String email;
     private final String[] messages = {
-            "Way to go, ",
-            "You're doing great, ",
-            "It's going to be a good day, ",
-            "You got this, ",
-            "Stellar job, ",
-            "Stay smiling, ",
-            "Great work, ",
-            "You're killing it, ",
-            "Excellent work, ",
-            "Keep grinding, ",
-            "Amazing effort, ",
+            "Way to go",
+            "You're doing great",
+            "It's going to be a good day",
+            "You got this",
+            "Stellar job",
+            "Stay smiling",
+            "Great work",
+            "You're killing it",
+            "Excellent work",
+            "Keep grinding",
+            "Amazing effort",
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,20 +72,54 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        // update image, name, email programatically
+
+        // set up
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View hView =  navigationView.getHeaderView(0);
 
+        final ImageView profilePic = (ImageView)hView.findViewById(R.id.profilePic);
+        final Uri imageUri;
 
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        StorageReference mStorage = FirebaseStorage.getInstance().getReference();
+        StorageReference filePath = mStorage.child("ProfilePics").child(currentUser.getUid()).child("profilePic");
+        filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                if (uri != null) {
+                    Picasso.get().load(uri).into(profilePic);
+                }
+            }
+        });
+
+        userInfo = new UserInfo(false);
+        TextView name = (TextView) hView.findViewById(R.id.full_name);
+        name.setText(userInfo.getFirstName());
+
+        TextView email = (TextView) hView.findViewById(R.id.email);
+        email.setText(userInfo.getEmail());
+
+        TextView day = (TextView)findViewById(R.id.dayatglance);
         TextView steps = (TextView)findViewById(R.id.steps);
         TextView calories = (TextView)findViewById(R.id.calories);
         TextView minute = (TextView)findViewById(R.id.minutes);
         TextView happy = (TextView)findViewById(R.id.happymessage);
 
+        day.setText("Your day at a glance");
         steps.setText("You've taken "+10+" steps today.");
         calories.setText("You've burned "+90+" calories.");
         minute.setText("You've exercised for "+10+" minutes.");
-        happy.setText(messages[(int)Math.random()*messages.length]+"Tianqin.");
+        if (userInfo.getFirstName().equals("")){
+            happy.setText(messages[(int)Math.random()*messages.length]+ "!");
+        }
+        else {
+            happy.setText(messages[(int)Math.random()*messages.length]+ ", " + userInfo.getFirstName());
+        }
     }
+
 
     @Override
     public void onBackPressed() {
@@ -87,7 +134,20 @@ public class MainActivity extends AppCompatActivity
     public void onResume(){
         super.onResume();
         TextView happy = (TextView)findViewById(R.id.happymessage);
-        happy.setText(messages[(int)(Math.random()*messages.length)]+"Tianqin.");
+        if (userInfo.getFirstName().equals("")){
+            happy.setText(messages[(int)Math.random()*messages.length]+ "!");
+        }
+        else {
+            happy.setText(messages[(int)Math.random()*messages.length]+ ", " + userInfo.getFirstName());
+        }
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View hView =  navigationView.getHeaderView(0);
+
+        userInfo = new UserInfo(false);
+        TextView name = (TextView) hView.findViewById(R.id.full_name);
+        name.setText(userInfo.getFirstName());
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
