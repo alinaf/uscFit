@@ -410,11 +410,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
                 if (signUp) {
-                    i = new Intent(LoginActivity.this, MainActivity.class);
+                    i = new Intent(LoginActivity.this, NewUserFlow.class);
                 }
                 else {
-                    // switch this later don't forget !!!!
-                    i = new Intent(LoginActivity.this, NewUserFlow.class);
+                    i = new Intent(LoginActivity.this, MainActivity.class);
                 }
                 startActivity(i);
                 finish();
