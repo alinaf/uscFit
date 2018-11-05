@@ -35,17 +35,17 @@ public class MainActivity extends AppCompatActivity
     UserInfo userInfo;
     private String email;
     private final String[] messages = {
-            "Way to go, ",
-            "You're doing great, ",
-            "It's going to be a good day, ",
-            "You got this, ",
-            "Stellar job, ",
-            "Stay smiling, ",
-            "Great work, ",
-            "You're killing it, ",
-            "Excellent work, ",
-            "Keep grinding, ",
-            "Amazing effort, ",
+            "Way to go",
+            "You're doing great",
+            "It's going to be a good day",
+            "You got this",
+            "Stellar job",
+            "Stay smiling",
+            "Great work",
+            "You're killing it",
+            "Excellent work",
+            "Keep grinding",
+            "Amazing effort",
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,11 +108,16 @@ public class MainActivity extends AppCompatActivity
         TextView minute = (TextView)findViewById(R.id.minutes);
         TextView happy = (TextView)findViewById(R.id.happymessage);
 
-        day.setText(userInfo.getFirstName() + "'s day at a glance");
+        day.setText("Your day at a glance");
         steps.setText("You've taken "+10+" steps today.");
         calories.setText("You've burned "+90+" calories.");
         minute.setText("You've exercised for "+10+" minutes.");
-        happy.setText(messages[(int)Math.random()*messages.length]+ userInfo.getFirstName());
+        if (userInfo.getFirstName().equals("")){
+            happy.setText(messages[(int)Math.random()*messages.length]+ "!");
+        }
+        else {
+            happy.setText(messages[(int)Math.random()*messages.length]+ ", " + userInfo.getFirstName());
+        }
     }
 
 
@@ -129,7 +134,20 @@ public class MainActivity extends AppCompatActivity
     public void onResume(){
         super.onResume();
         TextView happy = (TextView)findViewById(R.id.happymessage);
-        happy.setText(messages[(int)(Math.random()*messages.length)]+userInfo.getFirstName());
+        if (userInfo.getFirstName().equals("")){
+            happy.setText(messages[(int)Math.random()*messages.length]+ "!");
+        }
+        else {
+            happy.setText(messages[(int)Math.random()*messages.length]+ ", " + userInfo.getFirstName());
+        }
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View hView =  navigationView.getHeaderView(0);
+
+        userInfo = new UserInfo(false);
+        TextView name = (TextView) hView.findViewById(R.id.full_name);
+        name.setText(userInfo.getFirstName());
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
