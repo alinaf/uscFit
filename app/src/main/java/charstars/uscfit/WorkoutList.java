@@ -11,17 +11,19 @@ import android.view.View;
 
 import java.util.List;
 
+import charstars.uscfit.Adapters.GoalAdapter;
 import charstars.uscfit.Adapters.WorkoutAdapter;
+import charstars.uscfit.DataHandlers.GoalCalculations;
 import charstars.uscfit.DataHandlers.UpdateWorkouts;
 import charstars.uscfit.RootObjects.Workout;
 
 public class WorkoutList extends AppCompatActivity {
-    private String email;
+    private static String email;
+    private static List<Workout> workoutList = UpdateWorkouts.getWorkouts();
 
-    private List<Workout> workoutList;
-    private RecyclerView mRecyclerView;
-    private WorkoutAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private static RecyclerView mRecyclerView;
+    private static WorkoutAdapter mAdapter;
+    private static RecyclerView.LayoutManager mLayoutManager;
 
 
     @Override
@@ -30,7 +32,7 @@ public class WorkoutList extends AppCompatActivity {
         Intent intent = getIntent();
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
-            if(extras == null) {
+            if (extras == null) {
                 email = null;
             } else {
                 email = extras.getString("EMAIL");
@@ -38,7 +40,7 @@ public class WorkoutList extends AppCompatActivity {
         } else {
             email = (String) savedInstanceState.getSerializable("EMAIL");
         }
-        workoutList = UpdateWorkouts.getWorkouts(email);
+        workoutList = UpdateWorkouts.getWorkouts();
         setContentView(R.layout.activity_workout_list);
         createTable();
 
@@ -53,7 +55,7 @@ public class WorkoutList extends AppCompatActivity {
         });
     }
 
-    public void createTable(){
+    public void createTable() {
 
         mRecyclerView = findViewById(R.id.workoutListLayout);
 
@@ -64,8 +66,19 @@ public class WorkoutList extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         createTable();
+    }
+
+    public static void onChangeData(List<Workout> workouts) {
+        workoutList = workouts;
+        //    System.out.println("qianze: " + workouts.get(0).getDescription());
+        if (mRecyclerView != null) {
+            ((WorkoutAdapter)mRecyclerView.getAdapter()).notifyDataSetChanged();
+            mAdapter = new WorkoutAdapter(workoutList);
+            mRecyclerView.setAdapter(mAdapter);
+        }
+
     }
 }

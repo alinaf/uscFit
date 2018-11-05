@@ -20,6 +20,8 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,11 +35,13 @@ import java.util.GregorianCalendar;
 import charstars.uscfit.DataHandlers.UpdateWorkouts;
 import charstars.uscfit.RootObjects.Quantifier;
 import charstars.uscfit.RootObjects.Workout;
+import charstars.uscfit.RootObjects.Date;
 
 public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListener {
     Workout w;
     private String email;
     private FirebaseDatabase mDatabase;
+    private FirebaseAuth mAuth;
 
 
     Button btnDatePicker, btnTimePicker;
@@ -49,6 +53,7 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_pop_up);
 
@@ -154,15 +159,20 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
         if(activity == null || !isCalendarSet(year, month, day, hour, minute)) {
             return false;
         }
-        GregorianCalendar cal = new GregorianCalendar(year, month, day, hour, minute);
-        Workout workout = new Workout(activity, quant, length, cal);
-        writeToDatabase(workout);
-        return true;
+        Date date = new Date(year, month, day, hour, minute);
+        Workout workout = new Workout(activity, quant, length, date);
+        return UpdateWorkouts.addWorkout(workout);
     }
 
     //Need to include firebase
     public void writeToDatabase(Workout workout) {
-        UpdateWorkouts.addWorkout(workout,email);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        DatabaseReference myRef = database.getReference("Users");
+        DatabaseReference myRef1 = myRef.child(currentUser.getUid());
+        DatabaseReference myRef2 = myRef1.child("Workouts");
+        myRef2.setValue(workout);
+        //UpdateWorkouts.addWorkout(workout,email);
     }
 
     @Override
@@ -244,4 +254,6 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
         toast.setView(layout);
         toast.show();
     }
+
+
 }
