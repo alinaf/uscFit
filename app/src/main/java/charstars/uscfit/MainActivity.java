@@ -2,7 +2,9 @@ package charstars.uscfit;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
@@ -17,8 +19,13 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -65,13 +72,27 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         // update image, name, email programatically
+
+        // set up
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View hView =  navigationView.getHeaderView(0);
-        Drawable new_image = getResources().getDrawable(R.drawable.med_trophy);
 
-        ImageView profilePic = (ImageView)hView.findViewById(R.id.profilePic);
-        profilePic.setImageDrawable(new_image);
+        final ImageView profilePic = (ImageView)hView.findViewById(R.id.profilePic);
+        final Uri imageUri;
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        StorageReference mStorage = FirebaseStorage.getInstance().getReference();
+        StorageReference filePath = mStorage.child("ProfilePics").child(currentUser.getUid()).child("profilePic");
+        filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                if (uri != null) {
+                    Picasso.get().load(uri).into(profilePic);
+                }
+            }
+        });
 
         TextView name = (TextView) hView.findViewById(R.id.full_name);
         name.setText("text");

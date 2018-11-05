@@ -75,6 +75,7 @@ public class NewUserFlow extends AppCompatActivity {
 
     /** Called when the user touches the button */
     public void sendMessage(View view) {
+        String nameString = ((TextView)findViewById(R.id.input_name)).getText().toString();
         String ageString = ((TextView)findViewById(R.id.input_age)).getText().toString();
         String heightString = ((TextView)findViewById(R.id.input_height)).getText().toString();
         String weightString = ((TextView)findViewById(R.id.input_weight)).getText().toString();
