@@ -4,6 +4,7 @@ package charstars.uscfit.DataHandlers;
 
 import java.util.List;
 
+import charstars.uscfit.DatabaseHandlers.GoalDatabaseManager;
 import charstars.uscfit.DatabaseHandlers.WorkoutDatabaseManager;
 import charstars.uscfit.RootObjects.Workout;
 
@@ -22,21 +23,14 @@ public class UpdateWorkouts {
         return WorkoutDatabaseManager.getInstance().getWorkouts();
     }
 
-    /*
-    public static void editGoal(Goal copy, Goal orig) {
-        Goal g = GoalDatabaseManager.getInstance().getGoal(orig);
-        Log.d("GOAL ID", g.id()+" "+copy.id());
-
-        g.setDescription(copy.getDescription());
-        g.setGoalNum(copy.getGoalNum());
-        g.setTrackingNum(copy.getTrackingNum());
-
-
-        for(Goal ggg: GoalDatabaseManager.getInstance().getGoals()){
-            Log.d("goal", ggg.getDescription());
-        }
-        GoalDatabaseManager.getInstance().updateGoalsDB();
-    }*/
+    public static void changeWorkoutCompletionStatus(Workout workout) {
+        Workout w = WorkoutDatabaseManager.getInstance().getWorkout(workout);
+        if(w.isCompleted())
+            w.setCompleted(false);
+        else if(!w.isCompleted())
+            w.setCompleted(true);
+        WorkoutDatabaseManager.getInstance().updateWorkoutsDB();
+    }
 
     //signal completion function
 }

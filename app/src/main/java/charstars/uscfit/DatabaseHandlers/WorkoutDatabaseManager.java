@@ -72,7 +72,7 @@ public class WorkoutDatabaseManager {
                     for (Workout entry : wm) {
                         Workout wmlist = entry;
                         Quantifier quant = wmlist.getQuant();
-                        Workout w = new Workout(wmlist.getActivity(), wmlist.getQuant(), wmlist.getLength(), wmlist.getDate());
+                        Workout w = new Workout(wmlist.getActivity(), wmlist.getQuant(), wmlist.getLength(), wmlist.getDate(), wmlist.isCompleted());
                         workouts.add(w);
                         //Log.d("Hello", quant);
 
@@ -82,7 +82,6 @@ public class WorkoutDatabaseManager {
                 }
                 workoutsMap = new HashMap<Integer, Workout>();
                 for(Workout w: workouts){
-                    Log.d("inside whatsingoals", w.toString());
                     workoutsMap.put(w.getID(), w);
                 }
 

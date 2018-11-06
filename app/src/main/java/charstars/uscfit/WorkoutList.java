@@ -7,7 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.NumberPicker;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -15,11 +23,15 @@ import charstars.uscfit.Adapters.GoalAdapter;
 import charstars.uscfit.Adapters.WorkoutAdapter;
 import charstars.uscfit.DataHandlers.GoalCalculations;
 import charstars.uscfit.DataHandlers.UpdateWorkouts;
+import charstars.uscfit.DatabaseHandlers.GoalDatabaseManager;
+import charstars.uscfit.RootObjects.Quantifier;
 import charstars.uscfit.RootObjects.Workout;
 
-public class WorkoutList extends AppCompatActivity {
+public class WorkoutList extends AppCompatActivity implements View.OnClickListener {
     private static String email;
     private static List<Workout> workoutList = UpdateWorkouts.getWorkouts();
+
+    CheckBox checkBox;
 
     private static RecyclerView mRecyclerView;
     private static WorkoutAdapter mAdapter;
@@ -53,6 +65,17 @@ public class WorkoutList extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        /*
+        checkBox = (CheckBox)(findViewById(R.id.checkBox));
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkBox.isChecked()) {
+                    View v1 = checkBox.getParent()
+                }
+            }
+        });
+        checkBox.getParen */
     }
 
     public void createTable() {
@@ -80,5 +103,15 @@ public class WorkoutList extends AppCompatActivity {
             mRecyclerView.setAdapter(mAdapter);
         }
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.checkBox){
+            Workout w = (Workout) v.getTag();
+            Log.d("onclick", "getting in here");
+            UpdateWorkouts.changeWorkoutCompletionStatus(w);
+            onChangeData(workoutList);
+        }
     }
 }

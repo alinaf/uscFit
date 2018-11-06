@@ -1,8 +1,5 @@
 package charstars.uscfit.RootObjects;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
 import charstars.uscfit.Activity;
 
 
@@ -23,7 +20,17 @@ public class Workout {
         this.length = length;
         completed = false;
         this.date = d;
-        caloriesBurned = action.getDefaultCalorieValue();
+        this.caloriesBurned = action.getDefaultCalorieValue();
+        this.id = _ID++;
+    }
+
+    public Workout(Activity action, Quantifier quant, int length, Date d, boolean c ) {
+        this.activity = action;
+        this.quant = quant;
+        this.length = length;
+        this.completed = c;
+        this.date = d;
+        this.caloriesBurned = action.getDefaultCalorieValue();
         this.id = _ID++;
     }
 
@@ -33,7 +40,7 @@ public class Workout {
     }
 
     public boolean isCompleted() {
-        return completed;
+        return this.completed;
     }
     public void setCompleted(boolean completed) {
         this.completed = completed;
