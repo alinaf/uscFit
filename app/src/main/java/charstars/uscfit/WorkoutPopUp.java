@@ -258,6 +258,4 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
         mNotificationHelper.getManager().notify(1, nb.build());
     }
 
-
-
 }
