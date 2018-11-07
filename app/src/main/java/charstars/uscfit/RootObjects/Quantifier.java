@@ -1,6 +1,8 @@
 package charstars.uscfit.RootObjects;
 
-public enum Quantifier
+import java.io.Serializable;
+
+public enum Quantifier implements Serializable
 {
     MILES("miles"), MINUTES("minutes"), STEPS("steps"), DAYS("days");
 

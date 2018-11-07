@@ -1,8 +1,9 @@
 package charstars.uscfit.RootObjects;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Badge {
+public class Badge implements Serializable  {
 
     // Store the id of the trophy
     private int mTrophyNum;
