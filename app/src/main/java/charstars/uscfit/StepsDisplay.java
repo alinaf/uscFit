@@ -19,10 +19,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
+import com.jjoe64.graphview.series.BarGraphSeries;
+import com.jjoe64.graphview.series.DataPoint;
+
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import charstars.uscfit.DataHandlers.GoalCalculations;
-import charstars.uscfit.RootObjects.Quantifier;
 
 import static java.lang.Character.isDigit;
 
@@ -128,6 +134,8 @@ public class StepsDisplay extends AppCompatActivity implements SensorEventListen
     }
 
 
+
+
     public boolean addStepsGoal(String goalType, String goalNumString, String exerciseDescription){
         int goalNum = 0;
         if(goalNumString == null || goalNumString.equals("")){
@@ -174,6 +182,47 @@ public class StepsDisplay extends AppCompatActivity implements SensorEventListen
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);//tbh idk what's goin on here
 
+
+        GraphView graph = (GraphView) findViewById(R.id.graph);
+        //get dates and information from database (probably put this in a function later)
+        GregorianCalendar mon = new GregorianCalendar();
+        GregorianCalendar tues = new GregorianCalendar();
+        GregorianCalendar wed = new GregorianCalendar();
+        GregorianCalendar thurs = new GregorianCalendar();
+        GregorianCalendar fri = new GregorianCalendar();
+        GregorianCalendar sat = new GregorianCalendar();
+        GregorianCalendar sun = new GregorianCalendar();//really the last one will be today
+        mon.set(2018, 9, 29);
+        tues.set(2018, 9, 30);
+        wed.set(2018, 9, 31);
+        thurs.set(2018, 10, 1);
+        fri.set(2018, 10, 2);
+        sat.set(2018, 10, 3);
+        sun.set(2018, 10, 4);
+        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[] {
+                new DataPoint((Date)mon.getTime(), 1000),
+                new DataPoint((Date)tues.getTime(), 2000),
+                new DataPoint((Date)wed.getTime(), 3000),
+                new DataPoint((Date)thurs.getTime(), 4000),
+                new DataPoint((Date)fri.getTime(), 5000),
+                //new DataPoint((Date)sat.getTime(), 2800),
+                //new DataPoint((Date)sun.getTime(), 6800)
+        });
+        graph.addSeries(series);
+
+        // set date label formatter
+        graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this));
+        graph.getGridLabelRenderer().setNumHorizontalLabels(5); // only 4 because of the space
+
+// set manual x bounds to have nice steps
+        graph.getViewport().setMinX(mon.getTime().getTime());
+        graph.getViewport().setMaxX(sun.getTime().getTime());
+        //graph.getViewport().setXAxisBoundsManual(true);
+
+// as we use dates as labels, the human rounding to nice readable numbers
+// is not necessary
+        graph.getGridLabelRenderer().setHumanRounding(false);
+
     }
 
     @Override
@@ -205,4 +254,6 @@ public class StepsDisplay extends AppCompatActivity implements SensorEventListen
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
+
+
 }

@@ -1,9 +1,12 @@
 package charstars.uscfit.Adapters;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -17,13 +20,18 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.MyViewHo
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView category, length, date, caloriesBurned;
+        public CheckBox checkBox;
+        public RelativeLayout relativeLayout;
 
         public MyViewHolder(View view) {
             super(view);
             category = view.findViewById(R.id.category);
-            length =  view.findViewById(R.id.length);
+            length = view.findViewById(R.id.length);
             date = view.findViewById(R.id.date);
             caloriesBurned = view.findViewById(R.id.caloriesBurned);
+            checkBox =  view.findViewById(R.id.checkBox);
+            relativeLayout = view.findViewById(R.id.workoutRowLayout);
+
         }
     }
 
@@ -36,7 +44,6 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.MyViewHo
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.activity_workout_list_row, parent, false);
-
         return new MyViewHolder(itemView);
     }
 
@@ -47,6 +54,15 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.MyViewHo
         holder.length.setText(Integer.toString(workout.getLength()) + " " + workout.getQuant().getMeasurement());
         holder.date.setText(workout.stringDate());
         holder.caloriesBurned.setText(Long.toString(workout.getCaloriesBurned()) + " calories");
+        holder.checkBox.setTag(workout);
+        if (workout.isCompleted()) {
+            holder.checkBox.setChecked(true);
+            holder.itemView.setBackgroundColor(Color.argb(211, 211, 211, 211));
+        }
+        else if(!workout.isCompleted()){
+            holder.checkBox.setChecked(false);
+            holder.itemView.setBackgroundColor(Color.argb(0, 0, 0, 0));
+        }
     }
 
     @Override

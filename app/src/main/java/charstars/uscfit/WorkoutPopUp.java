@@ -1,15 +1,27 @@
 package charstars.uscfit;
 
+import android.annotation.TargetApi;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.app.TimePickerDialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
+import android.content.pm.PackageManager;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +35,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,15 +43,14 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.Date;
 
 import charstars.uscfit.DataHandlers.UpdateWorkouts;
 import charstars.uscfit.RootObjects.Quantifier;
 import charstars.uscfit.RootObjects.Workout;
-import charstars.uscfit.RootObjects.Date;
 
 public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListener {
-    Workout w;
+    Workout w = null;
     private String email;
     private FirebaseDatabase mDatabase;
     private FirebaseAuth mAuth;
@@ -129,6 +139,7 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
 
 
 
+
         spinner.setSelection(0);
         NumberPicker num = (NumberPicker)findViewById(R.id.lengthPicker);
         num.setMinValue(1);
@@ -153,6 +164,20 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
         }
         else {
             DisplayToast(true);
+           // mNotificationHelper = new NotificationHelper(WorkoutPopUp.this);
+            //sendNotification("Workout added!", "Workout has successfully been added!");
+
+
+            Calendar cal = Calendar.getInstance();
+            Date d = w.getDate();
+            Log.d("currentTime", d.toString());
+            d.setHours(d.getHours()-3);
+           // cal.set(d.getYear(), d.getMonth(), d.getDate(), d.getHours()-3, d.getMinutes());
+            Log.d("EarlyWorkoutTime", d.toString());
+            setStartAlarm(d.getTime());
+            d = w.getDate();
+            d.setMinutes(d.getMinutes()+length);
+            setFinishAlarm(d.getTime());
         }
         finish();
     }
@@ -161,9 +186,10 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
         if(activity == null || !isCalendarSet(year, month, day, hour, minute)) {
             return false;
         }
-        Date date = new Date(year, month, day, hour, minute);
-        Workout workout = new Workout(activity, quant, length, date);
-        return UpdateWorkouts.addWorkout(workout);
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day, hour, minute);
+        w = new Workout(activity, quant, length, cal.getTime());
+        return UpdateWorkouts.addWorkout(w);
     }
 
     @Override
@@ -238,13 +264,37 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
         Toast toast = new Toast(getApplicationContext());
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         toast.setDuration(Toast.LENGTH_SHORT);
-        if(!value)
-            layout = inflater.inflate(R.layout.workoutfail,null);
-        else if(value)
-            layout = inflater.inflate(R.layout.workoutsuccess,null);
+        if (!value)
+            layout = inflater.inflate(R.layout.workoutfail, null);
+        else if (value)
+            layout = inflater.inflate(R.layout.workoutsuccess, null);
         toast.setView(layout);
         toast.show();
     }
 
+    @TargetApi(19)
+    public void setStartAlarm(long time) {
+        Log.d("setalarm", "alarm has been set");
+        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
 
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("message", w.getActivity().getCategory() + " for " + w.getLength() + " " + w.getQuant().getMeasurement());
+         PendingIntent broadcast = PendingIntent.getBroadcast(this, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        am.setExact(AlarmManager.RTC_WAKEUP, time, broadcast);
+
+    }
+
+    @TargetApi(19)
+    public void setFinishAlarm(long time) {
+        Log.d("setalarm", "alarm has been set");
+        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("message", "Did you complete your workout?");
+        PendingIntent broadcast = PendingIntent.getBroadcast(this, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        am.setExact(AlarmManager.RTC_WAKEUP, time, broadcast);
+
+    }
 }

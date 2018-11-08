@@ -10,7 +10,10 @@
     android:paddingBottom="@dimen/row_padding_vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/row_padding_vertical">
+    android:paddingTop="@dimen/row_padding_vertical"
+    android:id="@+id/workoutRowLayout"
+    android:onClick="onClick"
+    >
 
 
     <TextView
@@ -39,7 +42,7 @@
         android:layout_alignTop="@+id/category"
         android:layout_alignParentRight="true"
         android:layout_marginTop="0dp"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="81dp" />
 
 
 
@@ -50,8 +53,19 @@
         android:layout_below="@id/date"
         android:layout_alignParentRight="true"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="81dp" />
 
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="47dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:text="Complete"
+        android:onClick="onClick" />
 
 
 </RelativeLayout>
