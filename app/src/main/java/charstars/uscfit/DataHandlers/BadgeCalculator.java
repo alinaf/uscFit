@@ -18,10 +18,7 @@ public class BadgeCalculator extends AppCompatActivity
     {
 
         Badge bb = null;
-        if(quant>=1000){
-            bb = BadgeFactory.generateThousand(b, date);
-
-        }else if(quant>=500){
+        if(quant>=500){
             bb = BadgeFactory.generateFiveHundred(b, date);
 
         }else if(quant>=100){
