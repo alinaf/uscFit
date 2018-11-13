@@ -121,10 +121,6 @@ public class MainActivity extends AppCompatActivity
         else {
             happy.setText(messages[(int)Math.random()*messages.length]+ ", " + userInfo.getFirstName());
         }
-
-        BadgeDatabaseManager bm = BadgeDatabaseManager.getInstance();
-
-        GoalDatabaseManager gm = GoalDatabaseManager.getInstance();
     }
 
 

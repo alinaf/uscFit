@@ -46,6 +46,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import charstars.uscfit.DataHandlers.GoalCalculations;
+import charstars.uscfit.DatabaseHandlers.BadgeDatabaseManager;
+import charstars.uscfit.DatabaseHandlers.GoalDatabaseManager;
 
 import static android.Manifest.permission.READ_CONTACTS;
 import android.app.NotificationManager;
@@ -425,6 +427,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             return true;
         }
 
+        private void initializeDBInfo(){
+
+            BadgeDatabaseManager bm = BadgeDatabaseManager.getInstance();
+
+            GoalDatabaseManager gm = GoalDatabaseManager.getInstance();
+        }
+
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
@@ -440,6 +449,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 else {
                     i = new Intent(LoginActivity.this, MainActivity.class);
                 }
+                initializeDBInfo();
                 startActivity(i);
                 finish();
             } else {
