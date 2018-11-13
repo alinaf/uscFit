@@ -29,6 +29,9 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import charstars.uscfit.DatabaseHandlers.BadgeDatabaseManager;
+import charstars.uscfit.DatabaseHandlers.GoalDatabaseManager;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -118,6 +121,10 @@ public class MainActivity extends AppCompatActivity
         else {
             happy.setText(messages[(int)Math.random()*messages.length]+ ", " + userInfo.getFirstName());
         }
+
+        BadgeDatabaseManager bm = BadgeDatabaseManager.getInstance();
+
+        GoalDatabaseManager gm = GoalDatabaseManager.getInstance();
     }
 
 

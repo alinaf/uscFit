@@ -38,7 +38,7 @@ public class GoalDatabaseManager {
         return gm;
     }
 
-    private GoalDatabaseManager() {
+    private void query(){
         this.goals = new ArrayList<Goal>();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -56,7 +56,7 @@ public class GoalDatabaseManager {
         // This method is called once with the initial value and again
         // whenever data at this location is updated.
 
-  // Read from the database
+        // Read from the database
         myRef2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -103,7 +103,7 @@ public class GoalDatabaseManager {
                 }
 
                 if(onInit){
-                    GoalsDisplay.onChangeData(goals);
+                    //GoalsDisplay.onChangeData(goals);
                     onInit = false;
                 }
 
@@ -115,6 +115,9 @@ public class GoalDatabaseManager {
                 Log.w("tag", "Failed to read value.", error.toException());
             }
         });
+    }
+    private GoalDatabaseManager() {
+        query();
     }
 
     public void addGoal(Goal e) {

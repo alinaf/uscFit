@@ -69,7 +69,7 @@ public class BadgeDatabaseManager {
                 }
 
                 if(onInit){
-                   BadgesDisplay.onChangeData(badges);
+                   //BadgesDisplay.onChangeData(badges);
                     onInit = false;
                 }
 

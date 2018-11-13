@@ -78,7 +78,7 @@ public class BadgesDisplay extends AppCompatActivity
 
     public static void onChangeData(ArrayList<Badge> goals){
         badges = goals;
-        ((BadgeAdapter) listView.getAdapter()).notifyDataSetChanged();
+        //((BadgeAdapter) listView.getAdapter()).notifyDataSetChanged();
         //mAdapter = new BadgeAdapter(this, badges);
         //listView.setAdapter(mAdapter);
 
