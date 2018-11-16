@@ -1,6 +1,7 @@
 package charstars.uscfit.DataHandlers;
 
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,6 +18,8 @@ public class BadgeCalculator extends AppCompatActivity
     public static void addBadge(String b, int quant, Date date)
     {
 
+        Log.d(("Adding Badge"), b+" "+quant+" "+date);
+
         Badge bb = null;
         if(quant>=500){
             bb = BadgeFactory.generateFiveHundred(b, date);
@@ -25,13 +28,13 @@ public class BadgeCalculator extends AppCompatActivity
             bb = BadgeFactory.generateHundred(b, date);
 
 
-        }else if(quant>=50){
+        }else {
 
             bb = BadgeFactory.generateFifty(b, date);
 
 
         }
-        bm.addBadge(bb);
+        BadgeDatabaseManager.getInstance().addBadge(bb);
 //        Toast.makeText(BadgeCalculator.this, "Goal Completed! New Badge Added.",
 //                Toast.LENGTH_SHORT).show();
     }

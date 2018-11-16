@@ -111,6 +111,7 @@ public class WorkoutList extends AppCompatActivity implements View.OnClickListen
             Workout w = (Workout) v.getTag();
             Log.d("onclick", "getting in here");
             UpdateWorkouts.changeWorkoutCompletionStatus(w);
+
             onChangeData(workoutList);
         }
     }
