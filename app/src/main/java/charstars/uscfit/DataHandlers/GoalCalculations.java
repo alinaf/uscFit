@@ -33,8 +33,8 @@ public class GoalCalculations {
             Goal g = GoalDatabaseManager.getInstance().getGoals().get(i);
             String desc = g.getDescription().toLowerCase().trim();
             String workoutEx = a.getActivity().getCategory().toLowerCase().trim();
-
-            if( g.getQuantifier().equals(a.getQuant().getMeasurement()) && desc.equals(workoutEx)){
+            Log.d("COMPLETION", desc+" "+workoutEx);
+            if( g.getQuantifier().toLowerCase().equals(a.getQuant().getMeasurement().toLowerCase()) && desc.equals(workoutEx)){
                 int length = a.getLength();
                 g.setProgress(length);
                 if(g.getProgress()==1.0){
@@ -74,7 +74,6 @@ public class GoalCalculations {
         String desc = "Completed: " + e.getDescription() + " " + e.getGoalNum() + " " + q;
         BadgeCalculator.addBadge(desc, e.getGoalNum(), (new Date()));
         removeGoal(e, email);
-
         goalsThisWeek++;
 
         if(goalsThisWeek == 50){

@@ -432,6 +432,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             BadgeDatabaseManager bm = BadgeDatabaseManager.getInstance();
 
             GoalDatabaseManager gm = GoalDatabaseManager.getInstance();
+
+
         }
 
         @Override

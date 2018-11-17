@@ -29,6 +29,7 @@ public class UpdateWorkouts {
             w.setCompleted(false);
         else if(!w.isCompleted())
             w.setCompleted(true);
+        GoalCalculations.calculateGoalProgress(workout, "");
         WorkoutDatabaseManager.getInstance().updateWorkoutsDB();
     }
 

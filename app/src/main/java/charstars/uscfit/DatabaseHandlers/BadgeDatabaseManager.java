@@ -13,6 +13,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import charstars.uscfit.Adapters.BadgeAdapter;
 import charstars.uscfit.RootObjects.Badge;
 import charstars.uscfit.BadgesDisplay;
 
@@ -30,7 +31,8 @@ public class BadgeDatabaseManager {
     }
 
     public void query(){
-        badges = new ArrayList<Badge>();
+            this.badges = new ArrayList<Badge>();
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
@@ -89,9 +91,14 @@ public class BadgeDatabaseManager {
     }
 
     public void addBadge(Badge e) {
-        if(!badges.contains(e)){
-            badges.add(e);
+        if(badges == null){
+            badges = new ArrayList<Badge>();
         }
+        if(e==null){
+            Log.d("ADDBADGE", "null");
+        }
+            badges.add(e);
+            Log.d("BADGES DATABASE", "HERERE");
         this.updateBadgesDB();
     }
 
@@ -113,7 +120,7 @@ public class BadgeDatabaseManager {
     }
 
     public void updateBadgesDB() {
-        Log.d("updating db", badges.toString());
+        Log.d("updating badges db", badges.toString());
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         DatabaseReference myRef = database.getReference("Users"); // will not be null
