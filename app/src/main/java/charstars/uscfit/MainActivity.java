@@ -52,6 +52,14 @@ public class MainActivity extends AppCompatActivity
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        if (currentUser == null) {
+//            Intent i = new Intent(MainActivity.this, LoginActivity.class);
+//            startActivity(i);
+//            finish();
+//        }
+
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         if (savedInstanceState == null) {
@@ -85,8 +93,6 @@ public class MainActivity extends AppCompatActivity
         final ImageView profilePic = (ImageView)hView.findViewById(R.id.profilePic);
         final Uri imageUri;
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
         StorageReference mStorage = FirebaseStorage.getInstance().getReference();
         StorageReference filePath = mStorage.child("ProfilePics").child(currentUser.getUid()).child("profilePic");
         filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -199,7 +205,15 @@ public class MainActivity extends AppCompatActivity
             Intent i = new Intent(MainActivity.this,StepsDisplay.class);
             i.putExtra("EMAIL", "Tianqin");
             startActivity(i);
-        } else if (id == R.id.nav_view) {
+        }
+        else if (id == R.id.nav_signOut) {
+            FirebaseAuth.getInstance().signOut();
+            Intent i = new Intent(MainActivity.this,LoginActivity.class);
+            i.putExtra("EMAIL", "Tianqin");
+            startActivity(i);
+            finish(); // finish so that this activity is taken off the stack and user can't go back
+        }
+        else if (id == R.id.nav_view) {
 
         }
 

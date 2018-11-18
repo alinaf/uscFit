@@ -161,7 +161,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             startActivity(i);
             finish();
         }
-        // future goal: if signed in, take user directly to next page
     }
 
     /**
