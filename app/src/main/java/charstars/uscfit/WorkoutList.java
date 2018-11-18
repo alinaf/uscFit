@@ -17,6 +17,8 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import charstars.uscfit.Adapters.GoalAdapter;
@@ -30,6 +32,7 @@ import charstars.uscfit.RootObjects.Workout;
 public class WorkoutList extends AppCompatActivity implements View.OnClickListener {
     private static String email;
     private static List<Workout> workoutList = UpdateWorkouts.getWorkouts();
+
 
     CheckBox checkBox;
 
@@ -61,27 +64,16 @@ public class WorkoutList extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(WorkoutList.this, WorkoutPopUp.class);
-                i.putExtra("EMAIL", "Tianqin");
                 startActivity(i);
             }
         });
-        /*
-        checkBox = (CheckBox)(findViewById(R.id.checkBox));
-        checkBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(checkBox.isChecked()) {
-                    View v1 = checkBox.getParent()
-                }
-            }
-        });
-        checkBox.getParen */
+
     }
 
     public void createTable() {
 
         mRecyclerView = findViewById(R.id.workoutListLayout);
-
+        Collections.sort(workoutList);
         mAdapter = new WorkoutAdapter(workoutList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);

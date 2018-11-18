@@ -11,7 +11,7 @@ import charstars.uscfit.NotificationHelper;
 import charstars.uscfit.WorkoutPopUp;
 
 
-public class Workout implements Serializable  {
+public class Workout implements Serializable, Comparable<Workout>  {
 
     static int _ID = 0;
     private int id;
@@ -97,4 +97,10 @@ public class Workout implements Serializable  {
         return this.id;
     }
 
+
+
+    @Override
+    public int compareTo(Workout o) {
+       return getDate().compareTo(o.getDate());
+    }
 }
