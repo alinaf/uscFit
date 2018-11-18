@@ -151,9 +151,10 @@ public class StepsDisplay extends AppCompatActivity implements SensorEventListen
         }
     }
 
+    //ADD A FIELD FOR NEW DATE
     public boolean addGoal(String goalType, int goalNum, String exerciseDescription){
             Log.d("updating", exerciseDescription);
-            return GoalCalculations.addGoal(new StepsGoal(goalNum, 0), email);
+            return GoalCalculations.addGoal(new StepsGoal(new Date(), goalNum, 0), email);
     }
 
     @Override

@@ -1,11 +1,13 @@
 package charstars.uscfit;
 
+import java.util.Date;
+
 import charstars.uscfit.RootObjects.Quantifier;
 
 public class MinutesGoal extends Goal {
 
-    public MinutesGoal(String desc, int gNum, int tNum){
-        super(desc, gNum, tNum);
+    public MinutesGoal(Date d, String desc, int gNum, int tNum){
+        super(d, desc, gNum, tNum);
     }
     @Override
     public String getQuantifier() {
