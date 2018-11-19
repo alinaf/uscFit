@@ -64,13 +64,14 @@ public class BadgeCalculator extends AppCompatActivity
             q = b.getQuantifier();
         }
         String desc = "Completed: " + b.getDescription() + " " + b.getGoalNum() + " " + q;
-        if(b.getQuantifier().equals(Quantifier.STEPS)){
+        if(b.getQuantifier().equals(Quantifier.STEPS.getMeasurement())){
             return BadgeFactory.generateSteps(desc, d);
         }
-        if(b.getQuantifier().equals(Quantifier.DAYS)){
+        if(b.getQuantifier().equals(Quantifier.DAYS.getMeasurement())){
             return BadgeFactory.generateDays(desc, d);
         }
-        if(b.getQuantifier().equals(Quantifier.MILES)){
+        if(b.getQuantifier().equals(Quantifier.MILES.getMeasurement())){
+            Log.d("QUANT", "MILES");
             if(b.getGoalNum()>=20){
                 return BadgeFactory.generateGold(desc, d);
             }else if(b.getGoalNum()>=10){
