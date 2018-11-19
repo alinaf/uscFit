@@ -10,6 +10,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class UserInfo {
     private static String firstName = "";
     private static String email;
@@ -17,6 +21,7 @@ public class UserInfo {
     private static double weight = 0;
     private static double height = 0;
     private FirebaseAuth mAuth;
+    public static boolean dataUpdated = false;
 
     public UserInfo() {
     }
@@ -27,35 +32,18 @@ public class UserInfo {
         if (fromDb){
             return;
         }
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        email = currentUser.getEmail();
-        DatabaseReference userListRef = database.getReference("Users"); // will not be null
-        DatabaseReference currentUserRef = userListRef.child(currentUser.getUid());
-        if (currentUserRef == null) { // will be null the first time
+        if (firstName != "") {
             return;
         }
-        DatabaseReference userInfoRef = currentUserRef.child("UserInfo");
 
-        // Read from the database
-        userInfoRef.addValueEventListener(new ValueEventListener() {
+        readData(new FirebaseCallback() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                UserInfo uinfo = dataSnapshot.getValue(UserInfo.class);
-                if (uinfo != null){
-                    firstName = uinfo.getFirstName();
-                    age = uinfo.getAge();
-                    weight = uinfo.getWeight();
-                    height = uinfo.getHeight();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-               Log.w("tag", "Failed to read value.", error.toException());
+            public void onCallback(UserInfo userInfo) {
+                Log.d("tag", firstName);
+                firstName = userInfo.getFirstName();
+                age = userInfo.getAge();
+                weight = userInfo.getWeight();
+                height = userInfo.getHeight();
             }
         });
     }
@@ -100,5 +88,47 @@ public class UserInfo {
         this.height = height;
     }
 
+    private void readData(final FirebaseCallback firebaseCallback) {
+        // otherwise, need to query!
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        email = currentUser.getEmail();
+        DatabaseReference userListRef = database.getReference("Users"); // will not be null
+        DatabaseReference currentUserRef = userListRef.child(currentUser.getUid());
+        if (currentUserRef == null) { // will be null the first time
+            return;
+        }
+        DatabaseReference userInfoRef = currentUserRef.child("UserInfo");
+        //final AtomicBoolean done = new AtomicBoolean(false);
+        // final CountDownLatch done = new CountDownLatch(1);
 
+
+        // Read from the database
+
+        userInfoRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                UserInfo uinfo = dataSnapshot.getValue(UserInfo.class);
+                if (uinfo != null){
+
+                }
+                firebaseCallback.onCallback(uinfo);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("tag", "Failed to read value.", error.toException());
+            }
+        });
+    }
+
+    private interface FirebaseCallback {
+        void onCallback(UserInfo userInfo);
+    }
 }
+

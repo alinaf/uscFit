@@ -155,9 +155,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
+            UserInfo ui = new UserInfo(false);
             Intent i = new Intent(LoginActivity.this, MainActivity.class);
-            BadgeDatabaseManager bm = BadgeDatabaseManager.getInstance();
-            GoalDatabaseManager gm = GoalDatabaseManager.getInstance();
             startActivity(i);
             finish();
         }
@@ -211,7 +210,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            UserInfo ui = new UserInfo(false);
+                           // UserInfo ui = new UserInfo(false);
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("tag", "createUserWithEmail:success");
 
@@ -275,7 +274,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                             @Override
                                             public void onComplete(@NonNull Task<AuthResult> task) {
                                                 if (task.isSuccessful()) {
-                                                    UserInfo ui = new UserInfo(false);
+                                                   // UserInfo ui = new UserInfo(false);
                                                     // Sign in success, update UI with the signed-in user's information
                                                     Log.d("tag", "signInWithEmail:success");
                                                     FirebaseUser user = mAuth.getCurrentUser();
