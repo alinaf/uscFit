@@ -240,6 +240,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(i);
         }
         else if (id == R.id.nav_signOut) {
+            DayAtAGlance dayAtAGlance = new DayAtAGlance();
+            dayAtAGlance.setDayLastUpdated(-1);
             FirebaseAuth.getInstance().signOut();
             Intent i = new Intent(MainActivity.this,LoginActivity.class);
             i.putExtra("EMAIL", "Tianqin");

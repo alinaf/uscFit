@@ -85,6 +85,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        DayAtAGlance dayAtAGlance = new DayAtAGlance();
+        dayAtAGlance.setDayLastUpdated(-1);
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -175,7 +177,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         }
     }
-
 
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -438,8 +439,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             BadgeDatabaseManager bm = BadgeDatabaseManager.getInstance();
 
             GoalDatabaseManager gm = GoalDatabaseManager.getInstance();
-
-
         }
 
         @Override
