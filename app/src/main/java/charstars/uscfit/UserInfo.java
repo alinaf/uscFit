@@ -30,9 +30,6 @@ public class UserInfo {
         if (fromDb){
             return;
         }
-        if (firstName != "") {
-            return;
-        }
 
         readData(new FirebaseCallback() {
             @Override

@@ -20,19 +20,41 @@ public class DayAtAGlance {
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     public void setDayLastUpdated(int dayLastUpdated) {
-        DayAtAGlance.dayLastUpdated = dayLastUpdated;
+        this.dayLastUpdated = dayLastUpdated;
     }
 
     public void setDailySteps(int dailySteps) {
-        DayAtAGlance.dailySteps = dailySteps;
+        this.dailySteps = dailySteps;
     }
 
     public void setDailyCalories(double dailyCalories) {
-        DayAtAGlance.dailyCalories = dailyCalories;
+        this.dailyCalories = dailyCalories;
     }
 
     public void setDailyMinutes(int dailyMinutes) {
-        DayAtAGlance.dailyMinutes = dailyMinutes;
+        this.dailyMinutes = dailyMinutes;
+    }
+
+    public void updateDailySteps(int dailyStepsDiff) {
+        dailySteps += dailyStepsDiff;
+        if(dailySteps < 0) {
+            dailySteps = 0;
+        }
+        updateDB();
+    }
+
+    public void updateDailyCalories(double dailyCaloriesDiff) {
+        dailyCalories += dailyCaloriesDiff;
+        if(dailyCalories < 0) {
+            dailyCalories = 0;
+        }
+    }
+
+    public void updateDailyMinutes(int dailyMinutesDiff) {
+        dailyMinutes += dailyMinutesDiff;
+        if(dailyMinutes < 0) {
+            dailyMinutes = 0;
+        }
     }
 
     public int getDayLastUpdated() {
@@ -66,11 +88,6 @@ public class DayAtAGlance {
         readData(new FirebaseCallback() {
             @Override
             public void onCallback(DayAtAGlance dayAtAGlance) {
-                //Log.d("tag", dayAtAGlance);
-//                firstName = userInfo.getFirstName();
-//                age = userInfo.getAge();
-//                weight = userInfo.getWeight();
-//                height = userInfo.getHeight();
                 Calendar cal = Calendar.getInstance();
                 int dayofmonth = cal.get(Calendar.DAY_OF_MONTH);
                 if (dayAtAGlance.getDayLastUpdated() != dayofmonth) {
@@ -127,6 +144,9 @@ public class DayAtAGlance {
                     Calendar cal = Calendar.getInstance();
                     int dayofmonth = cal.get(Calendar.DAY_OF_MONTH);
                     dayLastUpdated = dayofmonth;
+                    dailyCalories = 0;
+                    dailyMinutes = 0;
+                    dailySteps = 0;
                     updateDB();
                 }
             }
