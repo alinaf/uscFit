@@ -48,7 +48,7 @@ public class PopUpInfo extends AppCompatActivity {
             return;
         }
 
-        writeToDatabase(userInfo);
+        UserInfo.updateDB(userInfo);
         finish();
     }
 
@@ -69,15 +69,6 @@ public class PopUpInfo extends AppCompatActivity {
         userInfo.setHeight(height);
         userInfo.setWeight(weight);
         return true;
-    }
-
-    public void writeToDatabase(UserInfo userInfo) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        DatabaseReference myRef = database.getReference("Users");
-        DatabaseReference myRef1 = myRef.child(currentUser.getUid());
-        DatabaseReference myRef2 = myRef1.child("UserInfo");
-        myRef2.setValue(userInfo);
     }
 
     public void DisplayToast() {

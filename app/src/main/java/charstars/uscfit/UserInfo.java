@@ -20,14 +20,12 @@ public class UserInfo {
     private static int age = 0;
     private static double weight = 0;
     private static double height = 0;
-    private FirebaseAuth mAuth;
-    public static boolean dataUpdated = false;
+    private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     public UserInfo() {
     }
 
     public UserInfo(boolean fromDb) {
-        mAuth = FirebaseAuth.getInstance();
 
         if (fromDb){
             return;
@@ -88,6 +86,15 @@ public class UserInfo {
         this.height = height;
     }
 
+    public static void updateDB(UserInfo userInfo) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        DatabaseReference myRef = database.getReference("Users");
+        DatabaseReference myRef1 = myRef.child(currentUser.getUid());
+        DatabaseReference myRef2 = myRef1.child("UserInfo");
+        myRef2.setValue(userInfo);
+    }
+
     private void readData(final FirebaseCallback firebaseCallback) {
         // otherwise, need to query!
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -99,16 +106,11 @@ public class UserInfo {
             return;
         }
         DatabaseReference userInfoRef = currentUserRef.child("UserInfo");
-        //final AtomicBoolean done = new AtomicBoolean(false);
-        // final CountDownLatch done = new CountDownLatch(1);
-
-
         // Read from the database
 
         userInfoRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
 
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
@@ -131,4 +133,3 @@ public class UserInfo {
         void onCallback(UserInfo userInfo);
     }
 }
-

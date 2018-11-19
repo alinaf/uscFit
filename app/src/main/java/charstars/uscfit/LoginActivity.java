@@ -156,6 +156,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             UserInfo ui = new UserInfo(false);
+            DayAtAGlance day = new DayAtAGlance(false);
             Intent i = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(i);
             finish();
@@ -450,6 +451,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
                 UserInfo ui = new UserInfo(false);
+                DayAtAGlance day = new DayAtAGlance(false);
                 if (signUp) {
                     i = new Intent(LoginActivity.this, NewUserFlow.class);
                 }
