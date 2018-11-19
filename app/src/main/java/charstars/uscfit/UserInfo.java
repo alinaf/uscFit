@@ -113,9 +113,8 @@ public class UserInfo {
                 // whenever data at this location is updated.
                 UserInfo uinfo = dataSnapshot.getValue(UserInfo.class);
                 if (uinfo != null){
-
+                    firebaseCallback.onCallback(uinfo);
                 }
-                firebaseCallback.onCallback(uinfo);
             }
 
             @Override
