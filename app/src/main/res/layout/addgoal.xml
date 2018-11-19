@@ -31,29 +31,46 @@
             android:hint="ex. run, swim, bike"/>
 
         <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal">
+        <NumberPicker
+            android:layout_marginTop="15dp"
+            android:id="@+id/numberPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/exercise" />
+
+        <Spinner
+            android:id="@+id/goalSpinner"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:entries="@array/goalOptions"
+            android:prompt="@string/title_goals" />
+    </LinearLayout>
+        <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical|center_horizontal">
-            <NumberPicker
-                android:layout_marginTop="15dp"
-                android:id="@+id/numberPicker"
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/exercise" />
-
-            <Spinner
-                android:id="@+id/goalSpinner"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="30dp"
-                android:layout_gravity="center_vertical"
-                android:layout_width="100dp"
+                android:text="Select Due Date"
+                android:id="@+id/btn_duedate"/>
+            <TextView
+                android:id="@+id/text_date"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:entries="@array/goalOptions"
-                android:prompt="@string/title_goals" />
+                android:textSize="15dp"
+                android:text=""/>
         </LinearLayout>
         <Button
             android:layout_marginTop="10dp"

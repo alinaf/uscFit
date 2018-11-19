@@ -10,7 +10,7 @@ public class DaysGoal extends Goal {
     Date startingDate;
 
     public DaysGoal(Date d, String desc, int gNum, int tNum){
-        super(desc, gNum, tNum);
+        super(null, desc, gNum, tNum);
         this.startingDate = d;
     }
     @Override

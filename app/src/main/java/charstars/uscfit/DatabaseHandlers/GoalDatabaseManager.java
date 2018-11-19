@@ -16,6 +16,8 @@ package charstars.uscfit.DatabaseHandlers;
         import java.util.HashMap;
         import java.util.List;
         import java.util.Map;
+        import java.util.Timer;
+        import java.util.TimerTask;
 
         import charstars.uscfit.DaysGoal;
         import charstars.uscfit.Goal;
@@ -28,7 +30,7 @@ public class GoalDatabaseManager {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static GoalDatabaseManager gm = null;
     private static List<Goal> goals;
-    private Map<Integer, Goal> goalsMap = new HashMap<Integer, Goal>();
+    private Map<Goal, Timer> goalsMap = new HashMap<Goal, Timer>();
     private boolean oninit = true;
 
     public static GoalDatabaseManager getInstance() {
@@ -38,7 +40,7 @@ public class GoalDatabaseManager {
         return gm;
     }
 
-    private GoalDatabaseManager() {
+    private void query(){
         this.goals = new ArrayList<Goal>();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -56,7 +58,7 @@ public class GoalDatabaseManager {
         // This method is called once with the initial value and again
         // whenever data at this location is updated.
 
-  // Read from the database
+        // Read from the database
         myRef2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -75,19 +77,23 @@ public class GoalDatabaseManager {
                         Goal gmlist = entry;
                         String quant = gmlist.getQuantifier();
                         Log.d("Hello", quant);
+
+                        Date d = gmlist.getDueDate();
                         if(quant.equals("miles")){
-                            MilesGoal g = new MilesGoal(gmlist.getDescription(), gmlist.getGoalNum(), gmlist.getTrackingNum());
+                            MilesGoal g = new MilesGoal(d, gmlist.getDescription(), gmlist.getGoalNum(), gmlist.getTrackingNum());
                             goals.add(g);
 
                         }else if(quant.equals("minutes")){
-                            MinutesGoal g = new MinutesGoal(gmlist.getDescription(), gmlist.getGoalNum(), gmlist.getTrackingNum());
+                            MinutesGoal g = new MinutesGoal(d, gmlist.getDescription(), gmlist.getGoalNum(), gmlist.getTrackingNum());
                             goals.add(g);
 
                         }else if(quant.equals("steps")){
-                            StepsGoal g = new StepsGoal(gmlist.getGoalNum(), gmlist.getTrackingNum());
+                            StepsGoal g = new StepsGoal(d, gmlist.getGoalNum(), gmlist.getTrackingNum());
                             goals.add(g);
 
                         }else if(quant.equals("days")){
+
+                            //NOT SURE WHAT TO DO ABOUT DATE HERE
                             DaysGoal g = new DaysGoal(new Date(), gmlist.getDescription(), gmlist.getGoalNum(), gmlist.getTrackingNum());
                             goals.add(g);
 
@@ -96,14 +102,14 @@ public class GoalDatabaseManager {
                 }else{
                     Log.d("GoalDB", "Goals don't exist");
                 }
-                goalsMap = new HashMap<Integer, Goal>();
+                goalsMap = new HashMap<Goal, Timer>();
                 for(Goal g: goals){
                     Log.d("inside whatsingoals", g.toString());
-                    goalsMap.put(g.id(), g);
+                        putInTimerMap(g);
                 }
 
                 if(onInit){
-                    GoalsDisplay.onChangeData(goals);
+                    //GoalsDisplay.onChangeData(goals);
                     onInit = false;
                 }
 
@@ -116,18 +122,25 @@ public class GoalDatabaseManager {
             }
         });
     }
+    private GoalDatabaseManager() {
+        query();
+    }
 
     public void addGoal(Goal e) {
-        if(goalsMap.get(e.id())==null){
+        if(goalsMap.get(e)==null){
             goals.add(e);
-            goalsMap.put(e.id(), e);
+            putInTimerMap(e);
             this.updateGoalsDB();
         }
     }
 
+    public void putInTimerMap(Goal g){
+        this.goalsMap.put(g, null);
+    }
+
     public void removeGoal(Goal e) {
         boolean removed = goals.remove(e);
-        goalsMap.remove(e.id());
+        goalsMap.remove(e);
 
         if(removed){
             this.updateGoalsDB();

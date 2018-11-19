@@ -21,7 +21,10 @@ public class BadgeFactory extends android.app.Activity
         return new Badge(R.drawable.big_trophy, name, d.toString());
     }
 
-    public static Badge generateThousand(String name, Date d){
+    public static Badge generateSteps(String name, Date d){
+        return new Badge(R.drawable.big_trophy, name, d.toString());
+    }
+    public static Badge generateDays(String name, Date d){
         return new Badge(R.drawable.big_trophy, name, d.toString());
     }
 

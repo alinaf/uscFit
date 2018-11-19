@@ -1,11 +1,13 @@
 package charstars.uscfit;
 
+import java.util.Date;
+
 import charstars.uscfit.RootObjects.Quantifier;
 
 public class MilesGoal extends Goal{
 
-    public MilesGoal(String desc, int gNum, int tNum){
-        super(desc, gNum, tNum);
+    public MilesGoal(Date d, String desc, int gNum, int tNum){
+        super(d, desc, gNum, tNum);
     }
 
     @Override

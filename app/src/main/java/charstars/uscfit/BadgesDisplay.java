@@ -1,10 +1,12 @@
 package charstars.uscfit;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.widget.ListView;
 
@@ -17,6 +19,7 @@ import charstars.uscfit.RootObjects.Badge;
 
 public class BadgesDisplay extends AppCompatActivity
 {
+    public static boolean created = false;
     private static ArrayList<Badge> badges;
     private static ListView listView;
     private static BadgeAdapter mAdapter;
@@ -70,17 +73,53 @@ public class BadgesDisplay extends AppCompatActivity
         listView = (ListView) findViewById(R.id.movies_list);
         mAdapter = new BadgeAdapter(this,badges);
         listView.setAdapter(mAdapter);
+        created = true;
+        Log.d("BADGES DISPLAY", "HERERE");
 
 
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        badges = BadgeCalculator.getBadges();
+         setContentView(R.layout.activity_badges_display);
+        listView = (ListView) findViewById(R.id.movies_list);
+        mAdapter = new BadgeAdapter(this,badges);
+        listView.setAdapter(mAdapter);
+        created = true;
+        Log.d("BADGES DISPLAY", "HERERE");
+
+    }
+
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+//        if (Integer.parseInt(android.os.Build.VERSION.SDK) > 5
+//                && keyCode == KeyEvent.KEYCODE_BACK
+//                && event.getRepeatCount() == 0) {
+//            Log.d("CDA", "onKeyDown Called");
+//            onBackPressed();
+//            return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
+//
+//
+//    @Override
+//    public void onBackPressed() {
+//        Intent i; // could go to two activities
+//        i = new Intent(BadgesDisplay.this, MainActivity.class);
+//            startActivity(i);
+//            finish();
+//    }
+
 
 
     public static void onChangeData(ArrayList<Badge> goals){
-        badges = goals;
-        ((BadgeAdapter) listView.getAdapter()).notifyDataSetChanged();
-        //mAdapter = new BadgeAdapter(this, badges);
-        //listView.setAdapter(mAdapter);
+//        if(created) {
+//            badges = goals;
+//            ((BadgeAdapter) listView.getAdapter()).notifyDataSetChanged();
+//        }
 
     }
 

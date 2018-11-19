@@ -8,20 +8,30 @@ public class Goal implements Serializable{
 
     static int _ID = 0;
     private int id;
+
+    private Date dueDate;
     protected String description = "";
     protected String quantifier = "";
     protected int goalNum = 100;
     protected int trackingNum = 0; //how many so far
-    public Goal(String description, int goalNum, int trackingNum) {
+    public Goal(Date dueDate, String description, int goalNum, int trackingNum) {
         this.description = description;
         this.goalNum = goalNum;
         this.trackingNum = trackingNum;
         this.id = _ID;
+        this.dueDate = dueDate;
         _ID++;
     }
 
     public Goal(){
 
+    }
+    public Date getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
     }
 
     public String getDescription() {

@@ -2,9 +2,16 @@ package charstars.uscfit.DataHandlers;
 
 import android.util.Log;
 
+import java.time.Clock;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 //import charstars.uscfit.BadgeDatabase;
 import charstars.uscfit.Goal;
@@ -14,6 +21,8 @@ import charstars.uscfit.RootObjects.Workout;
 public class GoalCalculations {
 
     private static int goalsThisWeek = 0;
+    private static Map<Goal, Timer> timerMap = new HashMap<Goal, Timer>();
+
 
     public static boolean addGoal(Goal e, String email){
         Log.d("updating gc", e.toString());
@@ -33,8 +42,8 @@ public class GoalCalculations {
             Goal g = GoalDatabaseManager.getInstance().getGoals().get(i);
             String desc = g.getDescription().toLowerCase().trim();
             String workoutEx = a.getActivity().getCategory().toLowerCase().trim();
-
-            if( g.getQuantifier().equals(a.getQuant().getMeasurement()) && desc.equals(workoutEx)){
+            Log.d("COMPLETION", desc+" "+workoutEx);
+            if( g.getQuantifier().toLowerCase().equals(a.getQuant().getMeasurement().toLowerCase()) && desc.equals(workoutEx)){
                 int length = a.getLength();
                 g.setProgress(length);
                 if(g.getProgress()==1.0){
@@ -73,8 +82,7 @@ public class GoalCalculations {
         }
         String desc = "Completed: " + e.getDescription() + " " + e.getGoalNum() + " " + q;
         BadgeCalculator.addBadge(desc, e.getGoalNum(), (new Date()));
-        removeGoal(e, email);
-
+        GoalDatabaseManager.getInstance().getGoals().remove(e);
         goalsThisWeek++;
 
         if(goalsThisWeek == 50){
@@ -103,6 +111,7 @@ public class GoalCalculations {
                g.setDescription(copy.getDescription());
                g.setGoalNum(copy.getGoalNum());
                g.setTrackingNum(copy.getTrackingNum());
+               g.setDueDate(copy.getDueDate());
 
 
                for(Goal ggg: GoalDatabaseManager.getInstance().getGoals()){

@@ -46,6 +46,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import charstars.uscfit.DataHandlers.GoalCalculations;
+import charstars.uscfit.DatabaseHandlers.BadgeDatabaseManager;
+import charstars.uscfit.DatabaseHandlers.GoalDatabaseManager;
 
 import static android.Manifest.permission.READ_CONTACTS;
 import android.app.NotificationManager;
@@ -152,7 +154,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        // future goal: if signed in, take user directly to next page
+        if (currentUser != null) {
+            UserInfo ui = new UserInfo(false);
+            DayAtAGlance day = new DayAtAGlance(false);
+            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(i);
+            finish();
+        }
     }
 
     /**
@@ -203,7 +211,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            UserInfo ui = new UserInfo(false);
+                           // UserInfo ui = new UserInfo(false);
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("tag", "createUserWithEmail:success");
 
@@ -267,7 +275,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                             @Override
                                             public void onComplete(@NonNull Task<AuthResult> task) {
                                                 if (task.isSuccessful()) {
-                                                    UserInfo ui = new UserInfo(false);
+                                                   // UserInfo ui = new UserInfo(false);
                                                     // Sign in success, update UI with the signed-in user's information
                                                     Log.d("tag", "signInWithEmail:success");
                                                     FirebaseUser user = mAuth.getCurrentUser();
@@ -425,6 +433,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             return true;
         }
 
+        private void initializeDBInfo(){
+
+            BadgeDatabaseManager bm = BadgeDatabaseManager.getInstance();
+
+            GoalDatabaseManager gm = GoalDatabaseManager.getInstance();
+
+
+        }
+
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
@@ -434,12 +451,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
                 UserInfo ui = new UserInfo(false);
+                DayAtAGlance day = new DayAtAGlance(false);
                 if (signUp) {
                     i = new Intent(LoginActivity.this, NewUserFlow.class);
                 }
                 else {
                     i = new Intent(LoginActivity.this, MainActivity.class);
                 }
+                initializeDBInfo();
                 startActivity(i);
                 finish();
             } else {
