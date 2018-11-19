@@ -10,22 +10,22 @@ public class BadgeFactory extends android.app.Activity
     //generates badges of different sizes by passing in name/desc and date
 
     public static Badge generateBronze(String name, Date d){
-        return new Badge(R.drawable.small_trophy, name, d.toString());
+        return new Badge(R.drawable.bronze, name, d.toString());
     }
 
     public static Badge generateSilver(String name, Date d){
-        return new Badge(R.drawable.med_trophy, name, d.toString());
+        return new Badge(R.drawable.silver, name, d.toString());
     }
 
     public static Badge generateGold(String name, Date d){
-        return new Badge(R.drawable.big_trophy, name, d.toString());
+        return new Badge(R.drawable.gold, name, d.toString());
     }
 
     public static Badge generateSteps(String name, Date d){
-        return new Badge(R.drawable.big_trophy, name, d.toString());
+        return new Badge(R.drawable.steps1, name, d.toString());
     }
     public static Badge generateDays(String name, Date d){
-        return new Badge(R.drawable.big_trophy, name, d.toString());
+        return new Badge(R.drawable.day, name, d.toString());
     }
 
 }
