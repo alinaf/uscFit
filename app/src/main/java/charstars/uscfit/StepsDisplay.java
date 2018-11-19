@@ -29,6 +29,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import charstars.uscfit.DataHandlers.GoalCalculations;
+import charstars.uscfit.DatabaseHandlers.StepsDatabaseManager;
 
 import static java.lang.Character.isDigit;
 
@@ -40,7 +41,9 @@ public class StepsDisplay extends AppCompatActivity implements SensorEventListen
 
     SensorManager sensorManager;
 
-    TextView tv_steps;//for one blackbox check: just check if this is an integer
+    TextView tv_steps;
+
+    TextView tv_goalNum;
 
     boolean running = false;
 
@@ -157,6 +160,12 @@ public class StepsDisplay extends AppCompatActivity implements SensorEventListen
             return GoalCalculations.addGoal(new StepsGoal(new Date(), goalNum, 0), email);
     }
 
+    public int getMostRecentStepGoal(){
+        //call function in StepCalculations to get the most recent steps goal.
+
+        return StepsDatabaseManager.getLatestStepGoal();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -176,6 +185,8 @@ public class StepsDisplay extends AppCompatActivity implements SensorEventListen
         setContentView(R.layout.activity_steps_display);
 
         tv_steps = (TextView) findViewById(R.id.tv_steps);//you only need to do this because you're doing logic with this layout element
+
+        tv_goalNum = (TextView) findViewById(R.id.tv_goalNum);
 
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);

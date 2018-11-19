@@ -35,6 +35,10 @@ public class StepsDatabaseManager {
         return sm;
     }
 
+    public static int getLatestStepGoal() {
+        return -1;
+    }
+
     //when adding steps to database: add date, associated goal, and # of steps
     public boolean addStepsRecord(StepsRecord sr){
         return true;
