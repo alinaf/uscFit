@@ -15,23 +15,29 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import charstars.uscfit.Adapters.BadgeAdapter;
 import charstars.uscfit.Adapters.GoalAdapter;
+import charstars.uscfit.Adapters.WorkoutAdapter;
 import charstars.uscfit.DataHandlers.BadgeCalculator;
 import charstars.uscfit.DataHandlers.GoalCalculations;
+import charstars.uscfit.DataHandlers.UpdateWorkouts;
 import charstars.uscfit.RootObjects.Quantifier;
 import charstars.uscfit.RootObjects.Workout;
 
@@ -42,6 +48,8 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
     private static RecyclerView mRecyclerView = null;
     private static RecyclerView.Adapter mAdapter;
     private static RecyclerView.LayoutManager mLayoutManager;
+
+    private ArrayList<Activity> activityList = new ArrayList<Activity>();
 
 
     Button btnDatePicker;
@@ -124,6 +132,51 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
             mRecyclerView.setAdapter(mAdapter);
         }
 
+        //workout list
+
+    }
+
+    public void setDefaultWorkouts() {
+        activityList.add(new Activity("Aerobics", 384));
+        activityList.add(new Activity("Badminton", 266));
+        activityList.add(new Activity("Ballet", 266));
+        activityList.add(new Activity("Ballroom Dancing", 177));
+        activityList.add(new Activity("Baseball", 295));
+        activityList.add(new Activity("Softball", 295));
+        activityList.add(new Activity("Basketball", 400));
+        activityList.add(new Activity("Biking ", 390));
+        activityList.add(new Activity("Bowling", 177));
+        activityList.add(new Activity("Boxing", 354));
+        activityList.add(new Activity("Football", 472));
+        activityList.add(new Activity("Gardening", 236));
+        activityList.add(new Activity("General Cleaning", 207));
+        activityList.add(new Activity("General Housework", 208));
+        activityList.add(new Activity("Golf", 266));
+        activityList.add(new Activity("Hiking", 354));
+        activityList.add(new Activity("Hockey", 472));
+        activityList.add(new Activity("Horseback Riding", 236));
+        activityList.add(new Activity("Jumping Rope", 472));
+        activityList.add(new Activity("Lacrosse", 472));
+        activityList.add(new Activity("Martial Arts", 590));
+        activityList.add(new Activity("Mowing Lawn", 325));
+        activityList.add(new Activity("Painting", 266));
+        activityList.add(new Activity("Ping Pong", 236));
+        activityList.add(new Activity("Playing with Children", 236));
+        activityList.add(new Activity("Rock Climbing", 472));
+        activityList.add(new Activity("Roller Blading ", 708));
+        activityList.add(new Activity("Running", 472));
+        activityList.add(new Activity("Skateboarding", 295));
+        activityList.add(new Activity("Skiing", 295));
+        activityList.add(new Activity("Soccer", 450));
+        activityList.add(new Activity("Swimming", 354));
+        activityList.add(new Activity("Tennis", 472));
+        activityList.add(new Activity("Ultimate Frisbee", 472));
+        activityList.add(new Activity("Volleyball", 177));
+        activityList.add(new Activity("Walking", 195));
+        activityList.add(new Activity("Walking the Dog", 177));
+        activityList.add(new Activity("Watering the Garden", 89));
+        activityList.add(new Activity("Weight Lifting", 354));
+        activityList.add(new Activity("Yoga", 234));
     }
 
     public void createTable(){
@@ -141,6 +194,8 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
         mRecyclerView.setAdapter(mAdapter);
 
 
+
+
     }
 
     public boolean addGoal(Date d, String goalType, int goalNum, String exerciseDescription){
@@ -156,9 +211,6 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
     }
 
     public void clearAddGoalFields(){
-        EditText e = findViewById(R.id.exercise);
-        e.getText().clear();
-        e.setHint("ex. run, swim, bike");
         Spinner spinner = (Spinner) findViewById(R.id.goalSpinner);
         spinner.setSelection(0);
         NumberPicker num = (NumberPicker)findViewById(R.id.numberPicker);
@@ -169,6 +221,15 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
         txtDate=(TextView)findViewById(R.id.text_date);
 
         btnDatePicker.setOnClickListener(this);
+
+        //workout list
+
+        Spinner workoutSpinner = (Spinner) findViewById(R.id.workoutSpinner);
+        setDefaultWorkouts();
+
+        final ArrayAdapter<Activity> arrayAdapter = new ArrayAdapter<Activity>(this, android.R.layout.simple_spinner_item,  activityList);
+        workoutSpinner.setAdapter(arrayAdapter);
+        workoutSpinner.setSelection(0);
     }
 
     @Override
@@ -210,8 +271,8 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
             datePickerDialog.show();
         }
         if(v.getId() == R.id.addGoal){
-            EditText e = findViewById(R.id.exercise);
             Spinner spinner = (Spinner) findViewById(R.id.goalSpinner);
+            Activity activity = (Activity)((Spinner)findViewById(R.id.workoutSpinner)).getSelectedItem();
 
             NumberPicker num = (NumberPicker)findViewById(R.id.numberPicker);
             int year = eYear;
@@ -219,7 +280,7 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
             int day = eDay;
 
 
-            String exerciseDescription = e.getText().toString();
+            String exerciseDescription = activity.getCategory();
             int goalNum = num.getValue();
             String goalType = spinner.getSelectedItem().toString();
 
