@@ -6,9 +6,11 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Date;
 
+import charstars.uscfit.Goal;
 import charstars.uscfit.RootObjects.Badge;
 import charstars.uscfit.DatabaseHandlers.BadgeDatabaseManager;
 import charstars.uscfit.BadgeFactory;
+import charstars.uscfit.RootObjects.Quantifier;
 
 public class BadgeCalculator extends AppCompatActivity
 {
@@ -21,22 +23,71 @@ public class BadgeCalculator extends AppCompatActivity
         Log.d(("Adding Badge"), b+" "+quant+" "+date);
 
         Badge bb = null;
-        if(quant>=500){
-            bb = BadgeFactory.generateFiveHundred(b, date);
+        if(quant>=10){
+            bb = BadgeFactory.generateGold(b, date);
 
-        }else if(quant>=100){
-            bb = BadgeFactory.generateHundred(b, date);
+        }else if(quant>=5){
+            bb = BadgeFactory.generateSilver(b, date);
 
 
         }else {
 
-            bb = BadgeFactory.generateFifty(b, date);
+            bb = BadgeFactory.generateBronze(b, date);
 
 
         }
         BadgeDatabaseManager.getInstance().addBadge(bb);
 //        Toast.makeText(BadgeCalculator.this, "Goal Completed! New Badge Added.",
 //                Toast.LENGTH_SHORT).show();
+    }
+
+    public static void addBadge(Goal b, Date d)
+    {
+
+
+        Badge bb = generateBadge(b, d);
+        if(bb!=null){
+            BadgeDatabaseManager.getInstance().addBadge(bb);
+        }
+//        Toast.makeText(BadgeCalculator.this, "Goal Completed! New Badge Added.",
+//                Toast.LENGTH_SHORT).show();
+    }
+
+    private static Badge generateBadge(Goal b, Date d) {
+        if(b == null){
+            return null;
+        }
+        String q = "";
+        if(b.getGoalNum()==1){
+            q = b.getQuantifier().substring(0, b.getQuantifier().length()-1);
+        }else{
+            q = b.getQuantifier();
+        }
+        String desc = "Completed: " + b.getDescription() + " " + b.getGoalNum() + " " + q;
+        if(b.getQuantifier().equals(Quantifier.STEPS)){
+            return BadgeFactory.generateSteps(desc, d);
+        }
+        if(b.getQuantifier().equals(Quantifier.DAYS)){
+            return BadgeFactory.generateDays(desc, d);
+        }
+        if(b.getQuantifier().equals(Quantifier.MILES)){
+            if(b.getGoalNum()>=20){
+                return BadgeFactory.generateGold(desc, d);
+            }else if(b.getGoalNum()>=10){
+                return BadgeFactory.generateSilver(desc, d);
+            }else{
+                return BadgeFactory.generateBronze(desc, d);
+            }
+
+        }
+        if(b.getGoalNum()>=60){
+            return BadgeFactory.generateGold(desc, d);
+        }else if(b.getGoalNum()>=30){
+            return BadgeFactory.generateSilver(desc, d);
+        }else{
+            return BadgeFactory.generateBronze(desc, d);
+        }
+
     }
 
     public static void removeBadge(Badge b){

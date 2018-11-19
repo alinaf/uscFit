@@ -9,15 +9,15 @@ public class BadgeFactory extends android.app.Activity
 {
     //generates badges of different sizes by passing in name/desc and date
 
-    public static Badge generateFifty(String name, Date d){
+    public static Badge generateBronze(String name, Date d){
         return new Badge(R.drawable.small_trophy, name, d.toString());
     }
 
-    public static Badge generateHundred(String name, Date d){
+    public static Badge generateSilver(String name, Date d){
         return new Badge(R.drawable.med_trophy, name, d.toString());
     }
 
-    public static Badge generateFiveHundred(String name, Date d){
+    public static Badge generateGold(String name, Date d){
         return new Badge(R.drawable.big_trophy, name, d.toString());
     }
 
