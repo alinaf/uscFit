@@ -1,9 +1,13 @@
 package charstars.uscfit;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -18,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -50,8 +55,18 @@ public class MainActivity extends AppCompatActivity
             "Keep grinding",
             "Amazing effort",
     };
+
+//    private PendingIntent pendingIntent;
+//    private AlarmManager manager;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        userInfo = new UserInfo();
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         if (savedInstanceState == null) {
@@ -75,6 +90,20 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+
+
+
+        // Retrieve a PendingIntent that will perform a broadcast
+//        Intent alarmIntent = new Intent(this, GoalAlarmReceiver.class);
+//        pendingIntent = PendingIntent.getBroadcast(this, 100, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        manager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+//        int interval = 1000;
+//
+//        manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
+//        Toast.makeText(this, "Alarm Set", Toast.LENGTH_SHORT).show();
+//
+
+
         // update image, name, email programatically
 
         // set up
@@ -85,8 +114,6 @@ public class MainActivity extends AppCompatActivity
         final ImageView profilePic = (ImageView)hView.findViewById(R.id.profilePic);
         final Uri imageUri;
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
         StorageReference mStorage = FirebaseStorage.getInstance().getReference();
         StorageReference filePath = mStorage.child("ProfilePics").child(currentUser.getUid()).child("profilePic");
         filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -98,7 +125,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        userInfo = new UserInfo(false);
         TextView name = (TextView) hView.findViewById(R.id.full_name);
         name.setText(userInfo.getFirstName());
 
@@ -111,18 +137,19 @@ public class MainActivity extends AppCompatActivity
         TextView minute = (TextView)findViewById(R.id.minutes);
         TextView happy = (TextView)findViewById(R.id.happymessage);
 
-        day.setText("Your day at a glance");
-        steps.setText("You've taken "+10+" steps today.");
-        calories.setText("You've burned "+90+" calories.");
-        minute.setText("You've exercised for "+10+" minutes.");
+        // don't think i need here
         if (userInfo.getFirstName().equals("")){
-            happy.setText(messages[(int)Math.random()*messages.length]+ "!");
+            day.setText("Welcome!");
         }
         else {
-            happy.setText(messages[(int)Math.random()*messages.length]+ ", " + userInfo.getFirstName());
+            DayAtAGlance dayAtAGlance = new DayAtAGlance();
+            happy.setText(messages[(int)Math.random()*messages.length]+ ", " + userInfo.getFirstName() + "!");
+            day.setText("Your day at a glance");
+            steps.setText("You've taken "+ dayAtAGlance.getDailySteps()+" steps today.");
+            calories.setText("You've burned "+ dayAtAGlance.getDailyCalories() +" calories.");
+            minute.setText("You've exercised for "+ dayAtAGlance.getDailyMinutes()+" minutes.");
         }
     }
-
 
     @Override
     public void onBackPressed() {
@@ -137,18 +164,30 @@ public class MainActivity extends AppCompatActivity
     public void onResume(){
         super.onResume();
         TextView happy = (TextView)findViewById(R.id.happymessage);
+        TextView day = (TextView)findViewById(R.id.dayatglance);
+        TextView steps = (TextView)findViewById(R.id.steps);
+        TextView calories = (TextView)findViewById(R.id.calories);
+        TextView minute = (TextView)findViewById(R.id.minutes);
+
         if (userInfo.getFirstName().equals("")){
-            happy.setText(messages[(int)Math.random()*messages.length]+ "!");
+            day.setText("With USCFit, you can:");
+            happy.setText("Update your info");
+            steps.setText("Set workout goals");
+            calories.setText("Admire your trophies");
+            minute.setText("Track your steps");
         }
         else {
-            happy.setText(messages[(int)Math.random()*messages.length]+ ", " + userInfo.getFirstName());
+            DayAtAGlance dayAtAGlance = new DayAtAGlance();
+            happy.setText(messages[(int)Math.random()*messages.length]+ ", " + userInfo.getFirstName() + "!");
+            day.setText("Your day at a glance");
+            steps.setText("You've taken "+ dayAtAGlance.getDailySteps()+" steps today.");
+            calories.setText("You've burned "+ dayAtAGlance.getDailyCalories() +" calories.");
+            minute.setText("You've exercised for "+ dayAtAGlance.getDailyMinutes()+" minutes.");
         }
-
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View hView =  navigationView.getHeaderView(0);
 
-        userInfo = new UserInfo(false);
         TextView name = (TextView) hView.findViewById(R.id.full_name);
         name.setText(userInfo.getFirstName());
     }
@@ -199,7 +238,17 @@ public class MainActivity extends AppCompatActivity
             Intent i = new Intent(MainActivity.this,StepsDisplay.class);
             i.putExtra("EMAIL", "Tianqin");
             startActivity(i);
-        } else if (id == R.id.nav_view) {
+        }
+        else if (id == R.id.nav_signOut) {
+            DayAtAGlance dayAtAGlance = new DayAtAGlance();
+            dayAtAGlance.setDayLastUpdated(-1);
+            FirebaseAuth.getInstance().signOut();
+            Intent i = new Intent(MainActivity.this,LoginActivity.class);
+            i.putExtra("EMAIL", "Tianqin");
+            startActivity(i);
+            finish(); // finish so that this activity is taken off the stack and user can't go back
+        }
+        else if (id == R.id.nav_view) {
 
         }
 

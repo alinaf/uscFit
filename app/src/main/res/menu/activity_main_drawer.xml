@@ -20,6 +20,10 @@
             android:id="@+id/nav_workoutList"
             android:icon="@drawable/barbell"
             android:title="Workouts" />
+        <item
+            android:id="@+id/nav_signOut"
+            android:icon="@drawable/logout"
+            android:title="Sign out" />
     </group>
 
 </menu>

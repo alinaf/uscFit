@@ -74,14 +74,7 @@ public class GoalCalculations {
     //notification that goal is completed
         // add badge somwhere
         //remove from list
-        String q = "";
-        if(e.getGoalNum()==1){
-            q = e.getQuantifier().substring(0, e.getQuantifier().length()-1);
-        }else{
-            q = e.getQuantifier();
-        }
-        String desc = "Completed: " + e.getDescription() + " " + e.getGoalNum() + " " + q;
-        BadgeCalculator.addBadge(desc, e.getGoalNum(), (new Date()));
+        BadgeCalculator.addBadge(e, new Date());
         GoalDatabaseManager.getInstance().getGoals().remove(e);
         goalsThisWeek++;
 
