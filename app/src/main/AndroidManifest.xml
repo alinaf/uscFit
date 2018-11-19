@@ -53,6 +53,7 @@
             android:theme="@style/AppTheme.TransparentTheme" />
         <activity android:name=".NewUserFlow"></activity>
         <receiver android:name=".AlarmReceiver"/>
+        <receiver android:name=".GoalAlarmReceiver"/>
     </application>
 
 </manifest>

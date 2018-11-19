@@ -1,5 +1,8 @@
 package charstars.uscfit;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -19,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -51,6 +55,11 @@ public class MainActivity extends AppCompatActivity
             "Keep grinding",
             "Amazing effort",
     };
+
+//    private PendingIntent pendingIntent;
+//    private AlarmManager manager;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         userInfo = new UserInfo();
@@ -80,6 +89,20 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+
+
+
+        // Retrieve a PendingIntent that will perform a broadcast
+//        Intent alarmIntent = new Intent(this, GoalAlarmReceiver.class);
+//        pendingIntent = PendingIntent.getBroadcast(this, 100, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        manager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+//        int interval = 1000;
+//
+//        manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
+//        Toast.makeText(this, "Alarm Set", Toast.LENGTH_SHORT).show();
+//
+
 
         // update image, name, email programatically
 
