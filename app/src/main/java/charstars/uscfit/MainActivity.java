@@ -114,15 +114,17 @@ public class MainActivity extends AppCompatActivity
         TextView minute = (TextView)findViewById(R.id.minutes);
         TextView happy = (TextView)findViewById(R.id.happymessage);
 
+        // don't think i need here
         if (userInfo.getFirstName().equals("")){
             day.setText("Welcome!");
         }
         else {
+            DayAtAGlance dayAtAGlance = new DayAtAGlance();
             happy.setText(messages[(int)Math.random()*messages.length]+ ", " + userInfo.getFirstName() + "!");
             day.setText("Your day at a glance");
-            steps.setText("You've taken "+10+" steps today.");
-            calories.setText("You've burned "+90+" calories.");
-            minute.setText("You've exercised for "+10+" minutes.");
+            steps.setText("You've taken "+ dayAtAGlance.getDailySteps()+" steps today.");
+            calories.setText("You've burned "+ dayAtAGlance.getDailyCalories() +" calories.");
+            minute.setText("You've exercised for "+ dayAtAGlance.getDailyMinutes()+" minutes.");
         }
     }
 
@@ -152,14 +154,13 @@ public class MainActivity extends AppCompatActivity
             minute.setText("Track your steps");
         }
         else {
-
-            day.setText("Your day at a glance");
+            DayAtAGlance dayAtAGlance = new DayAtAGlance();
             happy.setText(messages[(int)Math.random()*messages.length]+ ", " + userInfo.getFirstName() + "!");
-            steps.setText("You've taken "+10+" steps today.");
-            calories.setText("You've burned "+90+" calories.");
-            minute.setText("You've exercised for "+10+" minutes.");
+            day.setText("Your day at a glance");
+            steps.setText("You've taken "+ dayAtAGlance.getDailySteps()+" steps today.");
+            calories.setText("You've burned "+ dayAtAGlance.getDailyCalories() +" calories.");
+            minute.setText("You've exercised for "+ dayAtAGlance.getDailyMinutes()+" minutes.");
         }
-
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View hView =  navigationView.getHeaderView(0);
