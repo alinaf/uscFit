@@ -2,11 +2,20 @@ package charstars.uscfit.DataHandlers;
 
 
 
+import android.app.Application;
+import android.app.Notification;
+import android.content.Context;
+import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.AppCompatActivity;
+
 import java.util.List;
 
 import charstars.uscfit.DatabaseHandlers.GoalDatabaseManager;
 import charstars.uscfit.DatabaseHandlers.WorkoutDatabaseManager;
 import charstars.uscfit.DayAtAGlance;
+import charstars.uscfit.LoginActivity;
+import charstars.uscfit.MainActivity;
+import charstars.uscfit.NotificationHelper;
 import charstars.uscfit.RootObjects.Quantifier;
 import charstars.uscfit.RootObjects.Workout;
 
@@ -47,6 +56,7 @@ public class UpdateWorkouts {
         GoalCalculations.calculateGoalProgress(workout, "");
         WorkoutDatabaseManager.getInstance().updateWorkoutsDB();
     }
+
 
     //signal completion function
 }

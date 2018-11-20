@@ -1,6 +1,8 @@
 package charstars.uscfit.DataHandlers;
 
+import android.content.Context;
 import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import java.time.Clock;
@@ -21,7 +23,7 @@ import charstars.uscfit.LoginActivity;
 import charstars.uscfit.NotificationHelper;
 import charstars.uscfit.RootObjects.Workout;
 
-public class GoalCalculations {
+public class GoalCalculations extends AppCompatActivity {
 
     private static int goalsThisWeek = 0;
     private static Map<Goal, Timer> timerMap = new HashMap<Goal, Timer>();
@@ -51,8 +53,8 @@ public class GoalCalculations {
                 g.setProgress(length);
                 if(g.getProgress()==1.0){
                     completed.add(g);
-                    mNotificationHelper = new NotificationHelper(GoalCalculations.mNotificationHelper);
-                    sendNotification("Goal completed!", "You have successfully completed your goal: " + g.getDescription());
+                    GoalCalculations gc = new GoalCalculations();
+                    gc.sendNotifs(g);
                 }
             }
         }
@@ -64,8 +66,14 @@ public class GoalCalculations {
 
         GoalDatabaseManager.getInstance().updateGoalsDB();
     }
-    private static NotificationHelper mNotificationHelper;
-    public static void sendNotification(String title, String message)
+
+    public void sendNotifs(Goal g)
+    {
+        mNotificationHelper = new NotificationHelper(GoalCalculations.this);
+        sendNotification("Goal completed!", "You have successfully completed your goal: " + g.getDescription());
+    }
+    private NotificationHelper mNotificationHelper;
+    public void sendNotification(String title, String message)
     {
         NotificationCompat.Builder nb = mNotificationHelper.getChannelNotification(title, message);
         mNotificationHelper.getManager().notify(1, nb.build());
