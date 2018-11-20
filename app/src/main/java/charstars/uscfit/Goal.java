@@ -17,8 +17,8 @@ public class Goal implements Serializable{
     static int _ID = 0;
     private int id;
 
-    private Date dueDate;
-    private boolean valid = true;
+    protected Date dueDate;
+    protected boolean valid = true;
     transient private Timer timer = null;
     protected String description = "";
     protected String quantifier = "";

@@ -253,6 +253,9 @@ public class StepsDisplay extends AppCompatActivity implements SensorEventListen
     public void onSensorChanged(SensorEvent event) {
         if(running){
             tv_steps.setText(String.valueOf(event.values[0]));
+            // TO DO: test on Android to see if this actually works
+//            DayAtAGlance day = new DayAtAGlance();
+//            day.setDailySteps(event.values[0]);
         }
     }
 
