@@ -20,13 +20,11 @@
             android:textSize="30dp"
             android:text="Edit Goal"/>
 
-        <EditText
-            android:id="@+id/editgoalexercise"
-            android:layout_below="@id/ExerciseLabel"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:textSize="20dp"
-            android:hint="ex. run, swim, bike"/>
+        <Spinner
+            android:id="@+id/workoutSpinner"
+            android:layout_width="314dp"
+            android:layout_height="41dp"
+            android:entries="@array/workoutOptions" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -50,6 +48,23 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:padding="5dp" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select Due Date"
+                    android:id="@+id/btn_duedate"/>
+                <TextView
+                    android:id="@+id/text_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:text=""/>
+            </LinearLayout>
         </LinearLayout>
         <Button
             android:layout_marginTop="10dp"

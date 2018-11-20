@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CalendarView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.NumberPicker;
@@ -43,6 +44,8 @@ public class WorkoutList extends AppCompatActivity implements View.OnClickListen
     private static WorkoutAdapter mAdapter;
     private static RecyclerView.LayoutManager mLayoutManager;
 
+    private CalendarView mCalendarView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,16 @@ public class WorkoutList extends AppCompatActivity implements View.OnClickListen
             public void onClick(View view) {
                 Intent i = new Intent(WorkoutList.this, WorkoutPopUp.class);
                 startActivity(i);
+            }
+        });
+
+        mCalendarView = (CalendarView)findViewById(R.id.cal);
+
+        mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
+            @Override
+            public void onSelectedDayChange(CalendarView calendarView, int yyyy, int mm, int dd){
+                //get all relevant workouts
+                //add one to the month lol
             }
         });
 

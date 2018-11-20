@@ -24,8 +24,9 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="200dp"
+            android:layout_marginBottom="30dp"
             android:gravity="center"
-            android:text="Tianqin's Day at a Glance:"
+            android:text="Welcome!"
             android:textSize="30sp"
             android:textStyle="bold"
             tools:layout_editor_absoluteX="176dp"
@@ -39,7 +40,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="You've taken 100 steps today."
+            android:text=""
             android:textSize="20sp"
             tools:layout_editor_absoluteX="176dp"
             tools:layout_editor_absoluteY="224dp" />
@@ -52,7 +53,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="You've burned 900 calories."
+            android:text=""
             android:textSize="20sp"
             tools:layout_editor_absoluteX="176dp"
             tools:layout_editor_absoluteY="264dp" />
@@ -65,7 +66,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="You've exercised for 10 minutes."
+            android:text=""
             android:textSize="20sp"
             tools:layout_editor_absoluteX="176dp"
             tools:layout_editor_absoluteY="302dp" />
@@ -78,7 +79,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="You're doing great, Tianqin."
+            android:text=""
             android:textSize="20sp"
             tools:layout_editor_absoluteX="176dp"
             tools:layout_editor_absoluteY="344dp" />

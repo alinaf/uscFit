@@ -10,6 +10,12 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import charstars.uscfit.Goal;
@@ -24,13 +30,14 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.MyViewHolder> 
     // you provide access to all the views for a data item in a view holder
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView desc, category;
+        public TextView desc, category, duedate;
         public ProgressBar progressBar;
         public RelativeLayout relativeLayout;
         public MyViewHolder(View v) {
             super(v);
             desc = v.findViewById(R.id.description);
             category = v.findViewById(R.id.category);
+            duedate = v.findViewById(R.id.duedate);
             progressBar = v.findViewById(R.id.progress);
             relativeLayout = v.findViewById(R.id.goalRowLayout);
         }
@@ -38,7 +45,18 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.MyViewHolder> 
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public GoalAdapter(List<Goal> mDataset) {
-        this.mDataset = mDataset;
+        List<Goal> valid = new ArrayList<Goal>();
+        for(Goal g: mDataset){
+            if(g.isValid()){
+                valid.add(g);
+            }
+        }
+        this.mDataset = valid;
+
+
+        //FILTER VALID GOALS HERE
+
+
         Log.d("inside adapter", mDataset.toString());
     }
 
@@ -60,8 +78,16 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.MyViewHolder> 
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         Goal activity = mDataset.get(position);
+
         String quantifier = activity.getQuantifier();
         holder.desc.setTextColor(Color.GRAY);
+
+        if(activity.getDueDate()==null){
+            holder.duedate.setText("");
+
+        }else{
+            holder.duedate.setText("Due Date: " + activity.getDueDate().toString());
+        }
         if(activity.getGoalNum()==1){
             quantifier = quantifier.substring(0, quantifier.length()-1);
         }

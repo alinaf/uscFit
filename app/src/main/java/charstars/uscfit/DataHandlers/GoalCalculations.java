@@ -1,19 +1,33 @@
 package charstars.uscfit.DataHandlers;
 
+import android.content.Context;
+import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import java.time.Clock;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 //import charstars.uscfit.BadgeDatabase;
 import charstars.uscfit.Goal;
 import charstars.uscfit.DatabaseHandlers.GoalDatabaseManager;
+import charstars.uscfit.LoginActivity;
+import charstars.uscfit.NotificationHelper;
 import charstars.uscfit.RootObjects.Workout;
 
-public class GoalCalculations {
+public class GoalCalculations extends AppCompatActivity {
 
     private static int goalsThisWeek = 0;
+    private static Map<Goal, Timer> timerMap = new HashMap<Goal, Timer>();
+
 
     public static boolean addGoal(Goal e, String email){
         Log.d("updating gc", e.toString());
@@ -25,9 +39,11 @@ public class GoalCalculations {
         return true;
     }
 
+
     //THIS CAN BE INVOKED BY OTHER CLASSES WHEN STEPS ARE COMPLETED OR AN ACTIVITY IS COMPLETED
     public static void calculateGoalProgress(Workout a, String email){
         List<Goal> completed = new ArrayList<Goal>();
+        GoalCalculations gc = new GoalCalculations();
         int size = GoalDatabaseManager.getInstance().getGoals().size();
         for(int i = 0; i<size; i++){
             Goal g = GoalDatabaseManager.getInstance().getGoals().get(i);
@@ -39,6 +55,8 @@ public class GoalCalculations {
                 g.setProgress(length);
                 if(g.getProgress()==1.0){
                     completed.add(g);
+                    //GoalCalculations gc = new GoalCalculations();
+                    //gc.sendNotifs(g);
                 }
             }
         }
@@ -50,6 +68,19 @@ public class GoalCalculations {
 
         GoalDatabaseManager.getInstance().updateGoalsDB();
     }
+
+    public void sendNotifs(Goal g)
+    {
+        mNotificationHelper = new NotificationHelper(GoalCalculations.this);
+        sendNotification("Goal completed!", "You have successfully completed your goal: " + g.getDescription());
+    }
+    private NotificationHelper mNotificationHelper;
+    public void sendNotification(String title, String message)
+    {
+        NotificationCompat.Builder nb = mNotificationHelper.getChannelNotification(title, message);
+        mNotificationHelper.getManager().notify(1, nb.build());
+    }
+
     public static void resetWeek(){
         goalsThisWeek = 0;
     }
@@ -65,15 +96,8 @@ public class GoalCalculations {
     //notification that goal is completed
         // add badge somwhere
         //remove from list
-        String q = "";
-        if(e.getGoalNum()==1){
-            q = e.getQuantifier().substring(0, e.getQuantifier().length()-1);
-        }else{
-            q = e.getQuantifier();
-        }
-        String desc = "Completed: " + e.getDescription() + " " + e.getGoalNum() + " " + q;
-        BadgeCalculator.addBadge(desc, e.getGoalNum(), (new Date()));
-        removeGoal(e, email);
+        BadgeCalculator.addBadge(e, new Date());
+        GoalDatabaseManager.getInstance().getGoals().remove(e);
         goalsThisWeek++;
 
         if(goalsThisWeek == 50){
@@ -96,12 +120,19 @@ public class GoalCalculations {
     }
 
     public static void editGoal(Goal copy, Goal orig) {
+        Log.d("ENTERS THIS FUNCTION", "LOL");
        Goal g = GoalDatabaseManager.getInstance().getGoal(orig);
+       if(g == null){
+           Log.d("goal is NULL", "eferf");
+           return;
+       }
         Log.d("GOAL ID", g.id()+" "+copy.id());
 
                g.setDescription(copy.getDescription());
                g.setGoalNum(copy.getGoalNum());
                g.setTrackingNum(copy.getTrackingNum());
+               g.setDueDate(copy.getDueDate());
+               g.setValid(copy.isValid());
 
 
                for(Goal ggg: GoalDatabaseManager.getInstance().getGoals()){
