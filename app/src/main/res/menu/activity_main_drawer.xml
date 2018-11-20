@@ -21,15 +21,14 @@
             android:icon="@drawable/barbell"
             android:title="Workouts" />
         <item
-<<<<<<< HEAD
             android:id="@+id/nav_activityList"
             android:icon="@drawable/person"
             android:title="Activities" />
-=======
+
+        <item
             android:id="@+id/nav_signOut"
             android:icon="@drawable/logout"
             android:title="Sign out" />
->>>>>>> 064022c9ba187d1f9fabb37e1506575c6caddd64
     </group>
 
 </menu>
