@@ -14,8 +14,10 @@ package charstars.uscfit.DatabaseHandlers;
         import java.util.ArrayList;
         import java.util.Date;
         import java.util.HashMap;
+        import java.util.HashSet;
         import java.util.List;
         import java.util.Map;
+        import java.util.Set;
         import java.util.Timer;
         import java.util.TimerTask;
 
@@ -30,7 +32,7 @@ public class GoalDatabaseManager {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static GoalDatabaseManager gm = null;
     private static List<Goal> goals;
-    private Map<Goal, Timer> goalsMap = new HashMap<Goal, Timer>();
+    private Set<Goal> goalsMap= new HashSet<Goal>();
     private boolean oninit = true;
 
     public static GoalDatabaseManager getInstance() {
@@ -102,10 +104,10 @@ public class GoalDatabaseManager {
                 }else{
                     Log.d("GoalDB", "Goals don't exist");
                 }
-                goalsMap = new HashMap<Goal, Timer>();
+                goalsMap = new HashSet<Goal>();
                 for(Goal g: goals){
                     Log.d("inside whatsingoals", g.toString());
-                        putInTimerMap(g);
+                        goalsMap.add(g);
                 }
 
                 if(onInit){
@@ -127,15 +129,11 @@ public class GoalDatabaseManager {
     }
 
     public void addGoal(Goal e) {
-        if(goalsMap.get(e)==null){
+        if(!goals.contains(e)){
             goals.add(e);
-            putInTimerMap(e);
+            goalsMap.add(e);
             this.updateGoalsDB();
         }
-    }
-
-    public void putInTimerMap(Goal g){
-        this.goalsMap.put(g, null);
     }
 
     public void removeGoal(Goal e) {

@@ -98,13 +98,19 @@ public class GoalCalculations {
     }
 
     public static void editGoal(Goal copy, Goal orig) {
+        Log.d("ENTERS THIS FUNCTION", "LOL");
        Goal g = GoalDatabaseManager.getInstance().getGoal(orig);
+       if(g == null){
+           Log.d("goal is NULL", "eferf");
+           return;
+       }
         Log.d("GOAL ID", g.id()+" "+copy.id());
 
                g.setDescription(copy.getDescription());
                g.setGoalNum(copy.getGoalNum());
                g.setTrackingNum(copy.getTrackingNum());
                g.setDueDate(copy.getDueDate());
+               g.setValid(copy.isValid());
 
 
                for(Goal ggg: GoalDatabaseManager.getInstance().getGoals()){

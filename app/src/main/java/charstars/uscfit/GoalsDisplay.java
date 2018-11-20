@@ -189,7 +189,8 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
         txtDate=(TextView)findViewById(R.id.text_date);
 
         btnDatePicker.setOnClickListener(this);
-
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
         //workout list
 
         Spinner workoutSpinner = (Spinner) findViewById(R.id.workoutSpinner);
