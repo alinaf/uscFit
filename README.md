@@ -11,17 +11,27 @@ To deploy and run application:
 2. Run the application (Run > Run...) selecting the above device as the target device.
 3. When the application opens, log in with the above credentials.
 
-Improvements since 2.3:
--New user flow (when a user signs up, they are taken to a new screen, where they enter their personal info and select a picture, and this is all saved in the database)
+# uscFit
+Alina Abidi, Anjan Amarnath, Rupali Bahl, Devika Kumar, Qianze Zhang
 
--Workout notifications are now scheduled for 3 hours before a planned workout and upon the completion of a workout 
+Device: Pixel 2
+username: tianqinz@usc.edu
+password: uscfit
 
--Workouts have been fully integrated within Firebase
 
--Users can now indicate whether a workout is complete or not. By selecting complete, the background of the workout display is changed (creating a visual difference between completed and not completed workouts) and updates the database with the completion status of the respective workout.
+To deploy and run application:
+1. Clone this repository and open it in Android Studio (File > Open)
+2. Run the application (Run > Run...) selecting the above device as the target device.
+3. When the application opens, log in with the above credentials.
 
--Badge Functionality/Display -(badges are stored and read from database and badges are added whenever a workout is finished and a user achieves his or her goals, different types of badges are generated for different types of achievements, set up the functionality so that it can be used/referenced by other parts of the app)
-
--Storing daily steps in database (this is not accessible by the user and cannot be demoed)
-
--Displaying steps data for the past week on a bar graph on StepsDisplay interface
+Improvements since 2.4:
+Sign out and persisting login data
+Day At a Glance no longer hardcoded (pulls from DB and updates based on workout completion, steps)
+Deadlines added to goals (User can edit deadlines and they are displayed with each goal on the goals page)
+Tested Steps on an Android device (vs emulator) to ensure it was calculating and displaying steps properly (* We have a video demo since none of use Androids)
+Badge Functionality completely integrated into code (when a user completes a workout that completes a goal, a new badge is added, changed criteria for adding different levels of badges for different types of achievements)
+Goal Functionality enhanced (user must now pick from a preset list of activities when setting a goal in order to ensure that workouts and goals are in sync)
+Goal/Badge UI enhanced (integrated Badges UI into GoalsDisplay class to ensure smoother UI and fixed the bottom navigation bar issues that were persisting since the last sprint. Back button now always redirects to the main activity)
+Workouts display updates with Calendar UI
+Adding Custom Activities
+Sorting of workouts in workoutlist by date
