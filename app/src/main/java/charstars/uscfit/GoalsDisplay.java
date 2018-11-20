@@ -38,6 +38,7 @@ import charstars.uscfit.Adapters.WorkoutAdapter;
 import charstars.uscfit.DataHandlers.BadgeCalculator;
 import charstars.uscfit.DataHandlers.GoalCalculations;
 import charstars.uscfit.DataHandlers.UpdateWorkouts;
+import charstars.uscfit.RootObjects.Badge;
 import charstars.uscfit.RootObjects.Quantifier;
 import charstars.uscfit.RootObjects.Workout;
 
@@ -48,6 +49,14 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
     private static RecyclerView mRecyclerView = null;
     private static RecyclerView.Adapter mAdapter;
     private static RecyclerView.LayoutManager mLayoutManager;
+
+
+    //badge data:
+
+    public static boolean created = false;
+    private static ArrayList<Badge> badges;
+    private static ListView listView;
+    private static BadgeAdapter mBadgeAdapter;
 
     private ArrayList<Activity> activityList = new ArrayList<Activity>();
 
@@ -76,8 +85,9 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
                 case R.id.navigation_badges:
                     Log.d("nav to badges", "badge");
                     setContentView(R.layout.activity_badges_display);
-                    Intent i = new Intent(GoalsDisplay.this, BadgesDisplay.class);
-                    startActivity(i);
+//                    Intent i = new Intent(GoalsDisplay.this, BadgesDisplay.class);
+//                    startActivity(i);
+                    initBadges();
                     navigation = findViewById(R.id.navigation);
                     navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
                     return true;
@@ -123,61 +133,19 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
         createTable();
     }
 
-    public static void onChangeData(List<Goal> goals){
-        defaultGoals = goals;
-        System.out.println("qianze: " + goals.get(0).getDescription());
-        if(mRecyclerView !=null) {
-            ((GoalAdapter) mRecyclerView.getAdapter()).notifyDataSetChanged();
-            mAdapter = new GoalAdapter(defaultGoals);
-            mRecyclerView.setAdapter(mAdapter);
-        }
+//    public static void onChangeData(List<Goal> goals){
+//        defaultGoals = goals;
+//        System.out.println("qianze: " + goals.get(0).getDescription());
+//        if(mRecyclerView !=null) {
+//            ((GoalAdapter) mRecyclerView.getAdapter()).notifyDataSetChanged();
+//            mAdapter = new GoalAdapter(defaultGoals);
+//            mRecyclerView.setAdapter(mAdapter);
+//        }
+//
+//        //workout list
+//
+//    }
 
-        //workout list
-
-    }
-
-    public void setDefaultWorkouts() {
-        activityList.add(new Activity("Aerobics", 384));
-        activityList.add(new Activity("Badminton", 266));
-        activityList.add(new Activity("Ballet", 266));
-        activityList.add(new Activity("Ballroom Dancing", 177));
-        activityList.add(new Activity("Baseball", 295));
-        activityList.add(new Activity("Softball", 295));
-        activityList.add(new Activity("Basketball", 400));
-        activityList.add(new Activity("Biking ", 390));
-        activityList.add(new Activity("Bowling", 177));
-        activityList.add(new Activity("Boxing", 354));
-        activityList.add(new Activity("Football", 472));
-        activityList.add(new Activity("Gardening", 236));
-        activityList.add(new Activity("General Cleaning", 207));
-        activityList.add(new Activity("General Housework", 208));
-        activityList.add(new Activity("Golf", 266));
-        activityList.add(new Activity("Hiking", 354));
-        activityList.add(new Activity("Hockey", 472));
-        activityList.add(new Activity("Horseback Riding", 236));
-        activityList.add(new Activity("Jumping Rope", 472));
-        activityList.add(new Activity("Lacrosse", 472));
-        activityList.add(new Activity("Martial Arts", 590));
-        activityList.add(new Activity("Mowing Lawn", 325));
-        activityList.add(new Activity("Painting", 266));
-        activityList.add(new Activity("Ping Pong", 236));
-        activityList.add(new Activity("Playing with Children", 236));
-        activityList.add(new Activity("Rock Climbing", 472));
-        activityList.add(new Activity("Roller Blading ", 708));
-        activityList.add(new Activity("Running", 472));
-        activityList.add(new Activity("Skateboarding", 295));
-        activityList.add(new Activity("Skiing", 295));
-        activityList.add(new Activity("Soccer", 450));
-        activityList.add(new Activity("Swimming", 354));
-        activityList.add(new Activity("Tennis", 472));
-        activityList.add(new Activity("Ultimate Frisbee", 472));
-        activityList.add(new Activity("Volleyball", 177));
-        activityList.add(new Activity("Walking", 195));
-        activityList.add(new Activity("Walking the Dog", 177));
-        activityList.add(new Activity("Watering the Garden", 89));
-        activityList.add(new Activity("Weight Lifting", 354));
-        activityList.add(new Activity("Yoga", 234));
-    }
 
     public void createTable(){
         this.defaultGoals = GoalCalculations.getGoals(email);
@@ -221,7 +189,8 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
         txtDate=(TextView)findViewById(R.id.text_date);
 
         btnDatePicker.setOnClickListener(this);
-
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
         //workout list
 
         Spinner workoutSpinner = (Spinner) findViewById(R.id.workoutSpinner);
@@ -230,6 +199,16 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
         final ArrayAdapter<Activity> arrayAdapter = new ArrayAdapter<Activity>(this, android.R.layout.simple_spinner_item,  activityList);
         workoutSpinner.setAdapter(arrayAdapter);
         workoutSpinner.setSelection(0);
+    }
+
+    public void initBadges(){
+        BadgeCalculator.initDB();
+        badges = BadgeCalculator.getBadges();
+        setContentView(R.layout.activity_badges_display);
+        listView = (ListView) findViewById(R.id.movies_list);
+        mBadgeAdapter = new BadgeAdapter(this,badges);
+        listView.setAdapter(mBadgeAdapter);
+        created = true;
     }
 
     @Override
@@ -363,6 +342,55 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
         if(day < 1 || day > 31)
             return false;
         return true;
+    }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        finish();
+    }
+
+    public void setDefaultWorkouts() {
+        activityList.add(new Activity("Aerobics", 384));
+        activityList.add(new Activity("Badminton", 266));
+        activityList.add(new Activity("Ballet", 266));
+        activityList.add(new Activity("Ballroom Dancing", 177));
+        activityList.add(new Activity("Baseball", 295));
+        activityList.add(new Activity("Softball", 295));
+        activityList.add(new Activity("Basketball", 400));
+        activityList.add(new Activity("Biking ", 390));
+        activityList.add(new Activity("Bowling", 177));
+        activityList.add(new Activity("Boxing", 354));
+        activityList.add(new Activity("Football", 472));
+        activityList.add(new Activity("Gardening", 236));
+        activityList.add(new Activity("General Cleaning", 207));
+        activityList.add(new Activity("General Housework", 208));
+        activityList.add(new Activity("Golf", 266));
+        activityList.add(new Activity("Hiking", 354));
+        activityList.add(new Activity("Hockey", 472));
+        activityList.add(new Activity("Horseback Riding", 236));
+        activityList.add(new Activity("Jumping Rope", 472));
+        activityList.add(new Activity("Lacrosse", 472));
+        activityList.add(new Activity("Martial Arts", 590));
+        activityList.add(new Activity("Mowing Lawn", 325));
+        activityList.add(new Activity("Painting", 266));
+        activityList.add(new Activity("Ping Pong", 236));
+        activityList.add(new Activity("Playing with Children", 236));
+        activityList.add(new Activity("Rock Climbing", 472));
+        activityList.add(new Activity("Roller Blading ", 708));
+        activityList.add(new Activity("Running", 472));
+        activityList.add(new Activity("Skateboarding", 295));
+        activityList.add(new Activity("Skiing", 295));
+        activityList.add(new Activity("Soccer", 450));
+        activityList.add(new Activity("Swimming", 354));
+        activityList.add(new Activity("Tennis", 472));
+        activityList.add(new Activity("Ultimate Frisbee", 472));
+        activityList.add(new Activity("Volleyball", 177));
+        activityList.add(new Activity("Walking", 195));
+        activityList.add(new Activity("Walking the Dog", 177));
+        activityList.add(new Activity("Watering the Garden", 89));
+        activityList.add(new Activity("Weight Lifting", 354));
+        activityList.add(new Activity("Yoga", 234));
     }
 
 

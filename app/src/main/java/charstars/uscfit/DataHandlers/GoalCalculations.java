@@ -1,5 +1,6 @@
 package charstars.uscfit.DataHandlers;
 
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import java.time.Clock;
@@ -16,6 +17,8 @@ import java.util.TimerTask;
 //import charstars.uscfit.BadgeDatabase;
 import charstars.uscfit.Goal;
 import charstars.uscfit.DatabaseHandlers.GoalDatabaseManager;
+import charstars.uscfit.LoginActivity;
+import charstars.uscfit.NotificationHelper;
 import charstars.uscfit.RootObjects.Workout;
 
 public class GoalCalculations {
@@ -48,6 +51,8 @@ public class GoalCalculations {
                 g.setProgress(length);
                 if(g.getProgress()==1.0){
                     completed.add(g);
+                    mNotificationHelper = new NotificationHelper(GoalCalculations.mNotificationHelper);
+                    sendNotification("Goal completed!", "You have successfully completed your goal: " + g.getDescription());
                 }
             }
         }
@@ -59,6 +64,13 @@ public class GoalCalculations {
 
         GoalDatabaseManager.getInstance().updateGoalsDB();
     }
+    private static NotificationHelper mNotificationHelper;
+    public static void sendNotification(String title, String message)
+    {
+        NotificationCompat.Builder nb = mNotificationHelper.getChannelNotification(title, message);
+        mNotificationHelper.getManager().notify(1, nb.build());
+    }
+
     public static void resetWeek(){
         goalsThisWeek = 0;
     }
@@ -98,13 +110,19 @@ public class GoalCalculations {
     }
 
     public static void editGoal(Goal copy, Goal orig) {
+        Log.d("ENTERS THIS FUNCTION", "LOL");
        Goal g = GoalDatabaseManager.getInstance().getGoal(orig);
+       if(g == null){
+           Log.d("goal is NULL", "eferf");
+           return;
+       }
         Log.d("GOAL ID", g.id()+" "+copy.id());
 
                g.setDescription(copy.getDescription());
                g.setGoalNum(copy.getGoalNum());
                g.setTrackingNum(copy.getTrackingNum());
                g.setDueDate(copy.getDueDate());
+               g.setValid(copy.isValid());
 
 
                for(Goal ggg: GoalDatabaseManager.getInstance().getGoals()){

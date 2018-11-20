@@ -1,8 +1,16 @@
 package charstars.uscfit;
 
+import android.util.Log;
+
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import charstars.uscfit.DataHandlers.GoalCalculations;
+import charstars.uscfit.DatabaseHandlers.GoalDatabaseManager;
 
 public class Goal implements Serializable{
 
@@ -10,6 +18,8 @@ public class Goal implements Serializable{
     private int id;
 
     private Date dueDate;
+    private boolean valid = true;
+    transient private Timer timer = null;
     protected String description = "";
     protected String quantifier = "";
     protected int goalNum = 100;
@@ -19,19 +29,90 @@ public class Goal implements Serializable{
         this.goalNum = goalNum;
         this.trackingNum = trackingNum;
         this.id = _ID;
-        this.dueDate = dueDate;
+        this.valid = true;
+        setDueDate(dueDate);
         _ID++;
     }
 
     public Goal(){
 
     }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
+    }
+
     public Date getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(final Date dueDate) {
+//
+//        final Calendar cal = Calendar.getInstance();
+//        cal.setTime(dueDate);
+//        int year = cal.get(Calendar.YEAR);
+//        int month = cal.get(Calendar.MONTH);
+//        int day = cal.get(Calendar.DAY_OF_MONTH);
+//
+//
+//        if(this.dueDate!=null){
+//
+//        cal.setTime(this.dueDate);
+//        int year0 = cal.get(Calendar.YEAR);
+//        int month0 = cal.get(Calendar.MONTH);
+//        int day0 = cal.get(Calendar.DAY_OF_MONTH);
+//
+//            cal.setTime(new Date());
+//            int yearC = cal.get(Calendar.YEAR);
+//            int monthC = cal.get(Calendar.MONTH);
+//            int dayC = cal.get(Calendar.DAY_OF_MONTH);
+//        if((year == year0 && month == month0 && day == day0)){
+//            //SAME DAY AS CURRENTLY SET
+//            valid = false;
+//            return;
+//        }
+//
+//        }
+//
+//        cal.set(year, month, day, 23, 59);
+       // this.dueDate = cal.getTime();
         this.dueDate = dueDate;
+        if(this.dueDate == null){
+            return;
+        }
+        if(timer == null) {
+            timer = new Timer();
+        }else{
+            timer.cancel();
+            timer = new Timer();
+        }
+        this.valid = true;
+
+        TimerTask t = new TimerTask() {
+            @Override
+            public void run() {
+                Log.d("RUNNING", "inside timer "+dueDate.toString()+" current date" + (new Date()).toString());
+                valid = false;
+                //UPDATE SINGLE GOAL HERE
+            }
+        };
+
+ try {
+            timer.schedule(t, this.dueDate);
+     Log.d("CHANGED TIMER", ""+dueDate.toString() + " current date: "+ (new Date()).toString());
+
+ }catch (IllegalStateException e){
+            Log.d("RUNNING", "inside illegalstateexception"+dueDate.toString() + " current date: "+ (new Date()).toString());
+            valid = false;
+            //UPDATE THIS GOAL ONLY
+        }catch(IllegalArgumentException e){
+
+             e.printStackTrace();
+        }
     }
 
     public String getDescription() {

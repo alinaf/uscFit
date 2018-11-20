@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.text.FieldPosition;
 import java.text.ParsePosition;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -44,7 +45,18 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.MyViewHolder> 
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public GoalAdapter(List<Goal> mDataset) {
-        this.mDataset = mDataset;
+        List<Goal> valid = new ArrayList<Goal>();
+        for(Goal g: mDataset){
+            if(g.isValid()){
+                valid.add(g);
+            }
+        }
+        this.mDataset = valid;
+
+
+        //FILTER VALID GOALS HERE
+
+
         Log.d("inside adapter", mDataset.toString());
     }
 
@@ -66,6 +78,7 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.MyViewHolder> 
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         Goal activity = mDataset.get(position);
+
         String quantifier = activity.getQuantifier();
         holder.desc.setTextColor(Color.GRAY);
 

@@ -21,6 +21,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import charstars.uscfit.DataHandlers.GoalCalculations;
 import charstars.uscfit.RootObjects.Quantifier;
@@ -64,7 +65,12 @@ public class EditPopUpInfo extends AppCompatActivity implements View.OnClickList
 
         if(g.getDueDate()!=null){
             c.setTime(g.getDueDate());
+        }else{
+            c.setTime(new Date());
         }
+        eYear = c.get(Calendar.YEAR);
+        eMonth = c.get(Calendar.MONTH);
+        eDay = c.get(Calendar.DAY_OF_MONTH);
         btnDatePicker.setOnClickListener(this);
 
 
@@ -141,6 +147,7 @@ public class EditPopUpInfo extends AppCompatActivity implements View.OnClickList
         int year = eYear;
         int month = eMonth;
         int day = eDay;
+        Log.d("YEARRR", ""+eYear+" "+eMonth+" "+eDay);
 
 
         Calendar cal = Calendar.getInstance();
@@ -149,6 +156,7 @@ public class EditPopUpInfo extends AppCompatActivity implements View.OnClickList
         gg.setDescription(((Activity)((Spinner)findViewById(R.id.workoutSpinner)).getSelectedItem()).getCategory());
         gg.setGoalNum(num.getValue());
         gg.setTrackingNum(0);
+        Log.d("CAL GET TIME", cal.getTime().toString());
         gg.setDueDate(cal.getTime());
         GoalCalculations.editGoal(gg, g);
         Log.d("EDIT", "GOAL BEFORE: "+ g.getDescription());
@@ -164,10 +172,14 @@ public class EditPopUpInfo extends AppCompatActivity implements View.OnClickList
             final Calendar c = Calendar.getInstance();
             if(g.getDueDate()!=null){
                 c.setTime(g.getDueDate());
+            }else{
+                c.setTime(new Date());
             }
             mYear = c.get(Calendar.YEAR);
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
+
+            Log.d("YEAR", mYear+"");
 
 
             DatePickerDialog datePickerDialog = new DatePickerDialog(this,

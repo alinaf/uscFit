@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import charstars.uscfit.Adapters.BadgeAdapter;
 import charstars.uscfit.RootObjects.Badge;
-import charstars.uscfit.BadgesDisplay;
+//import charstars.uscfit.BadgesDisplay;
 
 public class BadgeDatabaseManager {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
