@@ -14,7 +14,7 @@ import java.util.Calendar;
 
 public class DayAtAGlance {
     private static int dayLastUpdated = -1; // hacky, fix later
-    private static int dailySteps = 0;
+    private static float dailySteps = 0;
     private static double dailyCalories = 0;
     private static int dailyMinutes = 0;
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -23,7 +23,7 @@ public class DayAtAGlance {
         this.dayLastUpdated = dayLastUpdated;
     }
 
-    public void setDailySteps(int dailySteps) {
+    public void setDailySteps(float dailySteps) {
         this.dailySteps = dailySteps;
     }
 
@@ -61,7 +61,7 @@ public class DayAtAGlance {
         return dayLastUpdated;
     }
 
-    public int getDailySteps() {
+    public float getDailySteps() {
         return dailySteps;
     }
 
