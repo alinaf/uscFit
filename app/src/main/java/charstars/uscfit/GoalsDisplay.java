@@ -343,6 +343,12 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        finish();
+    }
+
     public void setDefaultWorkouts() {
         activityList.add(new Activity("Aerobics", 384));
         activityList.add(new Activity("Badminton", 266));
