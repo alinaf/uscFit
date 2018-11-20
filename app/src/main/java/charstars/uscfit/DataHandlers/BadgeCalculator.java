@@ -1,5 +1,6 @@
 package charstars.uscfit.DataHandlers;
 
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import charstars.uscfit.Goal;
+import charstars.uscfit.NotificationHelper;
 import charstars.uscfit.RootObjects.Badge;
 import charstars.uscfit.DatabaseHandlers.BadgeDatabaseManager;
 import charstars.uscfit.BadgeFactory;
@@ -40,17 +42,25 @@ public class BadgeCalculator extends AppCompatActivity
 //        Toast.makeText(BadgeCalculator.this, "Goal Completed! New Badge Added.",
 //                Toast.LENGTH_SHORT).show();
     }
+    public static NotificationHelper mNotificationHelper;
 
     public static void addBadge(Goal b, Date d)
     {
-
-
         Badge bb = generateBadge(b, d);
-        if(bb!=null){
+        if(bb!=null)
+        {
+            mNotificationHelper = new NotificationHelper(BadgeCalculator.mNotificationHelper);
+            sendNotification("Badge earned!", "You have earned a badge: " + bb.getmName());
             BadgeDatabaseManager.getInstance().addBadge(bb);
         }
 //        Toast.makeText(BadgeCalculator.this, "Goal Completed! New Badge Added.",
 //                Toast.LENGTH_SHORT).show();
+    }
+
+    public static void sendNotification(String title, String message)
+    {
+        NotificationCompat.Builder nb = mNotificationHelper.getChannelNotification(title, message);
+        mNotificationHelper.getManager().notify(1, nb.build());
     }
 
     private static Badge generateBadge(Goal b, Date d) {
