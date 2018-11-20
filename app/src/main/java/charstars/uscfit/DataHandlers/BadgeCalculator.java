@@ -42,32 +42,32 @@ public class BadgeCalculator extends AppCompatActivity
 //        Toast.makeText(BadgeCalculator.this, "Goal Completed! New Badge Added.",
 //                Toast.LENGTH_SHORT).show();
     }
-    public NotificationHelper mNotificationHelper;
+    //public NotificationHelper mNotificationHelper;
 
     public static void addBadge(Goal b, Date d)
     {
         Badge bb = generateBadge(b, d);
         if(bb!=null)
         {
-            BadgeCalculator bc = new BadgeCalculator();
-            bc.sendNotifs(bb);
+//            BadgeCalculator bc = new BadgeCalculator();
+//            bc.sendNotifs(bb);
             BadgeDatabaseManager.getInstance().addBadge(bb);
         }
 //        Toast.makeText(BadgeCalculator.this, "Goal Completed! New Badge Added.",
 //                Toast.LENGTH_SHORT).show();
     }
 
-    public void sendNotifs(Badge b)
-    {
-        mNotificationHelper = new NotificationHelper(BadgeCalculator.this);
-        sendNotification("Badge earned!", "You have earned a badge: " + b.getmName());
-    }
-
-    public void sendNotification(String title, String message)
-    {
-        NotificationCompat.Builder nb = mNotificationHelper.getChannelNotification(title, message);
-        mNotificationHelper.getManager().notify(1, nb.build());
-    }
+//    public void sendNotifs(Badge b)
+//    {
+//        mNotificationHelper = new NotificationHelper(BadgeCalculator.this);
+//        sendNotification("Badge earned!", "You have earned a badge: " + b.getmName());
+//    }
+//
+//    public void sendNotification(String title, String message)
+//    {
+//        NotificationCompat.Builder nb = mNotificationHelper.getChannelNotification(title, message);
+//        mNotificationHelper.getManager().notify(1, nb.build());
+//    }
 
     private static Badge generateBadge(Goal b, Date d) {
         if(b == null){

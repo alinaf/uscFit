@@ -39,9 +39,11 @@ public class GoalCalculations extends AppCompatActivity {
         return true;
     }
 
+
     //THIS CAN BE INVOKED BY OTHER CLASSES WHEN STEPS ARE COMPLETED OR AN ACTIVITY IS COMPLETED
     public static void calculateGoalProgress(Workout a, String email){
         List<Goal> completed = new ArrayList<Goal>();
+        GoalCalculations gc = new GoalCalculations();
         int size = GoalDatabaseManager.getInstance().getGoals().size();
         for(int i = 0; i<size; i++){
             Goal g = GoalDatabaseManager.getInstance().getGoals().get(i);
@@ -53,8 +55,8 @@ public class GoalCalculations extends AppCompatActivity {
                 g.setProgress(length);
                 if(g.getProgress()==1.0){
                     completed.add(g);
-                    GoalCalculations gc = new GoalCalculations();
-                    gc.sendNotifs(g);
+                    //GoalCalculations gc = new GoalCalculations();
+                    //gc.sendNotifs(g);
                 }
             }
         }
