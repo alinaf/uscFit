@@ -28,7 +28,7 @@ public class Workout implements Serializable, Comparable<Workout>  {
         this.length = length;
         completed = false;
         this.date = d;
-        this.caloriesBurned = action.getDefaultCalorieValue();
+        this.caloriesBurned = action.getDefaultCalorieValue()*length/60;
         this.id = _ID++;
     }
 
@@ -38,7 +38,7 @@ public class Workout implements Serializable, Comparable<Workout>  {
         this.length = length;
         this.completed = c;
         this.date = d;
-        this.caloriesBurned = action.getDefaultCalorieValue();
+        this.caloriesBurned = action.getDefaultCalorieValue()*length/60;
         this.id = _ID++;
     }
 

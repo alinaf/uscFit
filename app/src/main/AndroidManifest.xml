@@ -51,6 +51,9 @@
         <activity
             android:name=".WorkoutPopUp"
             android:theme="@style/AppTheme.TransparentTheme" />
+        <activity
+            android:name=".AddActivityDisplay"
+            android:theme="@style/AppTheme.TransparentTheme" />
         <activity android:name=".NewUserFlow"></activity>
         <receiver android:name=".AlarmReceiver"/>
     </application>

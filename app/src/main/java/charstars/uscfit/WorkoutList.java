@@ -2,6 +2,8 @@ package charstars.uscfit;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -44,17 +47,7 @@ public class WorkoutList extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if (extras == null) {
-                email = null;
-            } else {
-                email = extras.getString("EMAIL");
-            }
-        } else {
-            email = (String) savedInstanceState.getSerializable("EMAIL");
-        }
+
         workoutList = UpdateWorkouts.getWorkouts();
         setContentView(R.layout.activity_workout_list);
         createTable();
@@ -71,7 +64,6 @@ public class WorkoutList extends AppCompatActivity implements View.OnClickListen
     }
 
     public void createTable() {
-
         mRecyclerView = findViewById(R.id.workoutListLayout);
         Collections.sort(workoutList);
         mAdapter = new WorkoutAdapter(workoutList);

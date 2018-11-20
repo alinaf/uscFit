@@ -2,12 +2,16 @@ package charstars.uscfit;
 
 public class Activity {
 
+
+    static int _ID = 0;
+    private int id;
     private String category;
     private long defaultCalorieValue;
 
     public Activity(String category, long defaultCalorieValue) {
         this.category = category;
         this.defaultCalorieValue = defaultCalorieValue;
+        this.id = _ID++;
     }
 
     public Activity() {
@@ -29,6 +33,11 @@ public class Activity {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    public int getID() {
+        return this.id;
+    }
+
 
     @Override
     public String toString() {

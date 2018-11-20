@@ -52,4 +52,7 @@
     <string name="title_activity_mainbadgedisplay">mainbadgedisplay</string>
     <string name="workoutFailString">Please use the calendar pickers to choose the date and time.</string>
     <string name="please_fill_out_all_fields">Please fill out all fields.</string>
+    <string name="title_addWorkout">Add Workout</string>
+    <string name="title_activities">Add Activity</string>
+    <string name="title_workout">Workout List </string>
 </resources>

@@ -35,22 +35,25 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
+import charstars.uscfit.DataHandlers.UpdateActivities;
 import charstars.uscfit.DataHandlers.UpdateWorkouts;
 import charstars.uscfit.RootObjects.Quantifier;
 import charstars.uscfit.RootObjects.Workout;
 
 public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListener {
     Workout w = null;
-    private String email;
     private FirebaseDatabase mDatabase;
     private FirebaseAuth mAuth;
 
@@ -60,7 +63,7 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
     private int mYear, mMonth, mDay, mHour, mMinute;
     private int eYear =-1, eMonth=-1, eDay=-1, eHour = -1, eMinute = -1;
 
-    private ArrayList<Activity> activityList = new ArrayList<Activity>();
+    private List<Activity> activityList = UpdateActivities.getActivities();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,16 +81,6 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
         mDatabase = FirebaseDatabase.getInstance();
 
         Intent intent = getIntent();
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if(extras == null) {
-                email = null;
-            } else {
-                email = extras.getString("EMAIL");
-            }
-        } else {
-            email = (String) savedInstanceState.getSerializable("EMAIL");
-        }
 
         initializeFields();
 
@@ -103,15 +96,24 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
 
     public void initializeFields(){
         Spinner spinner = (Spinner) findViewById(R.id.workoutSpinner);
-        setDefaultWorkouts();
-        DatabaseReference myRef = mDatabase.getReference("activities");
+
+        //\\DatabaseReference myRef = mDatabase.getReference("activities");
         final ArrayAdapter<Activity> arrayAdapter = new ArrayAdapter<Activity>(this, android.R.layout.simple_spinner_item,  activityList);
         spinner.setAdapter(arrayAdapter);
+/*
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        DatabaseReference myRef = database.getReference("Users"); // will not be null
+        DatabaseReference myRef1 = myRef.child(currentUser.getUid());
+        if (myRef1 == null) { // will be null the first time
+            return;
+        }
+        DatabaseReference myRef2 = myRef1.child("Activities");
 
-        /*myRef.addChildEventListener(new ChildEventListener() {
+        myRef2.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Activity act = new Activity(dataSnapshot.getKey(), (Long)dataSnapshot.getValue());
+                Activity act = new Activity(dataSnapshot.getKey(), (Long)(dataSnapshot.getValue()));
                 activityList.add(act);
                 arrayAdapter.notifyDataSetChanged();
             }
@@ -135,7 +137,8 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });*/
+        });
+        */
 
 
 
@@ -146,49 +149,6 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
         num.setMinValue(1);
         num.setMaxValue(1000);
         num.setValue(1);
-    }
-
-    public void setDefaultWorkouts() {
-        activityList.add(new Activity("Aerobics", 384));
-        activityList.add(new Activity("Badminton", 266));
-        activityList.add(new Activity("Ballet", 266));
-        activityList.add(new Activity("Ballroom Dancing", 177));
-        activityList.add(new Activity("Baseball", 295));
-        activityList.add(new Activity("Softball", 295));
-        activityList.add(new Activity("Basketball", 400));
-        activityList.add(new Activity("Biking ", 390));
-        activityList.add(new Activity("Bowling", 177));
-        activityList.add(new Activity("Boxing", 354));
-        activityList.add(new Activity("Football", 472));
-        activityList.add(new Activity("Gardening", 236));
-        activityList.add(new Activity("General Cleaning", 207));
-        activityList.add(new Activity("General Housework", 208));
-        activityList.add(new Activity("Golf", 266));
-        activityList.add(new Activity("Hiking", 354));
-        activityList.add(new Activity("Hockey", 472));
-        activityList.add(new Activity("Horseback Riding", 236));
-        activityList.add(new Activity("Jumping Rope", 472));
-        activityList.add(new Activity("Lacrosse", 472));
-        activityList.add(new Activity("Martial Arts", 590));
-        activityList.add(new Activity("Mowing Lawn", 325));
-        activityList.add(new Activity("Painting", 266));
-        activityList.add(new Activity("Ping Pong", 236));
-        activityList.add(new Activity("Playing with Children", 236));
-        activityList.add(new Activity("Rock Climbing", 472));
-        activityList.add(new Activity("Roller Blading ", 708));
-        activityList.add(new Activity("Running", 472));
-        activityList.add(new Activity("Skateboarding", 295));
-        activityList.add(new Activity("Skiing", 295));
-        activityList.add(new Activity("Soccer", 450));
-        activityList.add(new Activity("Swimming", 354));
-        activityList.add(new Activity("Tennis", 472));
-        activityList.add(new Activity("Ultimate Frisbee", 472));
-        activityList.add(new Activity("Volleyball", 177));
-        activityList.add(new Activity("Walking", 195));
-        activityList.add(new Activity("Walking the Dog", 177));
-        activityList.add(new Activity("Watering the Garden", 89));
-        activityList.add(new Activity("Weight Lifting", 354));
-        activityList.add(new Activity("Yoga", 234));
     }
 
     public void sendMessage(View view) {

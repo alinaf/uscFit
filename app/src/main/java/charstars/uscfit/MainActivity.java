@@ -192,15 +192,15 @@ public class MainActivity extends AppCompatActivity
             startActivity(i);
         } else if (id == R.id.nav_workoutList) {
             Intent i = new Intent(MainActivity.this, WorkoutList.class);
-            i.putExtra("EMAIL", "Tianqin");
             startActivity(i);
         }
         else if (id == R.id.nav_steps) {
             Intent i = new Intent(MainActivity.this,StepsDisplay.class);
             i.putExtra("EMAIL", "Tianqin");
             startActivity(i);
-        } else if (id == R.id.nav_view) {
-
+        } else if (id == R.id.nav_activityList) {
+            Intent i = new Intent(MainActivity.this, AddActivityDisplay.class);
+            startActivity(i);
         }
 
         DrawerLayout  drawer = findViewById(R.id.drawer_layout);
