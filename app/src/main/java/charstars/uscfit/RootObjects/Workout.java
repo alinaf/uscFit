@@ -8,6 +8,7 @@ import java.util.Date;
 
 import charstars.uscfit.Activity;
 import charstars.uscfit.NotificationHelper;
+import charstars.uscfit.UserInfo;
 import charstars.uscfit.WorkoutPopUp;
 
 
@@ -20,7 +21,8 @@ public class Workout implements Serializable, Comparable<Workout>  {
     private Quantifier quant;
     private int length;
     java.util.Date date = null;
-    private long caloriesBurned;
+    private double caloriesBurned;
+    UserInfo ui = new UserInfo();
 
     public Workout(Activity action, Quantifier quant, int length, java.util.Date d) {
         this.activity = action;
@@ -28,7 +30,15 @@ public class Workout implements Serializable, Comparable<Workout>  {
         this.length = length;
         completed = false;
         this.date = d;
-        this.caloriesBurned = action.getDefaultCalorieValue()*length/60;
+        double calories;
+        if (ui != null) {
+            /* equation from https://www.businessinsider.com/how-to-calculate-calories-burned-exercise-met-value-2017-8 */
+            calories = (ui.getWeight() / 2.2) * action.getDefaultCalorieValue()*length/60;
+        }
+        else { // average weight
+            calories = 80.7 * action.getDefaultCalorieValue()*length/60;
+        }
+        this.caloriesBurned = Math.floor(calories * 100) / 100;
         this.id = _ID++;
     }
 
@@ -38,7 +48,15 @@ public class Workout implements Serializable, Comparable<Workout>  {
         this.length = length;
         this.completed = c;
         this.date = d;
-        this.caloriesBurned = action.getDefaultCalorieValue()*length/60;
+        double calories;
+        if (ui != null) {
+            /* equation from https://www.businessinsider.com/how-to-calculate-calories-burned-exercise-met-value-2017-8 */
+            calories = (ui.getWeight() / 2.2) * action.getDefaultCalorieValue()*length/60;
+        }
+        else { // average weight
+            calories = 80.7 * action.getDefaultCalorieValue()*length/60;
+        }
+        this.caloriesBurned = Math.floor(calories * 100) / 100;
         this.id = _ID++;
     }
 
@@ -89,7 +107,7 @@ public class Workout implements Serializable, Comparable<Workout>  {
     }
 
 
-    public long getCaloriesBurned() {
+    public double getCaloriesBurned() {
         return this.caloriesBurned;
     }
 

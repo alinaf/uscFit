@@ -53,7 +53,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.MyViewHo
         holder.category.setText(workout.getActivity().getCategory());
         holder.length.setText(Integer.toString(workout.getLength()) + " " + workout.getQuant().getMeasurement());
         holder.date.setText(workout.stringDate());
-        holder.caloriesBurned.setText(Long.toString(workout.getCaloriesBurned()) + " calories");
+        holder.caloriesBurned.setText(Double.toString(workout.getCaloriesBurned()) + " calories");
         holder.checkBox.setTag(workout);
         if (workout.isCompleted()) {
             holder.checkBox.setChecked(true);

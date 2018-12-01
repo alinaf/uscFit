@@ -6,9 +6,9 @@ public class Activity {
     static int _ID = 0;
     private int id;
     private String category;
-    private long defaultCalorieValue;
+    private double defaultCalorieValue;
 
-    public Activity(String category, long defaultCalorieValue) {
+    public Activity(String category, double defaultCalorieValue) {
         this.category = category;
         this.defaultCalorieValue = defaultCalorieValue;
         this.id = _ID++;
@@ -18,7 +18,7 @@ public class Activity {
 
     }
 
-    public long getDefaultCalorieValue() {
+    public double getDefaultCalorieValue() {
         return defaultCalorieValue;
     }
 
