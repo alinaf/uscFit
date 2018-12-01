@@ -23,6 +23,10 @@ public class BadgeDatabaseManager {
     private static ArrayList<Badge> badges = null;
     private boolean changed = true;
 
+    public static void resetDb() {
+        bm = null;
+    }
+
     public static BadgeDatabaseManager getInstance() {
         if(bm == null){
             bm  = new BadgeDatabaseManager();

@@ -35,6 +35,10 @@ public class GoalDatabaseManager {
     private Set<Goal> goalsMap= new HashSet<Goal>();
     private boolean oninit = true;
 
+    public static void resetDb() {
+        gm = null;
+    }
+
     public static GoalDatabaseManager getInstance() {
         if(gm == null){
             gm  = new GoalDatabaseManager();

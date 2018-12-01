@@ -247,6 +247,8 @@ public class MainActivity extends AppCompatActivity
             DayAtAGlance dayAtAGlance = new DayAtAGlance();
             dayAtAGlance.setDayLastUpdated(-1);
             FirebaseAuth.getInstance().signOut();
+            GoalDatabaseManager.resetDb();
+            BadgeDatabaseManager.resetDb();
             Intent i = new Intent(MainActivity.this,LoginActivity.class);
             i.putExtra("EMAIL", "Tianqin");
             startActivity(i);
