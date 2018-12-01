@@ -22,8 +22,8 @@
             android:title="Workouts" />
         <item
             android:id="@+id/nav_activityList"
-            android:icon="@drawable/person"
-            android:title="Activities" />
+            android:icon="@drawable/add2"
+            android:title="Add Custom Activity" />
 
         <item
             android:id="@+id/nav_signOut"
