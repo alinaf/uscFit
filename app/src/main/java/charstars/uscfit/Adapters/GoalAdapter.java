@@ -86,7 +86,7 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.MyViewHolder> 
             holder.duedate.setText("");
 
         }else{
-            holder.duedate.setText("Due Date: " + activity.getDueDate().toString());
+            holder.duedate.setText("Due Date: " + activity.getDueDate().toString().substring(0, activity.getDueDate().toString().length()-18));
         }
         if(activity.getGoalNum()==1){
             quantifier = quantifier.substring(0, quantifier.length()-1);

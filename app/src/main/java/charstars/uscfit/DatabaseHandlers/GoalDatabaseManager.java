@@ -13,18 +13,12 @@ package charstars.uscfit.DatabaseHandlers;
 
         import java.util.ArrayList;
         import java.util.Date;
-        import java.util.HashMap;
         import java.util.HashSet;
         import java.util.List;
-        import java.util.Map;
         import java.util.Set;
-        import java.util.Timer;
-        import java.util.TimerTask;
 
         import charstars.uscfit.DaysGoal;
         import charstars.uscfit.Goal;
-        import charstars.uscfit.GoalsDisplay;
-        import charstars.uscfit.MilesGoal;
         import charstars.uscfit.MinutesGoal;
         import charstars.uscfit.StepsGoal;
 
@@ -85,12 +79,7 @@ public class GoalDatabaseManager {
                         Log.d("Hello", quant);
 
                         Date d = gmlist.getDueDate();
-                        if(quant.equals("miles")){
-                            MilesGoal g = new MilesGoal(d, gmlist.getDescription(), gmlist.getGoalNum(), gmlist.getTrackingNum());
-                            g.setValid(entry.isValid());
-                            goals.add(g);
-
-                        }else if(quant.equals("minutes")){
+                        if(quant.equals("minutes")){
                             MinutesGoal g = new MinutesGoal(d, gmlist.getDescription(), gmlist.getGoalNum(), gmlist.getTrackingNum());
                             g.setValid(entry.isValid());
                             goals.add(g);
