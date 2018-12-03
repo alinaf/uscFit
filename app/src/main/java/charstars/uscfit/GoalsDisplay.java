@@ -37,6 +37,7 @@ import charstars.uscfit.Adapters.GoalAdapter;
 import charstars.uscfit.Adapters.WorkoutAdapter;
 import charstars.uscfit.DataHandlers.BadgeCalculator;
 import charstars.uscfit.DataHandlers.GoalCalculations;
+import charstars.uscfit.DataHandlers.UpdateActivities;
 import charstars.uscfit.DataHandlers.UpdateWorkouts;
 import charstars.uscfit.RootObjects.Badge;
 import charstars.uscfit.RootObjects.Quantifier;
@@ -58,7 +59,7 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
     private static ListView listView;
     private static BadgeAdapter mBadgeAdapter;
 
-    private ArrayList<Activity> activityList = new ArrayList<Activity>();
+    private List<Activity> activityList = UpdateActivities.getActivities();
 
 
     Button btnDatePicker;
@@ -194,7 +195,6 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
         //workout list
 
         Spinner workoutSpinner = (Spinner) findViewById(R.id.workoutSpinner);
-        setDefaultWorkouts();
 
         final ArrayAdapter<Activity> arrayAdapter = new ArrayAdapter<Activity>(this, android.R.layout.simple_spinner_item,  activityList);
         workoutSpinner.setAdapter(arrayAdapter);
@@ -350,57 +350,6 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
         finish();
     }
 
-    public void setDefaultWorkouts() {
-        activityList.add(new Activity("Biking (competitive)", 8.5));
-        activityList.add(new Activity("Biking (leisure)", 4));
-        activityList.add(new Activity("Weight lifting", 6));
-        activityList.add(new Activity("Ballet", 4.8));
-        activityList.add(new Activity("Rowing (intense)", 8.5));
-        activityList.add(new Activity("Rowing (leisure)", 3.5));
-        activityList.add(new Activity("Stretching", 2.5));
-        activityList.add(new Activity("Aerobics", 6.5));
-        activityList.add(new Activity("House cleaning", 3));
-        activityList.add(new Activity("Lawn mowing", 5.5));
-        activityList.add(new Activity("Gardening", 4));
-        activityList.add(new Activity("Playing drums", 4));
-        activityList.add(new Activity("Carpentry", 3.5));
-        activityList.add(new Activity("Jogging", 7));
-        activityList.add(new Activity("Running (12 min/mile)", 8));
-        activityList.add(new Activity("Running (10 min/mile)", 10));
-        activityList.add(new Activity("Running (9 min/mile)", 11));
-        activityList.add(new Activity("Running (8 min/mile)", 12.5));
-        activityList.add(new Activity("Running (7 min/mile)", 14));
-        activityList.add(new Activity("Running (6 min/mile)", 16));
-        activityList.add(new Activity("Running, cross country", 9));
-        activityList.add(new Activity("Badminton (leisure)", 4.5));
-        activityList.add(new Activity("Badminton (competitive)", 7));
-        activityList.add(new Activity("Basketball (leisure)", 7));
-        activityList.add(new Activity("Basketball (competitive)", 4.5));
-        activityList.add(new Activity("Boxing (in ring)", 12));
-        activityList.add(new Activity("Boxing (punching bag)", 6));
-        activityList.add(new Activity("Coaching sports", 4));
-        activityList.add(new Activity("Cricket", 5));
-        activityList.add(new Activity("Croquet", 2.5));
-        activityList.add(new Activity("Fencing", 6));
-        activityList.add(new Activity("Football (leisure)", 9));
-        activityList.add(new Activity("Football (competitive)", 8));
-        activityList.add(new Activity("Frisbee (leisure)", 3));
-        activityList.add(new Activity("Frisbee (competitive)", 8));
-        activityList.add(new Activity("Golf", 4.5));
-        activityList.add(new Activity("Field hockey", 8));
-        activityList.add(new Activity("Ice hockey", 8));
-        activityList.add(new Activity("Horseback riding", 4));
-        activityList.add(new Activity("Skateboarding", 5));
-        activityList.add(new Activity("Soccer (leisure)", 10));
-        activityList.add(new Activity("Soccer (competitive)", 7));
-        activityList.add(new Activity("Tennis", 7));
-        activityList.add(new Activity("Volleyball (leisure)", 3));
-        activityList.add(new Activity("Volleyball (competitive)", 8));
-        activityList.add(new Activity("Hiking", 6));
-        activityList.add(new Activity("Swimming", 9));
-        activityList.add(new Activity("Water polo", 10));
-        activityList.add(new Activity("Skiing", 7));
-    }
 
 
 }

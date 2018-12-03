@@ -13,7 +13,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import charstars.uscfit.Activity;
 
@@ -24,6 +26,7 @@ public class ActivityDatabaseManager {
     private static List<Activity> allActivities = new ArrayList<>();
     private static List<Activity> customActivities;
     private static List<Activity> defaultActivities;
+    private static Set<String> activityNames;
     private HashMap<Integer, Activity> activitiesMap;
     private boolean oninit = true;
 
@@ -39,8 +42,13 @@ public class ActivityDatabaseManager {
 
     private ActivityDatabaseManager() {
         this.defaultActivities = new ArrayList<Activity>();
-        setDefaultActivities();
+        this.activityNames = new HashSet<String>();
         this.customActivities = new ArrayList<Activity>();
+        setDefaultActivities();
+
+        for(Activity a : defaultActivities) {
+            activityNames.add(a.getCategory().toLowerCase());
+        }
         //updateActivitiesDB();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -67,7 +75,7 @@ public class ActivityDatabaseManager {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 boolean onInit = true;
-                customActivities = new ArrayList<Activity>();
+               // customActivities = new ArrayList<Activity>();
                 GenericTypeIndicator<List<Activity>> t = new GenericTypeIndicator<List<Activity>>() {};
                 List<Activity> am = dataSnapshot.getValue(t);
                 if(am == null){
@@ -79,6 +87,9 @@ public class ActivityDatabaseManager {
                         Activity amlist = entry;
                         Activity a = new Activity(amlist.getCategory(), amlist.getDefaultCalorieValue());
                         customActivities.add(a);
+
+                        //checking if string exists
+                        activityNames.add(a.getCategory().toLowerCase());
                         //Log.d("Hello", quant);
 
                     }
@@ -110,6 +121,7 @@ public class ActivityDatabaseManager {
         if(!activitiesMap.containsKey(e.getID())){
             Log.d("tag", "succesfully added to list");
             customActivities.add(e);
+            activityNames.add(e.getCategory());
             activitiesMap.put(e.getID(), e);
             this.updateActivitiesDB();
         }
@@ -118,7 +130,7 @@ public class ActivityDatabaseManager {
     public void removeActivity(Activity e) {
         boolean removed = customActivities.remove(e);
         activitiesMap.remove(e.getID());
-
+        activityNames.remove(e.getCategory());
         if(removed){
             this.updateActivitiesDB();
         }
@@ -210,8 +222,10 @@ public class ActivityDatabaseManager {
         defaultActivities.add(new Activity("Swimming", 9));
         defaultActivities.add(new Activity("Water polo", 10));
         defaultActivities.add(new Activity("Skiing", 7));
-
     }
 
+    public boolean doesExist(String activityName) {
+        return activityNames.contains(activityName);
+    }
 }
 

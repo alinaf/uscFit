@@ -27,26 +27,36 @@ public class AddActivityDisplay extends AppCompatActivity {
 
     public void addCustomActivity(View view) {
         String activityName = ((EditText)(findViewById(R.id.customActivityName))).getText().toString();
-        int activityCalories = Integer.parseInt(((EditText)(findViewById(R.id.caloriesPerHour))).getText().toString());
-        a = new Activity(activityName, activityCalories);
-        UpdateActivities.addActivity(a);
-        displayToast();
+        String caloriesPerHour = ((EditText) (findViewById(R.id.caloriesPerHour))).getText().toString();
+        if(activityName.equals("") || caloriesPerHour.equals(""))
+            return;
+        if(!checkExists(activityName)) {
+            int activityCalories = Integer.parseInt(caloriesPerHour);
+            a = new Activity(activityName, activityCalories);
+            UpdateActivities.addActivity(a);
+            displayToast(true);
+        }
+        else {
+            displayToast(false);
+        }
+    }
+
+    public boolean checkExists(String activityName) {
+        return UpdateActivities.activityExists(activityName.toLowerCase());
     }
 
 
-
-    public void displayToast() {
+    public void displayToast(boolean value) {
         LayoutInflater inflater = getLayoutInflater();
         View layout = null;
 
         Toast toast = new Toast(getApplicationContext());
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         toast.setDuration(Toast.LENGTH_SHORT);
-        layout = inflater.inflate(R.layout.activity_success, null);
-        /*if (!value)
-            layout = inflater.inflate(R.layout.workoutfail, null);
-        else if (value)
-            layout = inflater.inflate(R.layout.workoutsuccess, null);*/
+        if(value)
+            layout = inflater.inflate(R.layout.activity_success, null);
+        else if(!value)
+            layout = inflater.inflate(R.layout.activity_fail, null);
         toast.setView(layout);
         toast.show();
     }

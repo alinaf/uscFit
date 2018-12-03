@@ -119,6 +119,14 @@ public class Workout implements Serializable, Comparable<Workout>  {
 
     @Override
     public int compareTo(Workout o) {
-       return getDate().compareTo(o.getDate());
+        if(isCompleted() && o.isCompleted())
+            return getDate().compareTo(o.getDate());
+        else if(!isCompleted() && !o.isCompleted())
+            return getDate().compareTo(o.getDate());
+        else if(isCompleted() && !o.isCompleted())
+            return 1;
+        else
+            return -1;
+
     }
 }

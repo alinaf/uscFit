@@ -100,45 +100,7 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
         //\\DatabaseReference myRef = mDatabase.getReference("activities");
         final ArrayAdapter<Activity> arrayAdapter = new ArrayAdapter<Activity>(this, android.R.layout.simple_spinner_item,  activityList);
         spinner.setAdapter(arrayAdapter);
-/*
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        DatabaseReference myRef = database.getReference("Users"); // will not be null
-        DatabaseReference myRef1 = myRef.child(currentUser.getUid());
-        if (myRef1 == null) { // will be null the first time
-            return;
-        }
-        DatabaseReference myRef2 = myRef1.child("Activities");
 
-        myRef2.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Activity act = new Activity(dataSnapshot.getKey(), (Long)(dataSnapshot.getValue()));
-                activityList.add(act);
-                arrayAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        */
 
 
 
@@ -273,7 +235,7 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
             layout = inflater.inflate(R.layout.workoutsuccess, null);
         toast.setView(layout);
         toast.show();
-    }
+}
 
     @TargetApi(19)
     public void setStartAlarm(long time) {
@@ -282,7 +244,7 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
 
         Intent intent = new Intent(this, AlarmReceiver.class);
         intent.putExtra("message", w.getActivity().getCategory() + " for " + w.getLength() + " " + w.getQuant().getMeasurement());
-         PendingIntent broadcast = PendingIntent.getBroadcast(this, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent broadcast = PendingIntent.getBroadcast(this, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         am.setExact(AlarmManager.RTC_WAKEUP, time, broadcast);
 

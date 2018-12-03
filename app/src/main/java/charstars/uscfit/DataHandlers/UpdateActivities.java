@@ -21,7 +21,9 @@ public class UpdateActivities {
     }
 
     //does activity already exist function
-
+    public static boolean activityExists(String activityName) {
+        return ActivityDatabaseManager.getInstance().doesExist(activityName);
+    }
 
 }
 
