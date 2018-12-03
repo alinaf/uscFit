@@ -94,7 +94,7 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
     public void sendMessage(View view) {
         Activity activity = (Activity)((Spinner)findViewById(R.id.workoutSpinner)).getSelectedItem();
         int length = (((NumberPicker)findViewById(R.id.lengthPicker)).getValue());
-        Quantifier quant = Quantifier.valueOf(((Spinner)findViewById(R.id.quantifierOption)).getSelectedItem().toString());
+        Quantifier quant = Quantifier.valueOf("MINUTES");
         int year = eYear;
         int month = eMonth;
         int day = eDay;
