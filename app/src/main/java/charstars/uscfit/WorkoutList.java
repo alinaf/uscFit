@@ -25,12 +25,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import charstars.uscfit.Adapters.GoalAdapter;
 import charstars.uscfit.Adapters.WorkoutAdapter;
-import charstars.uscfit.DataHandlers.GoalCalculations;
 import charstars.uscfit.DataHandlers.UpdateWorkouts;
-import charstars.uscfit.DatabaseHandlers.GoalDatabaseManager;
-import charstars.uscfit.RootObjects.Quantifier;
 import charstars.uscfit.RootObjects.Workout;
 
 public class WorkoutList extends AppCompatActivity implements View.OnClickListener {
