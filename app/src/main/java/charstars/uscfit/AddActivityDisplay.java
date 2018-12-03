@@ -28,8 +28,16 @@ public class AddActivityDisplay extends AppCompatActivity {
     public void addCustomActivity(View view) {
         String activityName = ((EditText)(findViewById(R.id.customActivityName))).getText().toString();
         String caloriesPerHour = ((EditText) (findViewById(R.id.caloriesPerHour))).getText().toString();
+
         if(activityName.equals("") || caloriesPerHour.equals(""))
             return;
+        if(Integer.parseInt(caloriesPerHour) < 0) // user adds negative calories for custom activity
+        {
+            Toast toast = Toast.makeText(getApplicationContext(), "Input positive calories!", Toast.LENGTH_SHORT);
+            toast.show();
+
+            return;
+        }
         if(!checkExists(activityName)) {
             int activityCalories = Integer.parseInt(caloriesPerHour);
             a = new Activity(activityName, activityCalories);

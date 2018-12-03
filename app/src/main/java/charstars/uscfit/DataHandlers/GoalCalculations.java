@@ -27,7 +27,7 @@ public class GoalCalculations extends AppCompatActivity {
 
     private static int goalsThisWeek = 0;
     private static Map<Goal, Timer> timerMap = new HashMap<Goal, Timer>();
-
+    //private st
 
     public static boolean addGoal(Goal e, String email){
         Log.d("updating gc", e.toString());
