@@ -87,20 +87,24 @@ public class GoalDatabaseManager {
                         Date d = gmlist.getDueDate();
                         if(quant.equals("miles")){
                             MilesGoal g = new MilesGoal(d, gmlist.getDescription(), gmlist.getGoalNum(), gmlist.getTrackingNum());
+                            g.setValid(entry.isValid());
                             goals.add(g);
 
                         }else if(quant.equals("minutes")){
                             MinutesGoal g = new MinutesGoal(d, gmlist.getDescription(), gmlist.getGoalNum(), gmlist.getTrackingNum());
+                            g.setValid(entry.isValid());
                             goals.add(g);
 
                         }else if(quant.equals("steps")){
                             StepsGoal g = new StepsGoal(d, gmlist.getGoalNum(), gmlist.getTrackingNum());
+                            g.setValid(entry.isValid());
                             goals.add(g);
 
                         }else if(quant.equals("days")){
 
                             //NOT SURE WHAT TO DO ABOUT DATE HERE
                             DaysGoal g = new DaysGoal(new Date(), gmlist.getDescription(), gmlist.getGoalNum(), gmlist.getTrackingNum());
+                            g.setValid(entry.isValid());
                             goals.add(g);
 
                         }
