@@ -49,7 +49,7 @@ public class ActivityDatabaseManager {
         for(Activity a : defaultActivities) {
             activityNames.add(a.getCategory().toLowerCase());
         }
-        //updateActivitiesDB();
+        updateActivitiesDB();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
@@ -86,7 +86,7 @@ public class ActivityDatabaseManager {
                     for (Activity entry : am) {
                         Activity amlist = entry;
                         Activity a = new Activity(amlist.getCategory(), amlist.getDefaultCalorieValue());
-                        customActivities.add(a);
+                       // customActivities.add(a);
 
                         //checking if string exists
                         activityNames.add(a.getCategory().toLowerCase());

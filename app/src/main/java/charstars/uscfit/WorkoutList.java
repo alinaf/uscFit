@@ -96,6 +96,7 @@ public class WorkoutList extends AppCompatActivity implements View.OnClickListen
         //    System.out.println("qianze: " + workouts.get(0).getDescription());
         if (mRecyclerView != null) {
             ((WorkoutAdapter)mRecyclerView.getAdapter()).notifyDataSetChanged();
+            Collections.sort(workoutList);
             mAdapter = new WorkoutAdapter(workoutList);
             mRecyclerView.setAdapter(mAdapter);
         }
