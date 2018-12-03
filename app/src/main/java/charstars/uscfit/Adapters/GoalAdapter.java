@@ -96,13 +96,17 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.MyViewHolder> 
         }else{
             holder.desc.setText(activity.getDescription()+" "+activity.getGoalNum()+" "+quantifier);
         }
+
         if(activity.getGoalNum()==1){
             quantifier = quantifier+"s";
         }
+        holder.desc.setTextSize(20);
         holder.category.setText(activity.getTrackingNum()+"/"+activity.getGoalNum()+" "+quantifier+" finished");
         Log.d("goalapadter", (int)(activity.getProgress()*100)+"");
         holder.progressBar.setProgress((int)(activity.getProgress()*100));
         holder.relativeLayout.setTag(activity);
+
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)
