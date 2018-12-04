@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import charstars.uscfit.Goal;
-import charstars.uscfit.MilesGoal;
 
 public class GoalCalculationsTest {
     GoalCalculations gc;

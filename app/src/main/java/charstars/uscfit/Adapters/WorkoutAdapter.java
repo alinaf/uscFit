@@ -51,7 +51,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.MyViewHo
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Workout workout = workoutList.get(position);
         holder.category.setText(workout.getActivity().getCategory());
-        holder.length.setText(Integer.toString(workout.getLength()) + " " + workout.getQuant().getMeasurement());
+        holder.length.setText(Integer.toString(workout.getLength()) + " Minutes");
         holder.date.setText(workout.stringDate());
         holder.caloriesBurned.setText(Double.toString(workout.getCaloriesBurned()) + " calories");
         holder.checkBox.setTag(workout);

@@ -86,7 +86,7 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.MyViewHolder> 
             holder.duedate.setText("");
 
         }else{
-            holder.duedate.setText("Due Date: " + activity.getDueDate().toString());
+            holder.duedate.setText("Due Date: " + activity.getDueDate().toString().substring(0, activity.getDueDate().toString().length()-18));
         }
         if(activity.getGoalNum()==1){
             quantifier = quantifier.substring(0, quantifier.length()-1);
@@ -96,13 +96,17 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.MyViewHolder> 
         }else{
             holder.desc.setText(activity.getDescription()+" "+activity.getGoalNum()+" "+quantifier);
         }
+
         if(activity.getGoalNum()==1){
             quantifier = quantifier+"s";
         }
+        holder.desc.setTextSize(20);
         holder.category.setText(activity.getTrackingNum()+"/"+activity.getGoalNum()+" "+quantifier+" finished");
         Log.d("goalapadter", (int)(activity.getProgress()*100)+"");
         holder.progressBar.setProgress((int)(activity.getProgress()*100));
         holder.relativeLayout.setTag(activity);
+
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)

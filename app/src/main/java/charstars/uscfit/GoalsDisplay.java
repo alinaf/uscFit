@@ -169,19 +169,14 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
 
     public boolean addGoal(Date d, String goalType, int goalNum, String exerciseDescription){
 
-        if(goalType.equals("Miles")){
-           return GoalCalculations.addGoal(new MilesGoal(d, exerciseDescription, goalNum, 0), email);
-        }else{
             Log.d("updating", exerciseDescription);
             return GoalCalculations.addGoal(new MinutesGoal(d, exerciseDescription, goalNum, 0), email);
 
-        }
+
         //assuming success;
     }
 
     public void clearAddGoalFields(){
-        Spinner spinner = (Spinner) findViewById(R.id.goalSpinner);
-        spinner.setSelection(0);
         NumberPicker num = (NumberPicker)findViewById(R.id.numberPicker);
         num.setMinValue(1);
         num.setMaxValue(1000);
@@ -250,7 +245,6 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
             datePickerDialog.show();
         }
         if(v.getId() == R.id.addGoal){
-            Spinner spinner = (Spinner) findViewById(R.id.goalSpinner);
             Activity activity = (Activity)((Spinner)findViewById(R.id.workoutSpinner)).getSelectedItem();
 
             NumberPicker num = (NumberPicker)findViewById(R.id.numberPicker);
@@ -261,7 +255,6 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
 
             String exerciseDescription = activity.getCategory();
             int goalNum = num.getValue();
-            String goalType = spinner.getSelectedItem().toString();
 
 
 
@@ -275,7 +268,7 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
             toast.setDuration(Toast.LENGTH_SHORT);
 
 
-            if(exerciseDescription.equals("") || exerciseDescription == null || goalNum == 0 || goalType == null || goalType.equals("") || !isCalendarSet(year, month, day)){
+            if(exerciseDescription.equals("") || exerciseDescription == null || goalNum == 0 ||  !isCalendarSet(year, month, day)){
 
                 Log.d("Something happened", "");
                 layout = inflater.inflate(R.layout.goalfail,null);
@@ -288,7 +281,7 @@ public class GoalsDisplay extends AppCompatActivity implements View.OnClickListe
 
             Calendar cal = Calendar.getInstance();
             cal.set(year, month, day);
-            boolean successful = addGoal(cal.getTime(), goalType, goalNum, exerciseDescription);
+            boolean successful = addGoal(cal.getTime(), "minutes", goalNum, exerciseDescription);
 
             if(successful){
                 layout = inflater.inflate(R.layout.goalsuccess,null);

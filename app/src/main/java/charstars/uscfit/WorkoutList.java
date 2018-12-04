@@ -25,12 +25,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import charstars.uscfit.Adapters.GoalAdapter;
 import charstars.uscfit.Adapters.WorkoutAdapter;
-import charstars.uscfit.DataHandlers.GoalCalculations;
 import charstars.uscfit.DataHandlers.UpdateWorkouts;
-import charstars.uscfit.DatabaseHandlers.GoalDatabaseManager;
-import charstars.uscfit.RootObjects.Quantifier;
 import charstars.uscfit.RootObjects.Workout;
 
 public class WorkoutList extends AppCompatActivity implements View.OnClickListener {
@@ -96,6 +92,7 @@ public class WorkoutList extends AppCompatActivity implements View.OnClickListen
         //    System.out.println("qianze: " + workouts.get(0).getDescription());
         if (mRecyclerView != null) {
             ((WorkoutAdapter)mRecyclerView.getAdapter()).notifyDataSetChanged();
+            Collections.sort(workoutList);
             mAdapter = new WorkoutAdapter(workoutList);
             mRecyclerView.setAdapter(mAdapter);
         }

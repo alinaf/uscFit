@@ -1,15 +1,11 @@
 package charstars.uscfit.RootObjects;
 
-import android.support.v4.app.NotificationCompat;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 
 import charstars.uscfit.Activity;
-import charstars.uscfit.NotificationHelper;
 import charstars.uscfit.UserInfo;
-import charstars.uscfit.WorkoutPopUp;
 
 
 public class Workout implements Serializable, Comparable<Workout>  {
