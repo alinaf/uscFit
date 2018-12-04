@@ -1,6 +1,8 @@
 package charstars.uscfit.DatabaseHandlers;
 
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -103,10 +105,17 @@ public class WorkoutDatabaseManager {
     public void addWorkout(Workout e) {
         Log.d("tag", "trying to add to list");
         if(!workoutsMap.containsKey(e.getID())){
-            Log.d("tag", "succesfully added to list");
-            workouts.add(e);
-            workoutsMap.put(e.getID(), e);
-            this.updateWorkoutsDB();
+            java.util.Date date1 = new java.util.Date();
+            //Log.d(e.getDate().getTime() - date1.getTime(),e.getDate().getTime() - date1.getTime());
+//            Toast toast = Toast.makeText(getApplicationContext(),Long.toString(e.getDate().getTime() - date1.getTime()) , Toast.LENGTH_SHORT);
+//            toast.show();
+            System.out.println("TIME DIFFERENCE: " + Long.toString(e.getDate().getTime() - date1.getTime()));
+            if(date1.getTime() - e.getDate().getTime() < 5274000000L) {
+                Log.d("tag", "succesfully added to list");
+                workouts.add(e);
+                workoutsMap.put(e.getID(), e);
+                this.updateWorkoutsDB();
+            }
         }
     }
 
