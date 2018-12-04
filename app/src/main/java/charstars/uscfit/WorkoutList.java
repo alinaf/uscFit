@@ -49,16 +49,7 @@ public class WorkoutList extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
 
         workoutList = UpdateWorkouts.getWorkouts();
-        java.util.Date date1 = new java.util.Date();
 
-        // remove workouts that are more than 2 months old
-        for(Workout w: workoutList)
-        {
-            if(date1.getTime() - w.getDate().getTime() < 5274000000L)
-            {
-                UpdateWorkouts.removeWorkout(w);
-            }
-        }
         setContentView(R.layout.activity_workout_list);
         createTable();
 

@@ -9,8 +9,10 @@ import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import charstars.uscfit.DataHandlers.UpdateWorkouts;
 import charstars.uscfit.R;
 import charstars.uscfit.RootObjects.Workout;
 
@@ -37,7 +39,16 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.MyViewHo
 
 
     public WorkoutAdapter(List<Workout> workoutList) {
-        this.workoutList = workoutList;
+        List<Workout> listOfWorkouts = new ArrayList<Workout>();
+         java.util.Date date1 = new java.util.Date();
+        for(Workout w: workoutList)
+        {
+            if(date1.getTime() - w.getDate().getTime() < 5274000000L)
+            {
+                listOfWorkouts.add(w);
+            }
+        }
+        this.workoutList = listOfWorkouts;
     }
 
     @Override

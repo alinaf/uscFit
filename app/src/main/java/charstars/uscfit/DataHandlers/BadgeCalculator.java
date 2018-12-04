@@ -99,7 +99,7 @@ public class BadgeCalculator extends AppCompatActivity
         }
         if(b.getGoalNum()>=60){
             return BadgeFactory.generateGold(desc, d);
-        }else if(b.getGoalNum()>=30){
+        }else if(b.getGoalNum()>=45){
             return BadgeFactory.generateSilver(desc, d);
         }else{
             return BadgeFactory.generateBronze(desc, d);
