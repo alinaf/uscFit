@@ -197,6 +197,22 @@ public class WorkoutPopUp extends AppCompatActivity implements View.OnClickListe
             return false;
         if(minute < 0 || minute >= 60)
             return false;
+
+//        Calendar cal = Calendar.getInstance();
+//        int currMonth = cal.get(cal.MONTH)+1;
+//        int currDay = cal.get(cal.DAY_OF_MONTH);
+//
+//        // don't add workout older than 2 months
+//        if(currMonth - month > 2)
+//        {
+//            return false;
+//        }
+//        if(currMonth - month == 2)
+//        {
+//            if(day < currDay) {
+//                return false;
+//            }
+//        }
         return true;
     }
 
