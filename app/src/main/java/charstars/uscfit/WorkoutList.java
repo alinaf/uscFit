@@ -19,8 +19,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -37,6 +39,8 @@ public class WorkoutList extends AppCompatActivity implements View.OnClickListen
 
     CheckBox checkBox;
 
+    TextView tv_label;
+
     private static RecyclerView mRecyclerView;
     private static WorkoutAdapter mAdapter;
     private static RecyclerView.LayoutManager mLayoutManager;
@@ -50,8 +54,13 @@ public class WorkoutList extends AppCompatActivity implements View.OnClickListen
 
         workoutList = UpdateWorkouts.getWorkouts();
 
+
+
+
+
         setContentView(R.layout.activity_workout_list);
-        createTable();
+        tv_label = (TextView) findViewById(R.id.tv_workoutLabel);
+        //createTable();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.add_workout_button);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -67,11 +76,46 @@ public class WorkoutList extends AppCompatActivity implements View.OnClickListen
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
             @Override
             public void onSelectedDayChange(CalendarView calendarView, int yyyy, int mm, int dd){
-                //get all relevant workouts
+                //get all relevant workout
                 //add one to the month lol
+                createTableForDate(calendarView, yyyy, mm, dd);
             }
         });
 
+    }
+
+    //for only displaying workouts for a certain date
+    public void createTableForDate(CalendarView calendarView, int yyyy, int mm, int dd){
+        //mRecyclerView = findViewById(R.id.workoutListLayout);
+        List<Workout> workoutListForDate = new ArrayList<Workout>();
+        //go through workout list and only choose the ones with a matching date
+        System.out.println(yyyy + " " + mm + " " + dd);
+        for(int i = 0; i < workoutList.size(); i++){
+            Date currDate = workoutList.get(i).getDate();
+            int year = currDate.getYear() + 1900;
+            int month = currDate.getMonth(); //might need to add one to this, depending on mm
+            int day = currDate.getDate();
+
+
+            if(year == yyyy && mm == month && day == dd){
+                workoutListForDate.add(workoutList.get(i));
+            }
+        }
+
+        if(workoutListForDate.isEmpty()){
+            tv_label.setText("There are no workouts for this date.");
+        }else{
+            tv_label.setText(" ");
+        }
+
+
+
+        Collections.sort(workoutListForDate);
+        mAdapter = new WorkoutAdapter(workoutListForDate);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     public void createTable() {
